@@ -1,0 +1,211 @@
+% $Id: xetexko-josa.sty,v 1.11 2011/03/14 03:47:59 nomos Exp $
+%
+% Copyright (c) 2013 Dohyun Kim  <nomos at ktug org>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%  http://www.latex-project.org/lppl.txt
+% and version 1.3c or later is part of all distributions of LaTeX
+% version 2006/05/20 or later.
+
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
+  \ProvidesPackage{xetexko-josa}[2013/03/27 v2.0 Auto-josa for XeTeX-ko]
+\fi
+
+\unless\ifcsname @tempcnta\endcsname\newcount\@tempcnta\fi
+\unless\ifcsname @tempcntb\endcsname\newcount\@tempcntb\fi
+
+\newcount\@josa\@josa\m@ne
+\protected\def\jong{\global\@josa\z@}
+\protected\def\rieul{\global\@josa\@ne}
+\protected\def\jung{\global\@josa\tw@}
+
+\begingroup
+\catcode`\A=11
+\catcode`\0=12
+\global\let\dhucs@cat@eleven=A
+\global\let\dhucs@cat@twelve=0
+\endgroup
+
+\expandafter\def\expandafter\strip@characternum@meaning@prefix\detokenize
+  {the character} #1{\number`#1}
+\expandafter\def\expandafter\strip@letternum@meaning@prefix\detokenize
+  {the letter} #1{\number`#1}
+
+\def\@josa@char@to@number#1#2{%
+  \ifcat#1\dhucs@cat@eleven
+    \expandafter\expandafter\expandafter#2\expandafter
+    \strip@letternum@meaning@prefix\meaning#1\relax
+  \else\ifcat#1\dhucs@cat@twelve
+    \expandafter\expandafter\expandafter#2\expandafter
+    \strip@characternum@meaning@prefix\meaning#1\relax
+  \else
+    #2\z@
+  \fi\fi
+}
+
+\def\josa@char@to@number{%
+  \XeTeXinterchartokenstate\z@
+  \@josa@char@to@number\XK@last@char\count@
+  \@josa@char@to@number\XK@lastlast@char\@tempcnta
+  \@josa@char@to@number\XK@lastlastlast@char\@tempcntb
+  \ifnum\count@="302E
+    \count@\@tempcnta \@tempcnta\@tempcntb
+  \else\ifnum\count@="302F
+    \count@\@tempcnta \@tempcnta\@tempcntb
+  \else\ifnum\count@="1160
+    \count@\@tempcnta \@tempcnta\@tempcntb
+  \fi\fi\fi
+  \XeTeXinterchartokenstate\@ne
+}
+
+\def\josa@last@char@latin{%
+  \ifnum  49=\count@ \rieul\else	% 1
+  \ifnum  51=\count@ \jong \else	% 3
+  \ifnum  54=\count@ \jong \else	% 6
+  \ifnum  55=\count@ \rieul\else	% 7
+  \ifnum  56=\count@ \rieul\else	% 8
+  \ifnum  48=\count@ \jong \else	% 0
+  \ifnum 108=\count@ \rieul\else	% l
+  \ifnum 109=\count@ \jong \else	% m
+  \ifnum 110=\count@ \jong \else	% n
+  \ifnum  76=\count@ \rieul\else	% L
+  \ifnum  77=\count@ \jong \else	% M
+  \ifnum  78=\count@ \jong \else	% N
+    \jung
+  \fi\fi\fi\fi\fi \fi\fi\fi\fi\fi \fi\fi
+  \ifnum 110=\@tempcnta \ifnum 103=\count@ \jong \fi\fi	%skati-ng
+  \ifnum  97=\@tempcnta \ifnum 112=\count@ \jong \fi\fi	%c-ap
+  \ifnum 117=\@tempcnta \ifnum 112=\count@ \jong \fi\fi	%c-up
+  \ifnum  97=\@tempcnta \ifnum 116=\count@ \jong \fi\fi	%c-at
+  \ifnum 101=\@tempcnta \ifnum 116=\count@ \jong \fi\fi	%Haml-et
+  \ifnum 105=\@tempcnta \ifnum 116=\count@ \jong \fi\fi	%summ-it
+  \ifnum 111=\@tempcnta \ifnum 116=\count@ \jong \fi\fi	%n-ot
+  \ifnum 117=\@tempcnta \ifnum 116=\count@ \jong \fi\fi	%n-ut
+  \ifnum 111=\@tempcnta \ifnum 107=\count@ \jong \fi\fi	%bo-ok
+  \ifnum 105=\@tempcnta \ifnum  99=\count@ \jong \fi\fi	%picn-ic
+  \ifnum 108=\@tempcnta \ifnum 101=\count@ \rieul\fi\fi	%app-le
+  \ifnum 105=\@tempcntb \ifnum 109=\@tempcnta \ifnum 101=\count@ \jong\fi\fi\fi %t-ime
+  \ifnum 105=\@tempcntb \ifnum 110=\@tempcnta \ifnum 101=\count@ \jong\fi\fi\fi %m-ine
+  \ifnum  97=\@tempcntb \ifnum  99=\@tempcnta \ifnum 107=\count@ \jong\fi\fi\fi %b-ack
+  \ifnum 105=\@tempcntb \ifnum  99=\@tempcnta \ifnum 107=\count@ \jong\fi\fi\fi  %p-ick
+  \ifnum 111=\@tempcntb \ifnum  97=\@tempcnta \ifnum 116=\count@ \jung\fi\fi\fi %b-oat
+  \ifnum  84=\@tempcntb \ifnum  69=\@tempcnta \ifnum  88=\count@ \jong\fi\fi\fi	%TEX
+}
+
+\def\josa@hanja@hangul#1{%
+  \begingroup
+  \count@=\z@
+  \openin1=#1\relax \josa@hanja \closein1
+  \endgroup
+}
+\def\josa@hanja{%
+  \read1 to \@tempa
+  \ifnum\count@=\@josa
+    \global\@josa\@tempa \let\next\relax
+  \else
+    \advance\count@\@ne \let\next\josa@hanja
+  \fi
+  \next
+}
+
+\def\num@josa#1{%
+  \bgroup
+  \count@#1%
+  \ifnum\count@<\z@ \count@-\count@ \fi
+  \count\tw@\count@
+  \divide\count\tw@ 10
+  \multiply\count\tw@ 10
+  \advance\count@-\count\tw@
+  \ifcase\count@\jong\or\rieul\or\jung\or\jong\or\jung\or
+    \jung\or\jong\or\rieul\or\rieul\or\jung\fi
+  \egroup
+}
+
+\def\josa@last@char@cjk{%
+  \ifnum\@josa>19967 \ifnum\@josa<40870 % cjk unified ideographs
+    \advance\@josa-19968 % "4E00
+    \josa@hanja@hangul{hanja_hangul.tab}\fi\fi
+  \ifnum\@josa>13311 \ifnum\@josa<19894 % cjk unified ideographs ext. A
+    \advance\@josa-13312 % "3400
+    \josa@hanja@hangul{hanjaexa_hangul.tab}\fi\fi
+  \ifnum\@josa>63743 \ifnum\@josa<64046 % cjk compatibility ideographs
+    \advance\@josa-63744 % "F900
+    \josa@hanja@hangul{hanjacom_hangul.tab}\fi\fi
+  \ifnum\@josa>44031 \ifnum\@josa<55204 % hangul syllables
+    \advance\@josa-44032 % "AC00
+    \count@=\@josa \divide\count@28 \multiply\count@28
+    \advance\@josa-\count@ \advance\@josa4519 % "11A7
+    \fi\fi
+  \ifnum\@josa>"115F \ifnum\@josa<"11A8 % jamo vowels
+    \ifnum\@josa="1160 \ifnum\@tempcnta="1105 \rieul \else \jong \fi % ㄹ or other chosong
+    \else \jung \fi\fi\fi
+  \ifnum\@josa>"11A7 \ifnum\@josa<"1200 % jamo final consonants
+    \ifnum\@josa="11AF \rieul \else \jong \fi\fi\fi
+  \ifnum\@josa>"D7AF \ifnum\@josa<"D7C7 \jung \fi\fi % jamo vowels
+  \ifnum\@josa>"D7CA \ifnum\@josa<"D7FC \jong \fi\fi % jamo final consonants
+  \ifnum\@josa>12592 \ifnum\@josa<12623 % ㄱㄴㄷㄹ
+    \ifnum\@josa=12601 \rieul
+    \else\jong\fi \fi\fi
+  \ifnum\@josa>12895 \ifnum\@josa<12924 \advance\@josa-96 \fi\fi
+  \ifnum\@josa>12799 \ifnum\@josa<12814 % ㉠ or ㈀
+    \ifnum\@josa=12803 \rieul
+    \else\jong\fi \fi\fi
+  \ifnum\@josa>12813 \ifnum\@josa<12829 % ㉮ or ㈎
+    \jung \fi\fi
+  \ifnum\@josa>9311 \ifnum\@josa<9372 % ① or ⑴
+    \advance\@josa\m@ne \num@josa{\@josa}\fi\fi
+  \ifnum\@josa>9423 \ifnum\@josa<9450 \advance\@josa-26 \fi\fi
+  \ifnum\@josa>9397 \ifnum\@josa<9424 \advance\@josa-26 \fi\fi
+  \ifnum\@josa>9371 \ifnum\@josa<9398 % ⓐ or ⒜
+    \ifnum\@josa=9383 \rieul\else % l
+    \ifnum\@josa=9384 \jong\else  % m
+    \ifnum\@josa=9385 \jong\else  % n
+    \jung\fi\fi\fi \fi\fi
+  \ifnum\@josa>8543 \ifnum\@josa<8556 % ⅰ ⅱ ⅲ
+    \advance\@josa-3 \num@josa{\@josa}\fi\fi
+  \ifnum\@josa>8559 \ifnum\@josa<8572 % Ⅰ Ⅱ Ⅲ
+    \advance\@josa\@ne \num@josa{\@josa}\fi\fi
+}
+
+\protected\def\makejosa#1#2{%
+  \ifnum\@josa<\z@
+    \josa@char@to@number
+    \ifnum\count@<\@cclvi
+      \ifnum\lastskip>\z@\else\XKcjklatinsmallbreak\fi % probably last char is latin ㅠㅠ
+      \josa@last@char@latin
+    \else
+      \@josa\count@
+      \josa@last@char@cjk
+    \fi
+  \fi
+  \ifcase\@josa #2% jong
+  \or \ifx\@empty#1\@empty \else#2\fi% rieul
+  \else #1% jung
+  \fi
+  \global\@josa\m@ne
+}
+
+\def\가{\makejosa{가}{이}}
+\def\이{\futurelet\dhucs@next\makejosa@I}
+\def\은{\makejosa{는}{은}}
+\def\는{\makejosa{는}{은}}
+\def\을{\makejosa{를}{을}}
+\def\를{\makejosa{를}{을}}
+\def\와{\makejosa{와}{과}}
+\def\과{\makejosa{와}{과}}
+\def\으{\makejosa{}{으}}
+\def\로{\makejosa{}{으}로}
+\def\라{\makejosa{라}{이라}}
+\def\makejosa@I{%
+  \ifx\dhucs@next라%
+      \makejosa\relax{이}%
+  \else
+    \makejosa{가}{이}%
+  \fi
+}
+
+\endinput

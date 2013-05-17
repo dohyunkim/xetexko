@@ -1,0 +1,149 @@
+
+XeTeX-ko Package version 2.0 (2013/03/27)
+=========================================
+
+XeTeX-ko is a macro package for Xe(La)TeX which supports typesetting
+Korean documents including Old Hangul texts. Though XeTeX itself
+already has basic facility to typeset Korean texts, it is necessary
+to provide some enhanced features for quality products adapted to
+Korean culture. Therefore, this package has enabled, to say a few
+among others, typesetting different character classes by different
+fonts, insertion of small spaces between Hangul characters, and
+raising or lowering latin punctuations after Hangul or Hanja.
+
+This package requires cjk-ko package for Hangul counters and captions.
+
+
+License
+-------
+This package is licensed under LPPL (LaTeX Project Public License).
+
+See each file for details.
+
+
+Author
+------
+Please report any errors or suggestions to Dohyun Kim <nomos at ktug org>.
+
+
+Files
+-----
+
+### TeXinputs
+
+	xetexko.sty		-> tex/xetex/xetexko/
+	xetexko-font.sty	-> tex/xetex/xetexko/
+	xetexko-hanging.sty	-> tex/xetex/xetexko/
+	xetexko-josa.sty	-> tex/xetex/xetexko/
+	xetexko-space.sty	-> tex/xetex/xetexko/
+	xetexko-vertical.sty	-> tex/xetex/xetexko/
+	hanja_hangul.tab	-> tex/xetex/xetexko/
+	hanjacom_hangul.tab	-> tex/xetex/xetexko/
+	hanjaexa_hangul.tab	-> tex/xetex/xetexko/
+
+### Documents
+
+	xetexko-doc.pdf		-> doc/xetex/xetexko/
+	xetexko-doc.tex		-> doc/xetex/xetexko/
+	README (this file)	-> doc/xetex/xetexko/
+
+
+Loading
+-------
+If you are a LaTeX user, declaring
+
+	\usepackage{xetexko}
+or
+
+	\usepackage{kotex}
+is sufficient to load the package, which will load fontspec package
+as well. Notice that kotex.sty is a file provided by cjk-ko package.
+
+Under plain TeX:
+
+	\input xetexko.sty
+
+
+Package Options
+---------------
+
+	[hangul]
+Load Hangul captions. Besides, this option also adjusts interword
+and interline spacing.
+
+	[hanja]
+Load Hanja captions. Also adjusts spacing as [hangul] option does.
+
+	[unfonts]
+Load font setting predefined for Un TrueType fonts available at
+http://kldp.net/projects/unfonts/.
+
+
+Hangul Font Commands
+--------------------
+
+	\setmainhangulfont
+	\setsanshangulfont
+	\setmonohangulfont
+Same as \setmainfont et. al. provided by fontspec package, except that
+these affect only Hangul characters and related symbols.
+
+	\setmainhanjafont
+	\setsanshanjafont
+	\setmonohanjafont
+Same as \setmainfont et. al., except that these affect only Hanja
+characters.
+
+In like manner, these commands are available as well:
+
+	\hangulfontspec
+	\hanjafontspec
+	\newhangulfontfamily
+	\newhanjafontfamily
+	\addhangulfontfeature
+	\addhanjafontfeature
+
+
+Hangul Font Options
+-------------------
+
+	[hu=<dimen>]
+Set spacing between Hangul and Latin characters.
+
+	[interhchar=<dimen>]
+Set spacing between Hangul characters.
+
+	[lowerperiod=<dimen>]
+Lower latin fullstop after Hangul character.
+
+	[quoteraise=<dimen>]
+Raise latin quotation marks.
+
+	[postmathskip=<dimen>]
+Set spacing after inline math and before Hangul.
+
+See xetexko-doc.pdf for more options.
+
+
+Other User Commands
+-------------------
+
+	\dotemph{...}
+Emphasise Hangul or Hanja by putting dot above.
+
+	\begin{vertical}{<dimen>}
+	\end{vertical}
+This environment makes a vbox vertically typeset. <dimen> is an
+argument required to indicate the box height. For vertical typesetting
+of entire document, use the command \verticaltypesetting instead.
+
+	\은 \는 \이 \가 \을 \를 \와 \과 \로 \으로 \라 \이라
+Commands for automatic Josa selection. Unlike those of cjk-ko
+package, these commands work correctly even after Hangul or Hanja.
+
+	\jaso \gana \ojaso \ogana \pjaso \pgana \onum \pnum \oeng
+	\peng \hnum \Hnum \hroman \hRoman \hNum \hanjanum
+Hangul counters provided by cjk-ko package.
+
+
+*END of README*
