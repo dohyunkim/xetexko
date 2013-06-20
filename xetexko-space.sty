@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/03/27 v2.0 Spacings and fonts for XeTeX-ko]
+    [2013/06/20 v2.1 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1484,7 +1484,14 @@
 % etc commands
 \let\enablejamoautojosa\relax % enabled already
 
+\protected\def\disablejamoautojosa{%
+  \XeTeXinterchartoks\XKhangulsyllable\XKhanguljungjong = {}%
+  \XeTeXinterchartoks\XKhangulchosong \XKhanguljungjong = {}%
+  \XeTeXinterchartoks\XKhanguljungjong\XKhanguljungjong = {}%
+}
+
 \protected\def\disableautojosa{%
+  \disablejamoautojosa
   \let\XKbeginboundary\relax
   \let\XKendboundary\relax
   \let\XKlastchar\relax
@@ -1578,7 +1585,7 @@
 \def\setmathhangulblock#1#2{%
   \count@ "#1
   \loop
-    \XeTeXmathcode\count@ = 7 \symmathhangul \count@
+    \Umathcode\count@ = 7 \symmathhangul \count@
     \ifnum\count@<"#2
       \advance\count@\@ne \repeat}
 
