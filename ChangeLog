@@ -1,0 +1,13 @@
+2013-07-03      Dohyun Kim <nomos at ktug org>
+
+	Version 2.1
+
+	* xetexko.sty: move caption setting to AtBeginDocument
+
+	* xetexko-space.sty: new macro \disablejamoautojosa, needed for
+	teckit mapping of Jamos.
+
+2013-03-27      Dohyun Kim <nomos at ktug org>
+
+	Initial release to CTAN. Version 2.0
+

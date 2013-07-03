@@ -42,7 +42,7 @@
   \expandafter\endinput
 \fi
 
-\ProvidesPackage{xetexko}[2013/03/27 v2.0 Typesetting Korean with XeLaTeX]
+\ProvidesPackage{xetexko}[2013/07/03 v2.1 Typesetting Korean with XeLaTeX]
 
 \newif\if@hangul
 \newif\if@hanja
@@ -58,7 +58,7 @@
 \RequirePackage{xetexko-vertical}
 
 \RequirePackage{kolabels-utf}
-\if@hangul \RequirePackage{konames-utf} \fi
+\if@hangul\AtBeginDocument{\RequirePackage{konames-utf}}\fi
 
 \AtBeginDocument{
   % for ulem package
