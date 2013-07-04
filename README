@@ -49,6 +49,7 @@ Files
 	xetexko-doc.pdf		-> doc/xetex/xetexko/
 	xetexko-doc.tex		-> doc/xetex/xetexko/
 	README (this file)	-> doc/xetex/xetexko/
+	ChangeLog		-> doc/xetex/xetexko/
 
 
 Loading

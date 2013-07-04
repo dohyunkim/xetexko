@@ -13,27 +13,35 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-vertical}
-    [2013/03/27 v2.0 Vertical environment for XeTeX-ko]
+    [2013/07/03 v2.1 Vertical environment for XeTeX-ko]
 \fi
 
 \unless\ifcsname @tempdima\endcsname\newdimen\@tempdima\fi
 \unless\ifcsname @tempdimb\endcsname\newdimen\@tempdimb\fi
 \unless\ifcsname @tempdimc\endcsname\newdimen\@tempdimc\fi
-\unless\ifcsname AtBeginDocument\endcsname\def\AtBeginDocument#1{#1}\fi
-\unless\ifcsname @onlypreamble\endcsname\def\@onlypreamble#1{}\fi
 
 % do not veticalize headline/footline
-\protected\def\verticaltypesetting{%
-  \AtBeginDocument{\XK@vertical@spacing}%
-  \maxdepth\z@
-  \dimen@\textwidth
-  \textwidth\textheight
-  \textheight\dimen@
-  \edef\@outputpage{%
-    \unexpanded{\xetexko@rotatebox\@outputbox\textwidth\textheight}%
-    \unexpanded\expandafter{\@outputpage}}%
-}
-\@onlypreamble\verticaltypesetting
+\ifdefined\ProvidesPackage % for latex
+  \protected\def\verticaltypesetting{%
+    \AtBeginDocument{\XK@vertical@spacing}%
+    \maxdepth\z@
+    \dimen@\textwidth
+    \textwidth\textheight
+    \textheight\dimen@
+    \edef\@outputpage{%
+      \unexpanded{\xetexko@rotatebox\@outputbox\textwidth\textheight}%
+      \unexpanded\expandafter{\@outputpage}}%
+  }
+  \@onlypreamble\verticaltypesetting
+\else % for plain
+  \protected\def\verticaltypesetting{%
+    \dimen@\hsize\hsize\vsize\vsize\dimen@
+    \edef\plainoutput{\unexpanded{\dimen@\hsize\hsize\vsize\vsize\dimen@}%
+      \unexpanded\expandafter{\plainoutput}}%
+    \def\pagebody{\setbox\z@\vbox to\hsize{\boxmaxdepth=\maxdepth
+      \pagecontents}\xetexko@rotatebox\z@\box\z@}%
+    \maxdepth\z@ \XK@vertical@spacing}
+\fi
 
 \def\xetexko@rotatebox#1{%
   \ifvbox#1\count@\@ne\else\count@\z@\fi

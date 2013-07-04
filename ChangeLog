@@ -2,10 +2,13 @@
 
 	Version 2.1
 
-	* xetexko.sty: move caption setting to AtBeginDocument
+	* xetexko.sty: move Hangul caption setting to AtBeginDocument
 
-	* xetexko-space.sty: new macro \disablejamoautojosa, needed for
-	teckit mapping of Jamos.
+	* xetexko-space.sty, xetexko-doc.tex: new macro
+	\disablejamoautojosa, needed for teckit mapping of Jamos.
+
+	* xetexko-vertical.sty: \verticaltypesetting for plain tex was
+	missing.
 
 2013-03-27      Dohyun Kim <nomos at ktug org>
 

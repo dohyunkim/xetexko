@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/06/20 v2.1 Spacings and fonts for XeTeX-ko]
+    [2013/07/03 v2.1 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1484,7 +1484,7 @@
 % etc commands
 \let\enablejamoautojosa\relax % enabled already
 
-\protected\def\disablejamoautojosa{%
+\protected\def\disablejamoautojosa{% newly added by v2.1
   \XeTeXinterchartoks\XKhangulsyllable\XKhanguljungjong = {}%
   \XeTeXinterchartoks\XKhangulchosong \XKhanguljungjong = {}%
   \XeTeXinterchartoks\XKhanguljungjong\XKhanguljungjong = {}%
@@ -1635,6 +1635,6 @@
 %%% frenchspacing is default
 \frenchspacing
 
-\def\hellipsis{^^^^2026^^^^2026}
+\def\hellipsis{^^^^2026\kern-.1ex^^^^2026}
 
 \endinput
