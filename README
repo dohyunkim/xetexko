@@ -1,5 +1,5 @@
 
-XeTeX-ko Package version 2.1 (2013/07/03)
+XeTeX-ko Package version 2.2 (2013/07/09)
 =========================================
 
 XeTeX-ko is a macro package for Xe(La)TeX which supports typesetting
@@ -106,6 +106,8 @@ In like manner, these commands are available as well:
 	\newhanjafontfamily
 	\addhangulfontfeature
 	\addhanjafontfeature
+
+If \fallbackhanjafont is defined, it is used as a final fallback font.
 
 
 Hangul Font Options

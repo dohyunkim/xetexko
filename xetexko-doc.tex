@@ -5,7 +5,7 @@
 %% This file is in the public domain
 
 \documentclass[a4paper]{article}
-\usepackage{typearea}
+\usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
 %\usepackage{xetexko-hanging}
 \setmainhangulfont[Ligatures=TeX,quoteraise=.1em]{NanumMyeongjo}
@@ -58,6 +58,7 @@
       과거에는 한자글꼴에서 찾았다.
     \item \verb|interpunctskern| 글꼴 옵션을 없애고
       \verb|quoteraise|를 추가했다.
+    \item \verb|\fallbackhanjafont| 명령을 추가했다.
   \end{itemize}
 \end{quote}
 
@@ -164,6 +165,10 @@ fontspec의 \verb+\addfontfeature+ 명령을 구현한 것이다.
 참고로, 한자와 한글을 같은 글꼴로 식자하고 싶을 때 글꼴 설정을
 번거롭게 두 번 할 필요 없이 한글 글꼴만 설정한 뒤 간단히
   \cs{hanjabyhangulfont}를 선언하면 된다.
+
+한편 \cs{fallbackhanjafont}를 정의해두면 \hemph{한자 글꼴에도 없는 글자}를
+이 글꼴에서 찾아 식자한다. 간단히 \verb|\newfontfamily| 명령으로 정의한다.
+
 
 \section{기호 글꼴 명령}
 라틴 문자나 CJK 기호를 어떤 폰트로 식자할 것인가를 사용자가 지정할 수 있다.
@@ -381,6 +386,7 @@ CJK 구두점이나 괄호의 폭을 0.5em으로 강제설정하는 것을 방�
 \hfil\begin{vertical}{16em}
   \hangulfontspec[Vertical=RotatedGlyphs]{Adobe Myungjo Std}
   \hangulmarks \hanjabyhangulfont \parindent-1em\leftskip1em
+  \disablecjksymbolspacing
 \noindent 님의 침묵 {\small(The Silent Beloved)}
 \smallbreak
 \hfil\hfil 한 용 운\hfil
@@ -548,7 +554,7 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 \section{밑줄긋기}
 \LaTeX에서는 \uline{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
 \begin{plaintex}
-플레인텍에서는 패키지 로드 후 사용자가 \verb|\xetexkoulemsupport|
+플레인텍에서는 패키지 로드 후 사용자가 \cs{xetexkoulemsupport}
 명령을 내려주어야 한다.
 \end{plaintex}
 

@@ -1,3 +1,10 @@
+2013-07-09      Dohyun Kim <nomos at ktug org>
+
+	Version 2.2
+
+	* xetexko-space.sty: \fallbackhanjafont is used as a final
+	fallback font.
+
 2013-07-03      Dohyun Kim <nomos at ktug org>
 
 	Version 2.1
