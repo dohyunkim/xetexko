@@ -10,27 +10,34 @@
 %\usepackage{xetexko-hanging}
 \setmainhangulfont[Ligatures=TeX,quoteraise=.1em]{NanumMyeongjo}
 \setmainhanjafont[Path,BoldFont=*Bold]{UnBatang}
-\setsanshangulfont[Ligatures=TeX]{NanumGothic}
-\usepackage{metalogo,xcolor,ulem}
+\setsanshangulfont[Ligatures=TeX]{NanumBarunGothicOTF}
+\usepackage{hologo,xcolor,ulem}
 \usepackage[bookmarksnumbered]{hyperref}
 
 \def\dotemphraise{0.2em}
 \edef\verbatim{\unexpanded\expandafter{\verbatim
   \linespread{1.1}\selectfont\color{blue!50!black}}}
-\def\logoko{\textsf{k}\kern-.1em\textit{o}}
+\def\logoko{\textsf{k}\kern-.2ex\textit{o}}
+\def\XeTeX{\hologo{XeTeX}}
 \def\xetexko{\XeTeX\kern-.1ex -\logoko}
-\def\kotex{\logoko\kern-.1ex .\kern-.1667em \TeX}
-\pdfstringdefDisableCommands{\def\XeTeX{XeTeX}\def\xetexko{XeTeX-ko}}
+\def\kotex{\logoko\kern-.1ex .\kern-.1667em \hologo{TeX}}
+\pdfstringdefDisableCommands{\def\xetexko{XeTeX-ko}}
 \renewcommand*\descriptionlabel[1]{\hspace\labelsep\ttfamily\bfseries
   \color{blue!50!black}#1}
-\def\grayhrule{\color{white!80!black}\hrule height2pt\color{black}}
-\def\grayvrule{\color{white!80!black}\vrule width2pt\color{black}}
+\def\grayhrule{{\color{white!80!black}\hrule height2pt}}
+\def\grayvrule{{\color{white!80!black}\vrule width 2pt}}
 \newenvironment{plaintex}
-  {\par\medskip\leavevmode\hbox\bgroup\grayvrule\kern1em
-    \vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\small
-  }{\egroup\egroup\par\medskip}
+  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\small}
+  {\egroup \par\medskip
+    \ifdim\ht0<\dimexpr\pagegoal-\pagetotal\relax
+      \hbox{\grayvrule\kern10pt\box0}%
+    \else
+      \setbox2=\vsplit0 to\dimexpr\pagegoal-\pagetotal\relax
+      \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\newpage\fi
+      \ifvoid0 \else\hbox{\grayvrule\kern10pt\box0}\fi
+    \fi \par\medskip }
 \newenvironment{example}
-  {\leavevmode\hbox\bgroup\grayvrule
+  {\hbox\bgroup\grayvrule
     \vbox\bgroup\hsize\dimexpr\textwidth-4pt\relax
     \grayhrule\kern1em\leftskip1em\rightskip1em
   }{\par\kern1em\grayhrule\egroup\grayvrule\egroup}
