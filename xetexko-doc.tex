@@ -7,14 +7,13 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
-%\usepackage{xetexko-hanging}
 \setmainhangulfont[Ligatures=TeX,quoteraise=.1em]{NanumMyeongjo}
-\setmainhanjafont[Path,BoldFont=*Bold]{UnBatang}
+\setmainhanjafont{Adobe Myungjo Std}
 \setsanshangulfont[Ligatures=TeX]{NanumBarunGothicOTF}
+%\usepackage{xetexko-hanging}\hangingpunctuation
 \usepackage{hologo,xcolor,ulem}
 \usepackage[bookmarksnumbered]{hyperref}
 
-\def\dotemphraise{0.2em}
 \edef\verbatim{\unexpanded\expandafter{\verbatim
   \linespread{1.1}\selectfont\color{blue!50!black}}}
 \def\logoko{\textsf{k}\kern-.2ex\textit{o}}
@@ -33,8 +32,8 @@
       \hbox{\grayvrule\kern10pt\box0}%
     \else
       \setbox2=\vsplit0 to\dimexpr\pagegoal-\pagetotal\relax
-      \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\newpage\fi
-      \ifvoid0 \else\hbox{\grayvrule\kern10pt\box0}\fi
+      \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\fi
+      \ifvoid0 \else\newpage\hbox{\grayvrule\kern10pt\box0}\fi
     \fi \par\medskip }
 \newenvironment{example}
   {\hbox\bgroup\grayvrule
@@ -44,12 +43,11 @@
 \def\cs#1{\texttt{\color{blue!50!black}\textbackslash #1}}
 \def\hemph#1{\textsf{\bfseries #1}}
 \parindent0pt
-
 \begin{document}
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.1\quad\today}
+\date{Version 2.2\quad\today}
 \maketitle
 
 \begin{quote}\small
@@ -59,12 +57,11 @@
   주요 변경 사항
   \begin{itemize}\itemsep=0pt
       \item 플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.
-    \item 은글꼴을 자동으로 부르지 않는다. \verb+[unfonts]+ 옵션이 없으면
-      사용자가 한글 글꼴을 지시해야 할 수 있다.
-    \item CJK 기호문자를 한글글꼴에서 찾아 식자하는 것이 기본값이 되었다.
-      과거에는 한자글꼴에서 찾았다.
+    \item \verb+[unfonts]+ 옵션이 없으면 은글꼴을 자동으로 부르지 않는다.
+    \item CJK 기호문자를 (한자가 아니라) 한글 글꼴에서 찾는 것이
+      기본값이 되었다.
     \item \verb|interpunctskern| 글꼴 옵션을 없애고
-      \verb|quoteraise|를 추가했다.
+      \verb|charraise| 및 \verb|quoteraise|를 추가했다.
     \item \verb|\fallbackhanjafont| 명령을 추가했다.
   \end{itemize}
 \end{quote}
@@ -98,7 +95,7 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 \xetexko\ 로드하기: \cs{usepackage\{xetexko\}}.
 
 이 명령은 fontspec 및 xunicode 패키지도 불러온다.
-종전과 달리 \hemph{xltxtra 패키지를 함께 부르지 않음}을 주의할 것.
+종전과 달리 xltxtra 패키지를 함께 부르지 않음을 주의할 것.
 
 \begin{plaintex}
 플레인텍이라면 \verb|\input xetexko.sty| 명령으로 로드한다.
@@ -203,8 +200,8 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \item[cjksymbols] CJK 구두점, 괄호 및 상징기호
 \end{description}
 
-기본값은 다음 명령을 준 것과 동일하다. \hemph{CJK 기호가 한글폰트로 식자되게
-기본값이 변경되었음}에 유의할 것.
+기본값은 다음 명령을 준 것과 동일하다. \hemph{CJK 기호가 한글폰트로}
+식자되게 기본값이 변경되었음에 유의할 것.
 \begin{verbatim}
   \xetexkofontregime [
     puncts=prevfont, hyphens=prevfont, colons=prevfont, cjksymbols=hangul
@@ -248,6 +245,9 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
   참고로 한글 자간을 조절하는 저수준 명령은
   \texttt{\string\XKinterhangulbreak} 이다.}
 0pt.
+\item[charraise] 버전 2.2에서 새로 추가된 옵션.
+  글자의 \hemph{수직 위치}를 조절한다. 다른 글꼴 관련 효과와
+  충돌할 수 있어 주의를 요한다. \hemph{한자에 대해서만} 동작한다. 0pt.
 \item[lowerperiod]
 CJK 문자 직후의 마침표를 아래로 끌어내리는 정도. 0pt.
 \item[lowerquestion]
@@ -286,6 +286,7 @@ CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 \begin{verbatim}
   \def\xetexkohu{0.06em }
   \def\xetexkointerhchar{-0.04em }
+  \def\xetexkocharraise{-0.1ex }
   \def\xetexkolowerperiod{0.15ex }
   \def\xetexkolowerquestion{0.15ex }
   \def\xetexkolowerexclamation{0.15ex }
@@ -312,7 +313,7 @@ CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 
   \item[\cs{disableautojosa}]
 혹시 있을지 모를 예기치 못한 기능간 충돌에 대비하여 자동조사 기능을
-끄는 명령을 제공하고 있다.
+끄는 명령을 제공한다.
 
   \item[\cs{disablejamoautojosa}]
 옛한글 자모에 한해서 자동조사 기능을 끈다.
@@ -326,7 +327,7 @@ CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 버전 2.1에서 새롭게 추가된 명령이다.
 
   \item[\cs{disablecjksymbolspacing}]
-CJK 구두점이나 괄호의 폭을 0.5em으로 강제설정하는 것을 방지한다.
+CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 \xetexko는 낡은 고정폭 한글 폰트들을 고려하여 이 기능을 구현하였으나
 현대적인 한글 폰트는 이러한 과잉친절이 오히려 성가실 경우가 있다.
 

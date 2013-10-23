@@ -31,17 +31,17 @@
 \endgroup
 
 \expandafter\def\expandafter\strip@characternum@meaning@prefix\detokenize
-  {the character} #1{\number`#1}
+  {the character} #1#2\end{\number`#1}
 \expandafter\def\expandafter\strip@letternum@meaning@prefix\detokenize
-  {the letter} #1{\number`#1}
+  {the letter} #1#2\end{\number`#1}
 
 \def\@josa@char@to@number#1#2{%
   \ifcat#1\dhucs@cat@eleven
     \expandafter\expandafter\expandafter#2\expandafter
-    \strip@letternum@meaning@prefix\meaning#1\relax
+    \strip@letternum@meaning@prefix\meaning#1\end
   \else\ifcat#1\dhucs@cat@twelve
     \expandafter\expandafter\expandafter#2\expandafter
-    \strip@characternum@meaning@prefix\meaning#1\relax
+    \strip@characternum@meaning@prefix\meaning#1\end
   \else
     #2\z@
   \fi\fi
