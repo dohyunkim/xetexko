@@ -1624,7 +1624,6 @@
 %%%%%%%%%%%
 %% for ulem
 \def\xetexkoulemsupport{%
-  % an annoying bug exists! \uline{(가)} closing paren gets same font as hangul
   \UL@hook\expandafter{\the\UL@hook
     \let\XKcjklastchar\XKlastchar
     \let\XKhanjaboxstart\relax
@@ -1632,10 +1631,12 @@
     \def\ulem@XKrestoreprevfont{\let\XKprevfont\ulem@XKprevfont}%
     \let\ulem@XK@hangulfont\XK@hangulfont
     \let\ulem@XK@hanjafont\XK@hanjafont
-    \def\XK@hangulfont{\hangfnt\global\let\ulem@XKprevfont\XKprevfont
+    \def\XK@hangulfont{\ulem@XK@hangulfont
+      \global\let\ulem@XKprevfont\XKprevfont
       \aftergroup\aftergroup\aftergroup\ulem@XK@hangulfont
       \aftergroup\aftergroup\aftergroup\ulem@XKrestoreprevfont}%
-    \def\XK@hanjafont{\hanifnt\global\let\ulem@XKprevfont\XKprevfont
+    \def\XK@hanjafont{\ulem@XK@hanjafont
+      \global\let\ulem@XKprevfont\XKprevfont
       \aftergroup\aftergroup\aftergroup\ulem@XK@hanjafont
       \aftergroup\aftergroup\aftergroup\ulem@XKrestoreprevfont}%
 }}
