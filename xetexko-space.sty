@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/10/23 v2.2 Spacings and fonts for XeTeX-ko]
+    [2013/11/01 v2.2 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -69,9 +69,10 @@
 \XeTeXcharclass "30EE = \XKsmallkana
 \XeTeXcharclass "30F5 = \XKsmallkana
 \XeTeXcharclass "30F6 = \XKsmallkana
+\XeTeXcharclass "30FC = \XKsmallkana
 \count@="FF67 \loop
   \XeTeXcharclass\count@ = \XKsmallkana
-  \ifnum\count@<"FF6F \advance\count@\@ne \repeat
+  \ifnum\count@<"FF70 \advance\count@\@ne \repeat
 
 %%%
 \XeTeXcharclass "25A1 = \XKhanja         % □
@@ -1174,8 +1175,8 @@
 % `` '' or ` '
 \def\XKopeningquotestart{%
   \chardef\XK@make@quotebox\z@
-  \ifx\empty\xetexkoquotewidth\empty
-    \ifx\empty\xetexkoquoteraise\empty \else
+  \ifx\empty\xetexkoquotewidth
+    \ifx\empty\xetexkoquoteraise \else
       \chardef\XK@make@quotebox\tw@
     \fi
   \else
@@ -1196,8 +1197,8 @@
 }
 \def\XKclosingquotestart{%
   \chardef\XK@make@quotebox\z@
-  \ifx\empty\xetexkoquotewidth\empty
-    \ifx\empty\xetexkoquoteraise\empty \else
+  \ifx\empty\xetexkoquotewidth
+    \ifx\empty\xetexkoquoteraise \else
       \chardef\XK@make@quotebox\tw@
     \fi
   \else
@@ -1226,14 +1227,14 @@
 
 \def\XKperiodboxstart{% .
   \ifnum\XK@after@cjk@punct>\z@
-    \ifx\empty\xetexkolowerperiod\empty
+    \ifx\empty\xetexkolowerperiod
     \else
       \leavevmode\lower\xetexkolowerperiod\hbox\bgroup
       \chardef\XK@inpunctuationbox\@ne
     \fi
   \fi
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkopreperiodkern\empty
+    \ifx\empty\xetexkopreperiodkern
     \else
       \kern\xetexkopreperiodkern\relax
     \fi
@@ -1241,7 +1242,7 @@
 }
 \def\XKperiodboxstop{%
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkopostperiodkern\empty
+    \ifx\empty\xetexkopostperiodkern
     \else
       \vrule width\xetexkopostperiodkern height\z@ depth\z@
     \fi
@@ -1253,14 +1254,14 @@
 
 \def\XKquestionboxstart{% ?
   \ifnum\XK@after@cjk@punct>\z@
-    \ifx\empty\xetexkolowerquestion\empty
+    \ifx\empty\xetexkolowerquestion
     \else
       \leavevmode\lower\xetexkolowerquestion\hbox\bgroup
       \chardef\XK@inpunctuationbox\@ne
     \fi
   \fi
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkoprequestionkern\empty
+    \ifx\empty\xetexkoprequestionkern
     \else
       \kern\xetexkoprequestionkern\relax
     \fi
@@ -1268,7 +1269,7 @@
 }
 \def\XKquestionboxstop{%
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkopostquestionkern\empty
+    \ifx\empty\xetexkopostquestionkern
     \else
       \vrule width\xetexkopostquestionkern height\z@ depth\z@
     \fi
@@ -1280,14 +1281,14 @@
 
 \def\XKexclamationboxstart{% !
   \ifnum\XK@after@cjk@punct>\z@
-    \ifx\empty\xetexkolowerexclamation\empty
+    \ifx\empty\xetexkolowerexclamation
     \else
       \leavevmode\lower\xetexkolowerexclamation\hbox\bgroup
       \chardef\XK@inpunctuationbox\@ne
     \fi
   \fi
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkopreexclamationkern\empty
+    \ifx\empty\xetexkopreexclamationkern
     \else
       \kern\xetexkopreexclamationkern\relax
     \fi
@@ -1295,7 +1296,7 @@
 }
 \def\XKexclamationboxstop{%
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkopostexclamationkern\empty
+    \ifx\empty\xetexkopostexclamationkern
     \else
       \vrule width\xetexkopostexclamationkern height\z@ depth\z@
     \fi
@@ -1307,14 +1308,14 @@
 
 \def\XKcommaboxstart{% ,
   \ifnum\XK@after@cjk@punct>\z@
-    \ifx\empty\xetexkolowercomma\empty
+    \ifx\empty\xetexkolowercomma
     \else
       \leavevmode\lower\xetexkolowercomma\hbox\bgroup
       \chardef\XK@inpunctuationbox\@ne
     \fi
   \fi
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkoprecommakern\empty
+    \ifx\empty\xetexkoprecommakern
     \else
       \kern\xetexkoprecommakern\relax
     \fi
@@ -1322,7 +1323,7 @@
 }
 \def\XKcommaboxstop{%
   \ifnum\XKcurrentfont>\z@
-    \ifx\empty\xetexkopostcommakern\empty
+    \ifx\empty\xetexkopostcommakern
     \else
       \vrule width\xetexkopostcommakern height\z@ depth\z@
     \fi
@@ -1342,7 +1343,7 @@
   \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
   \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
   \leavevmode
-  \ifx\empty\xetexkocharraise\empty\else\raise\xetexkocharraise\fi
+  \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox to\dimen@\bgroup\hss
   \XeTeXinterchartoks\XKboundary\XKcjkopening = {\empty}}
 \def\postcjkopenparen{\egroup}
@@ -1354,7 +1355,7 @@
   \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
   \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
   \leavevmode
-  \ifx\empty\xetexkocharraise\empty\else\raise\xetexkocharraise\fi
+  \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox to\dimen@\bgroup
   \XeTeXinterchartoks\XKboundary\XKcjkclosing = {\empty}}
 \def\postcjkcloseparen{\hss\egroup}
@@ -1366,13 +1367,13 @@
   \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
   \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
   \leavevmode
-  \ifx\empty\xetexkocharraise\empty\else\raise\xetexkocharraise\fi
+  \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox to\dimen@\bgroup
   \XeTeXinterchartoks\XKboundary\XKcjkfullstop = {\empty}}
 \def\postcjkfullstop{\hss\egroup}
 
 \def\precjkcolon {\leavevmode
-  \ifx\empty\xetexkocharraise\empty\else\raise\xetexkocharraise\fi
+  \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox to 0.5em\bgroup\hss}
 \def\postcjkcolon{\hss\egroup}
 
@@ -1416,12 +1417,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % raise hanja box
 \def\XKhanjaboxstart{%
-  \ifx\empty\xetexkocharraise\empty\else
+  \ifx\empty\xetexkocharraise\else
     \leavevmode\raise\xetexkocharraise\hbox\bgroup
   \fi
 }
 \def\XKhanjaboxstop{%
-  \ifx\empty\xetexkocharraise\empty\else
+  \ifx\empty\xetexkocharraise\else
     \egroup
   \fi
 }
