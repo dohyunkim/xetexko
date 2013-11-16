@@ -233,18 +233,18 @@
     \edef\@tempb{\sfdefault}\edef\@tempc{\ttdefault}%
     \ifx\XKprevfont\@tempb
       \edef\@tempa{\noexpand\DeclareRobustCommand\noexpand\XK@sans@hangul@font
-	{\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
+        {\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
       \edef\XK@sans@hangul@options{\unexpanded\expandafter
-	{\XK@sans@hangul@options}\the\toks@}%
+        {\XK@sans@hangul@options}\the\toks@}%
     \else
     \ifx\XKprevfont\@tempc
       \edef\@tempa{\noexpand\DeclareRobustCommand\noexpand\XK@mono@hangul@font
-	{\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
+        {\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
     \else
       \edef\@tempa{\noexpand\DeclareRobustCommand\noexpand\XK@main@hangul@font
-	{\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
+        {\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
       \edef\XK@main@hangul@options{\unexpanded\expandafter
-	{\XK@main@hangul@options}\the\toks@}%
+        {\XK@main@hangul@options}\the\toks@}%
     \fi\fi
   \else
     \edef\hangfnt{\unexpanded\expandafter{\hangfnt\fontfamily}{\XK@curr@family}%
@@ -267,18 +267,18 @@
     \edef\@tempb{\sfdefault}\edef\@tempc{\ttdefault}%
     \ifx\XKprevfont\@tempb
       \edef\@tempa{\noexpand\DeclareRobustCommand\noexpand\XK@sans@hanja@font
-	{\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
+        {\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
       \edef\XK@sans@hanja@options{\unexpanded\expandafter
-	{\XK@sans@hanja@options}\the\toks@}%
+        {\XK@sans@hanja@options}\the\toks@}%
     \else
     \ifx\XKprevfont\@tempc
       \edef\@tempa{\noexpand\DeclareRobustCommand\noexpand\XK@mono@hanja@font
-	{\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
+        {\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
     \else
       \edef\@tempa{\noexpand\DeclareRobustCommand\noexpand\XK@main@hanja@font
-	{\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
+        {\noexpand\fontfamily{\XK@curr@family}\noexpand\selectfont}}\@tempa
       \edef\XK@main@hanja@options{\unexpanded\expandafter
-	{\XK@main@hanja@options}\the\toks@}%
+        {\XK@main@hanja@options}\the\toks@}%
     \fi\fi
   \else
     \edef\hanifnt{\unexpanded\expandafter{\hanifnt\fontfamily}{\XK@curr@family}%
@@ -378,9 +378,9 @@
     \@for\reserved@a:=,\small,\footnotesize,\large,\Large,\LARGE\do{%
       \reserved@a
       \bgroup
-	#1%
-	\global\dimen@\fontdimen2\font
-	\global\dimen@ii\fontdimen7\font
+        #1%
+        \global\dimen@\fontdimen2\font
+        \global\dimen@ii\fontdimen7\font
       \egroup
       \fontdimen2\font=\dimen@
       \fontdimen3\font=.5\dimen@
