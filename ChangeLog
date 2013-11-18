@@ -2,6 +2,7 @@
 
 	Version 2.2
 
+	* xetexko-space.sty: new macros \everyhangul and \everyhanja
 	* xetexko-space.sty: the same stretch/shrink value to inter-hangul
 	and inter-hanja skip
 	* xetexko-font.sty xetexko-space.sty: new font option [charraise]
@@ -13,10 +14,8 @@
 	Version 2.1
 
 	* xetexko.sty: move Hangul caption setting to AtBeginDocument
-
 	* xetexko-space.sty, xetexko-doc.tex: new macro
 	\disablejamoautojosa, needed for teckit mapping of Jamos.
-
 	* xetexko-vertical.sty: \verticaltypesetting for plain tex was
 	missing.
 

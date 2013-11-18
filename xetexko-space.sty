@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/11/11 v2.2 Spacings and fonts for XeTeX-ko]
+    [2013/11/18 v2.2 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1076,12 +1076,15 @@
   {\ifcase\XKcurrentfont\XKstoreprevfont\XK@hangulfont\or\or\XK@hangulfont\fi}
 \def\XKhanjafont
   {\ifcase\XKcurrentfont\XKstoreprevfont\XK@hanjafont\or\XK@hanjafont\fi}
-\def\XK@latinfont {\chardef\XKcurrentfont\z@\XKrestoreprevfont}
-\def\XK@hangulfont{\chardef\XKcurrentfont\@ne\hangfnt}
-\def\XK@hanjafont {\chardef\XKcurrentfont\tw@\hanifnt}
+\def\XK@latinfont {\XKrestoreprevfont\chardef\XKcurrentfont\z@ }
+\def\XK@hangulfont{\hangfnt          \chardef\XKcurrentfont\@ne}
+\def\XK@hanjafont {\hanifnt          \chardef\XKcurrentfont\tw@}
 \chardef\XKcurrentfont\z@
 
 \ifcsname selectfont\endcsname
+  \DeclareRobustCommand\fontfamily[1]{\edef\f@family{#1}%
+    \chardef\XKcurrentfont\z@
+  }
   \def\XKstoreprevfont  {\edef\XKprevfont{\f@family}}
   \def\XKrestoreprevfont{\fontfamily\XKprevfont\selectfont}
 \else
@@ -1449,13 +1452,20 @@
       \fallbackhanjafont
     \fi
   \fi
-  #1%
+  \XK@every@hanja{#1}% everyhanja
 }
+
+%%% everyhangul/everyhanja
+%%%  request from karnes at 2013.11.18
+\def\everyhanja#1{\def\XK@every@hanja##1{#1}}
+\everyhanja{#1}
+\def\everyhangul#1{\def\XK@every@hangul##1{#1}}
+\everyhangul{#1}
 
 \def\XKcjklastchar#1{%
   \let\@let@token#1\XK@save@last@char
   % and supress char orphan
-  \toks@{#1}% 가
+  \toks@{\XK@every@hangul{#1}}% everyhangul 가
   \afterassignment\XK@check@nextchar\let\XK@next@=
 }
 \def\XK@check@nextchar{%  가<par> 가. 가。 가<sp>
@@ -1500,20 +1510,20 @@
 \def\XK@nobreak{\skip@\lastskip\unskip\unpenalty\nobreak\hskip\skip@}
 
 \def\XKbeginboundary{% empty interchartoks crashes xetex!!!
-  \XeTeXinterchartoks\XKboundary\XKlatinnumber    = {\empty}%
-  \XeTeXinterchartoks\XKboundary\XKlatinchar      = {\empty}%
-  \XeTeXinterchartoks\XKboundary\XKhanja          = {\empty}%
-  \XeTeXinterchartoks\XKboundary\XKhangulsyllable = {\empty}%
-  \XeTeXinterchartoks\XKboundary\XKhanguljungjong = {\empty}%
-  \XeTeXinterchartoks\XKboundary\XKhangulchosong  = {\empty}%
+  \global\XeTeXinterchartoks\XKboundary\XKlatinnumber    = {\empty}%
+  \global\XeTeXinterchartoks\XKboundary\XKlatinchar      = {\empty}%
+  \global\XeTeXinterchartoks\XKboundary\XKhanja          = {\empty}%
+  \global\XeTeXinterchartoks\XKboundary\XKhangulsyllable = {\empty}%
+  \global\XeTeXinterchartoks\XKboundary\XKhanguljungjong = {\empty}%
+  \global\XeTeXinterchartoks\XKboundary\XKhangulchosong  = {\empty}%
 }
 \def\XKendboundary{%
-  \XeTeXinterchartoks\XKboundary\XKlatinnumber    = {\XKundoignorespaces\XKlatinnumfont\XKbeginboundary\XKlastchar}%
-  \XeTeXinterchartoks\XKboundary\XKlatinchar      = {\XKundoignorespaces\XKmaybelatinfont\XKbeginboundary\XKlastchar}%
-  \XeTeXinterchartoks\XKboundary\XKhanja = {\XKhanjafont\XKafterboundaryskip\XKbeginboundary\XKhanjaboxstart\XKhanjalastchar}%
-  \XeTeXinterchartoks\XKboundary\XKhangulsyllable = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjklastchar}%
-  \XeTeXinterchartoks\XKboundary\XKhanguljungjong = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKlastchar}%
-  \XeTeXinterchartoks\XKboundary\XKhangulchosong  = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKlastchar}%
+  \global\XeTeXinterchartoks\XKboundary\XKlatinnumber     = {\XKundoignorespaces\XKlatinnumfont\XKbeginboundary\XKlastchar}%
+  \global\XeTeXinterchartoks\XKboundary\XKlatinchar       = {\XKundoignorespaces\XKmaybelatinfont\XKbeginboundary\XKlastchar}%
+  \global\XeTeXinterchartoks\XKboundary\XKhanja           = {\XKhanjafont\XKafterboundaryskip\XKbeginboundary\XKhanjaboxstart\XKhanjalastchar}%
+  \global\XeTeXinterchartoks\XKboundary\XKhangulsyllable  = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjklastchar}%
+  \global\XeTeXinterchartoks\XKboundary\XKhanguljungjong  = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKlastchar}%
+  \global\XeTeXinterchartoks\XKboundary\XKhangulchosong   = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKlastchar}%
 }
 
 %%%%%%%%%%%%%%
