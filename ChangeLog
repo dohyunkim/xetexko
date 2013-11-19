@@ -1,11 +1,12 @@
-2013-11-11      Dohyun Kim <nomos at ktug org>
+2013-11-19      Dohyun Kim <nomos at ktug org>
 
 	Version 2.2
 
 	* xetexko-space.sty: new macros \everyhangul and \everyhanja
-	* xetexko-space.sty: the same stretch/shrink value to inter-hangul
+	* xetexko-space.sty: the same stretch/shrink value for inter-hangul
 	and inter-hanja skip
-	* xetexko-font.sty xetexko-space.sty: new font option [charraise]
+	* xetexko-font.sty xetexko-space.sty: new font option [charraise] for
+	hanja chars
 	* xetexko-space.sty: \fallbackhanjafont as a final fallback font
 	* xetexko-josa.sty: fix a bug regarding non-BMP chars
 
@@ -14,8 +15,8 @@
 	Version 2.1
 
 	* xetexko.sty: move Hangul caption setting to AtBeginDocument
-	* xetexko-space.sty, xetexko-doc.tex: new macro
-	\disablejamoautojosa, needed for teckit mapping of Jamos.
+	* xetexko-space.sty: new macro \disablejamoautojosa, needed for teckit
+	mapping of Jamos.
 	* xetexko-vertical.sty: \verticaltypesetting for plain tex was
 	missing.
 

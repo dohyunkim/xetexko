@@ -52,7 +52,7 @@
 \maketitle
 
 \begin{quote}\small
-  For summary introduction in English,
+  For a summary introduction in English,
   please see \verb+README+ file in this package.
 
   주요 변경 사항
@@ -62,9 +62,9 @@
     \item CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
       기본값이 되었다.
     \item \verb|interpunctskern| 글꼴 옵션을 없애고
-      \verb|charraise| (v2.2) 및 \verb|quoteraise|를 추가했다.
+      \verb|quoteraise| 및 \verb|charraise| (v2.2)를 추가했다.
     \item \verb|\fallbackhanjafont| 명령을 추가했다. (v2.2)
-    \item \verb|\everyhangul \everyhanja| 명령이 추가되었다. (v2.2)
+    \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다. (v2.2)
   \end{itemize}
 \end{quote}
 
@@ -310,10 +310,11 @@ CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 
 \section{그밖의 명령들}
 \begin{description}
-  \item[\cs{everyhangul} \cs{everyhanja}]
+  \item[\cs{everyhangul}, \cs{everyhanja}]
     한글 또는 한자에 대해 글자마다 지시한 명령을 수행한다. 예컨대
     \verb|\everyhangul{\fbox{#1}}| 명령은 모든 한글 주위에 박스를
-    두른다.  2.2 버전의 새로운 명령.
+    두른다.  2.2 버전의 새로운 명령. 다른 글꼴 옵션과 충돌할 수 있으므로
+    주의를 요한다.
 
   \item[\cs{disablekoreanfonts}]
 한글폰트를 따로 설정하지 않고 영문 폰트를 따라간다.

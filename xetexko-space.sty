@@ -1088,6 +1088,8 @@
   \def\XKstoreprevfont  {\edef\XKprevfont{\f@family}}
   \def\XKrestoreprevfont{\fontfamily\XKprevfont\selectfont}
 \else
+  \def\hangulfont{\chardef\XKcurrentfont\z@\font\hangfnt}
+  \def\hanjafont {\chardef\XKcurrentfont\z@\font\hanifnt}
   \def\XKstoreprevfont{\edef\XKrestoreprevfont{\the\font}}
 \fi
 
