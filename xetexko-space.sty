@@ -1438,17 +1438,14 @@
   \else\hskip\xetexkopostmathskip\XKskipstretchshrink\fi}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% raise hanja box
-\def\XKhanjaboxstart{%
-  \ifx\empty\xetexkocharraise\else
-    \leavevmode\raise\xetexkocharraise\hbox\bgroup
-  \fi
+%%% everyhangul/everyhanja
+%%%  request from karnes at 2013.11.18
+\def\everyhanja#1{\def\XK@every@hanja##1{#1}%
+  \let\XKhanjaboxstart\empty\let\XKhanjaboxstop\empty % conflict w. everyhanja
 }
-\def\XKhanjaboxstop{%
-  \ifx\empty\xetexkocharraise\else
-    \egroup
-  \fi
-}
+\everyhanja{#1}
+\def\everyhangul#1{\def\XK@every@hangul##1{#1}}
+\everyhangul{#1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% for autojosa, get last chars
@@ -1473,13 +1470,6 @@
   \fi
   \XK@every@hanja{#1}% everyhanja
 }
-
-%%% everyhangul/everyhanja
-%%%  request from karnes at 2013.11.18
-\def\everyhanja#1{\def\XK@every@hanja##1{#1}}
-\everyhanja{#1}
-\def\everyhangul#1{\def\XK@every@hangul##1{#1}}
-\everyhangul{#1}
 
 \def\XKcjklastchar#1{%
   \let\@let@token#1\XK@save@last@char
@@ -1543,6 +1533,19 @@
   \global\XeTeXinterchartoks\XKboundary\XKhangulsyllable  = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjklastchar}%
   \global\XeTeXinterchartoks\XKboundary\XKhanguljungjong  = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKlastchar}%
   \global\XeTeXinterchartoks\XKboundary\XKhangulchosong   = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKlastchar}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% raise hanja box
+\def\XKhanjaboxstart{%
+  \ifx\empty\xetexkocharraise\else
+    \leavevmode\raise\xetexkocharraise\hbox\bgroup
+  \fi
+}
+\def\XKhanjaboxstop{%
+  \ifx\empty\xetexkocharraise\else
+    \egroup
+  \fi
 }
 
 %%%%%%%%%%%%%%
