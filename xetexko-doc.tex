@@ -7,9 +7,8 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
-\setmainhangulfont[Ligatures=TeX,quoteraise=.1em]{NanumMyeongjo}
-\setmainhanjafont{Adobe Myungjo Std}
-\setsanshangulfont[Ligatures=TeX]{NanumBarunGothicOTF}
+\setmainhangulfont[Ligatures=TeX]{KoPubBatang_Pro}
+\setsanshangulfont[Ligatures=TeX]{KoPubDotum_Pro}
 %\usepackage{xetexko-hanging}\hangingpunctuation
 \usepackage{hologo,xcolor,ulem}
 \usepackage[bookmarksnumbered]{hyperref}
@@ -32,6 +31,7 @@
       \hbox{\grayvrule\kern10pt\box0}%
     \else
       \setbox2=\vsplit0 to\dimexpr\pagegoal-\pagetotal\relax
+      \lineskip=0pt
       \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\fi
       \ifvoid0 \else\hbox{\grayvrule\kern10pt\box0}\fi
     \fi \par\medskip }
@@ -62,9 +62,10 @@
     \item CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
       기본값이 되었다.
     \item \verb|interpunctskern| 글꼴 옵션을 없애고
-      \verb|quoteraise| 및 \verb|charraise| (v2.2)를 추가했다.
-    \item \verb|\fallbackhanjafont| 명령을 추가했다. (v2.2)
-    \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다. (v2.2)
+      \verb|quoteraise| 및 \verb|charraise| \hparen{v2.2}를 추가했다.
+    \item \verb|\fallbackhanjafont| 명령을 추가했다. \hparen{v2.2}
+    \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다.
+      \hparen{v2.2}
   \end{itemize}
 \end{quote}
 

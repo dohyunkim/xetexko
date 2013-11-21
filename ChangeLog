@@ -1,7 +1,11 @@
-2013-11-20      Dohyun Kim <nomos at ktug org>
+2013-11-21      Dohyun Kim <nomos at ktug org>
 
 	Version 2.2
 
+	* xetexko-space.sty: assign missing kana chars including U+30FC to
+	smallkana class due to a change in unicode-letters.tex
+	* xetexko-space.sty: assign compatibility jamo chars to hangulsyllable
+	class
 	* xetexko-space.sty: new macros \everyhangul and \everyhanja
 	* xetexko-space.sty: the same stretch/shrink value for inter-hangul
 	and inter-hanja skip

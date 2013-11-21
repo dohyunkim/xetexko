@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/11/20 v2.2 Spacings and fonts for XeTeX-ko]
+    [2013/11/21 v2.2 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -70,6 +70,9 @@
 \XeTeXcharclass "30F5 = \XKsmallkana
 \XeTeXcharclass "30F6 = \XKsmallkana
 \XeTeXcharclass "30FC = \XKsmallkana
+\count@="31F0 \loop
+  \XeTeXcharclass\count@ = \XKsmallkana
+  \ifnum\count@<"31FF \advance\count@\@ne \repeat
 \count@="FF67 \loop
   \XeTeXcharclass\count@ = \XKsmallkana
   \ifnum\count@<"FF70 \advance\count@\@ne \repeat
@@ -306,6 +309,11 @@
 \loop
   \XeTeXcharclass\count@\XKhangulsyllable
   \ifnum\count@ < "D7A3
+    \advance\count@\@ne \repeat
+\count@ "3131 % treat compatibility jamo as hangul syllable
+\loop
+  \XeTeXcharclass\count@\XKhangulsyllable
+  \ifnum\count@ < "318E
     \advance\count@\@ne \repeat
 
 %%% leading consonants jamo
