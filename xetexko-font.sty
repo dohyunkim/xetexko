@@ -121,7 +121,7 @@
 % adhochangulfont/adhochanjafont, hangulfontspec/hanjafontspec
 \protected\def\adhochangulfont{\@ifnextchar[\@adhochangulfont{\@adhochangulfont[]}}
 \def\@adhochangulfont[#1]{%
-  \def\XKhangulfont{\XK@adhoc@hangul@font\XK@adhoc@hangul@options}%
+  \def\XKhangulfont{\chardef\XKcurrentfont\@ne\XK@adhoc@hangul@font\XK@adhoc@hangul@options}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#1}%
   \edef\XK@adhoc@hangul@options{\the\XK@font@options}%
@@ -130,7 +130,7 @@
 
 \protected\def\adhochanjafont{\@ifnextchar[\@adhochanjafont{\@adhochanjafont[]}}
 \def\@adhochanjafont[#1]{%
-  \def\XKhanjafont{\XK@adhoc@hanja@font\XK@adhoc@hanja@options}%
+  \def\XKhanjafont{\chardef\XKcurrentfont\tw@\XK@adhoc@hanja@font\XK@adhoc@hanja@options}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#1}%
   \edef\XK@adhoc@hanja@options{\the\XK@font@options}%
@@ -144,7 +144,7 @@
 \protected\def\newhangulfontfamily#1{%
   \@ifnextchar[{\@newhangulfontfamily#1}{\@newhangulfontfamily#1[]}}
 \def\@newhangulfontfamily#1[#2]{%
-  \protected\def#1{\def\XKhangulfont{\csname\XK@newfont@family\string#1\endcsname
+  \protected\def#1{\def\XKhangulfont{\chardef\XKcurrentfont\@ne\csname\XK@newfont@family\string#1\endcsname
     \csname\XK@newfont@options\string#1\endcsname}}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
@@ -157,7 +157,7 @@
 \protected\def\newhanjafontfamily#1{%
   \@ifnextchar[{\@newhanjafontfamily#1}{\@newhanjafontfamily#1[]}}
 \def\@newhanjafontfamily#1[#2]{%
-  \protected\def#1{\def\XKhanjafont{\csname\XK@newfont@family\string#1\endcsname
+  \protected\def#1{\def\XKhanjafont{\chardef\XKcurrentfont\tw@\csname\XK@newfont@family\string#1\endcsname
     \csname\XK@newfont@options\string#1\endcsname}}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
@@ -171,7 +171,7 @@
 \protected\def\newhangulfontface#1{%
   \@ifnextchar[{\@newhangulfontface#1}{\@newhangulfontface#1[]}}
 \def\@newhangulfontface#1[#2]{%
-  \protected\def#1{\def\XKhangulfont{\csname\XK@newfont@family\string#1\endcsname
+  \protected\def#1{\def\XKhangulfont{\chardef\XKcurrentfont\@ne\csname\XK@newfont@family\string#1\endcsname
     \csname\XK@newfont@options\string#1\endcsname}}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
@@ -184,7 +184,7 @@
 \protected\def\newhanjafontface#1{%
   \@ifnextchar[{\@newhanjafontface#1}{\@newhanjafontface#1[]}}
 \def\@newhanjafontface#1[#2]{%
-  \protected\def#1{\def\XKhanjafont{\csname\XK@newfont@family\string#1\endcsname
+  \protected\def#1{\def\XKhanjafont{\chardef\XKcurrentfont\tw@\csname\XK@newfont@family\string#1\endcsname
     \csname\XK@newfont@options\string#1\endcsname}}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
@@ -212,7 +212,7 @@
 
 \protected\def\addhanjafontfeature#1{%
   \begingroup
-  \hanifnt
+  \XKhanjafont
   \unpresetkeys[xtxko]{font}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#1}%
