@@ -42,7 +42,7 @@
   \expandafter\endinput
 \fi
 
-\ProvidesPackage{xetexko}[2013/07/03 v2.1 Typesetting Korean with XeLaTeX]
+\ProvidesPackage{xetexko}[2013/11/26 v2.2 Typesetting Korean with XeLaTeX]
 
 \newif\if@hangul
 \newif\if@hanja
@@ -62,7 +62,7 @@
 
 \AtBeginDocument{
   % for ulem package
-  \ifcsname UL@hook\endcsname \xetexkoulemsupport \fi
+  % \ifcsname UL@hook\endcsname \xetexkoulemsupport \fi
   % for hyperref package
   \@ifpackageloaded{hyperref}{\pdfstringdefDisableCommands{%
       \let\dotemph\@firstofone

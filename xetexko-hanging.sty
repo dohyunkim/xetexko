@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-hanging}
-    [2013/03/27 v2.0 Hanging punctuations for XeTeX-ko]
+    [2013/11/26 v2.2 Hanging punctuations for XeTeX-ko]
 \fi
 
 \chardef\catcodeofATcharacter\catcode`@
@@ -47,7 +47,9 @@
   \def\strip@pt{\expandafter\rem@pt\the}
 \fi
 
-\def\hangingpunctuation{%
+\ifcsname AtBeginDocument\endcsname\else \def\AtBeginDocument#1{#1} \fi
+
+\AtBeginDocument{
   \begingroup
     \setbox\z@\hbox{가.}\setbox\tw@\hbox{가}%
     \xdef\temp@a
@@ -60,19 +62,19 @@
   \edef\xetexko@quotewidth {\temp@b em}%
   \def\XKperiodboxstop{%
     \XK@orig@periodboxstop
-    \ifnum\XKcurrentfont>\z@
+    %\ifnum\XKcurrentfont>\z@
       \count@\spacefactor
       \XKH@post@hang\xetexko@periodwidth
       \spacefactor\count@
-    \fi
+    %\fi
   }%
   \def\XKcommaboxstop{%
     \XK@orig@commaboxstop
-    \ifnum\XKcurrentfont>\z@
+    %\ifnum\XKcurrentfont>\z@
       \count@\spacefactor
       \XKH@post@hang\xetexko@periodwidth
       \spacefactor\count@
-    \fi
+    %\fi
   }%
   \def\XKclosingquotestop{%
     \XK@orig@closingquotestop \XKH@post@hang\xetexko@quotewidth
@@ -117,7 +119,9 @@
   \vrule width-#1 height\z@ depth\z@
   \nobreak\hskip\z@\relax
 }
-\let\hangingpunctuations\hangingpunctuation
+
+\let\hangingpunctuation\relax
+\let\hangingpunctuations\relax
 
 \catcode`\@\catcodeofATcharacter
 

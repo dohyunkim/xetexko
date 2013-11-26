@@ -9,12 +9,12 @@
 \usepackage[hangul]{xetexko}
 \setmainhangulfont[Ligatures=TeX]{KoPubBatang_Pro}
 \setsanshangulfont[Ligatures=TeX]{KoPubDotum_Pro}
-%\usepackage{xetexko-hanging}\hangingpunctuation
+\usepackage{xetexko-hanging}
 \usepackage{hologo,xcolor,ulem}
 \usepackage[bookmarksnumbered]{hyperref}
 
 \edef\verbatim{\unexpanded\expandafter{\verbatim
-  \linespread{1.1}\selectfont\color{blue!50!black}}}
+  \linespread{1.1}\selectfont }}
 \def\logoko{\textsf{k}\kern-.2ex\textit{o}}
 \def\XeTeX{\hologo{XeTeX}}
 \def\xetexko{\XeTeX\kern-.1ex -\logoko}
@@ -40,7 +40,7 @@
     \vbox\bgroup\hsize\dimexpr\textwidth-4pt\relax
     \grayhrule\kern1em\leftskip1em\rightskip1em
   }{\par\kern1em\grayhrule\egroup\grayvrule\egroup}
-\def\cs#1{\texttt{\color{blue!50!black}\textbackslash #1}}
+\def\cs#1{\texttt{\textbackslash #1}}
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
 \parindent0pt
@@ -114,7 +114,7 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
   한글이 주된 언어라고 인식하여 줄간격 조정도 수행한다.
 \item[ unfonts ] 은글꼴을 불러온다. \hemph{이 옵션이 없으면
   사용자가 한글 글꼴을 지정해야} 할 수 있다.\footnote{\texttt{[unfonts]}
-    옵션이 없더라도 \texttt{\string\setmainfont}로 지시한 글꼴에
+    옵션이 없더라도 \cs{setmainfont}로 지시한 글꼴에
     한글 글리프가 들어있으면 따로 한글 글꼴을 지정한 필요가 없다.}
 \end{description}
 
@@ -241,48 +241,50 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 허용되는 옵션은 다음과 같다. 각 항목의 길이값은 기본값을 뜻한다.
 \begin{description}\itemsep0pt
 \item[hu]
-영문자와 한글 사이 간격. 영문 괄호와 한글 사이 간격은 그 두 배이다. 0.06em.
+  영문자와 한글 사이 간격. 영문 괄호와 한글 사이 간격은 그 두 배이다. 0.06em.
 \item[interhchar]
-한글 자간.\footnote{한자 자간 옵션은 제공하지 않는다.
-  혹시 한자 자간을 조절하고 싶다면
-  \texttt{\string\XKinterhanjabreak}을 재정의하라.
-  참고로 한글 자간을 조절하는 저수준 명령은
-  \texttt{\string\XKinterhangulbreak} 이다.}
-0pt.
+  {\addhangulfontfeature{interhchar=0.3em} 한글 자간.}%
+  \footnote{한자 자간 옵션은 제공하지 않는다.
+  혹시 한자 자간을 조절하고 싶다면 \cs{XKinterhanjabreak}을 재정의하라.
+  참고로 한글 자간을 조절하는 저수준 명령은 \cs{XKinterhangulbreak} 이다.}
+  0pt.
 \item[charraise] 버전 2.2의 새로운 옵션으로
-  글자의 \hemph{수직 위치}를 조절한다. 다른 글꼴 관련 효과와
-  충돌할 수 있어 주의를 요한다. \hemph{한자에 대해서만} 동작한다. 0pt.
+  글자의 \hemph{\addhangulfontfeature{charraise=.5ex}수직 위치}를 조절한다.
+  다른 글꼴 관련 효과와 충돌할 수 있어 주의를 요한다. 0pt.
 \item[lowerperiod]
-CJK 문자 직후의 마침표를 아래로 끌어내리는 정도. 0pt.
+  CJK 문자 직후의 마침표를 아래로 끌어내리는
+  {\addhangulfontfeature{lowerperiod=.5ex}정도. 0pt.}
 \item[lowerquestion]
-CJK 문자 직후의 물음표를 아래로 끌어내리는 정도. 0pt.
+  CJK 문자 직후의 물음표를 아래로 끌어내리는 정도. 0pt.
 \item[lowerexclamation]
-CJK 문자 직후의 느낌표를 아래로 끌어내리는 정도. 0pt.
+  CJK 문자 직후의 느낌표를 아래로 끌어내리는 정도. 0pt.
 \item[lowercomma]
-CJK 문자 직후의 쉼표를 아래로 끌어내리는 정도. 0pt.
+  CJK 문자 직후의 쉼표를 아래로 끌어내리는 정도. 0pt.
 \item[preperiodkern]
-CJK 문자 직후의 마침표 앞에 들어가는 간격. 0pt.
+  {\addhangulfontfeature{preperiodkern=1ex}CJK 문자 직후의 마침표 앞에
+  들어가는 간격. 0pt.}
 \item[postperiodkern]
-CJK 문자 직후의 마침표 뒤에 들어가는 간격. 0pt.
+  {\addhangulfontfeature{postperiodkern=1ex}CJK 문자 직후의 마침표 뒤에
+  들어가는 간격. 0pt.}
 \item[prequestionkern]
-CJK 문자 직후의 물음표 앞에 들어가는 간격. 0pt.
+  CJK 문자 직후의 물음표 앞에 들어가는 간격. 0pt.
 \item[postquestionkern]
-CJK 문자 직후의 물음표 뒤에 들어가는 간격. 0pt.
+  CJK 문자 직후의 물음표 뒤에 들어가는 간격. 0pt.
 \item[preexclamationkern]
-CJK 문자 직후의 느낌표 앞에 들어가는 간격. 0pt.
+  CJK 문자 직후의 느낌표 앞에 들어가는 간격. 0pt.
 \item[postexclamationkern]
-CJK 문자 직후의 느낌표 뒤에 들어가는 간격. 0pt.
+  CJK 문자 직후의 느낌표 뒤에 들어가는 간격. 0pt.
 \item[precommakern]
-CJK 문자 직후의 쉼표 앞에 들어가는 간격. 0pt.
+  CJK 문자 직후의 쉼표 앞에 들어가는 간격. 0pt.
 \item[postcommakern]
-CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
+  CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 \item[quoteraise]
-영문 인용부호\hparen{아스키문자로 입력하는 것을 말함}를
-위로 끌어올리는 정도. 0pt.
+  영문 인용부호\hparen{아스키문자로 입력하는 것을 말함}를
+  위로 끌어올리는 정도. 0pt.
 \item[quotewidth]
-영문 인용부호의 폭. 기본값은 natural width.
+  영문 인용부호의 폭. 기본값은 natural width.
 \item[postmathskip]
-수식과 CJK 문자 사이의 간격.  기본값은 위 hu 값의 두 배.
+  수식과 CJK 문자 사이의 간격.  기본값은 위 hu 값의 두 배.
 \end{description}
 
 \begin{plaintex}
@@ -313,7 +315,8 @@ CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 \begin{description}
   \item[\cs{everyhangul}, \cs{everyhanja}]
     한글 또는 한자에 대해 글자마다 지시한 명령을 수행한다. 예컨대
-    \verb|\everyhangul{\fbox{#1}}| 명령은 모든 한글 주위에 박스를
+    \verb|\everyhangul{\fbox{#1}}| 명령은 모든
+    {\everyhangul{\fbox{#1}}\fboxsep=0.4pt 한글 주위에 박스}를
     두른다.  2.2 버전의 새로운 명령. 다른 글꼴 옵션과 충돌할 수 있으므로
     주의를 요한다.
 
@@ -440,7 +443,7 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
     세로쓰기로 식자할 부분
   \end{vertical}
 \end{verbatim}
-만일 세로쓰기의 EM 박스 크기가 가로쓰기와 다르다면
+만일 세로쓰기의 em 박스 크기가 가로쓰기와 다르다면
 \cs{verticalem=1.05em}과 같은 선언을 미리 해두는 것이 좋다.
 
 혹시 세로로 식자되지 않는 라틴문자 부분이 있다면
@@ -489,10 +492,8 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 마침표, 쉼표, 인용부호를 판면 바깥에 식자하여 행 끝에 매달리게 만든다.
 \begin{verbatim}
   \usepackage{xetexko-hanging}
-  \hangingpunctuation
 \end{verbatim}
-\cs{hangingpunctuation} 명령은 글꼴 설정이 완료된 이후에 내려야
-원하는 결과를 얻을 수 있다.
+\cs{hangingpunctuation} 명령은 버전 2.2 이후 불필요해졌다.
 
 %\begin{figure}
 %\Large
