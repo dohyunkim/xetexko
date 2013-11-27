@@ -25,14 +25,14 @@
 \def\grayhrule{{\color{white!80!black}\hrule height2pt}}
 \def\grayvrule{{\color{white!80!black}\vrule width 2pt}}
 \newenvironment{plaintex}
-  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\medskip\par\small}
-  {\par\medskip\egroup \par\medskip\par
+  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\kern10pt\par\small}
+  {\par\vskip-\lastskip\kern10pt\egroup \par\medskip\par
     \dimen0=\dimexpr\pagegoal-\pagetotal\relax
     \ifdim\ht0<\dimen0
       \hbox{\grayvrule\kern10pt\box0}%
     \else
+      \lineskip=0pt \splittopskip=10pt
       \setbox2=\vsplit0 to\dimen0
-      \lineskip=0pt
       \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\fi
       \ifvoid0 \else\hbox{\grayvrule\kern10pt\box0}\fi
     \fi \par\medskip\par }
@@ -44,6 +44,7 @@
 \def\cs#1{\texttt{\textbackslash #1}}
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
+\def\hparens#1{\leavevmode\unskip---{\small #1}---\ignorespaces}
 \parindent0pt
 \begin{document}
 \title{\xetexko\ 간단 매뉴얼}
@@ -62,11 +63,14 @@
     \item \verb+[unfonts]+ 옵션이 없으면 은글꼴을 자동으로 부르지 않는다.
     \item CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
       기본값이 되었다.
-    \item \verb|interpunctskern| 글꼴 옵션을 없애고
-      \verb|quoteraise| 및 \verb|charraise| \hparen{v2.2}를 추가했다.
-    \item \verb|\fallbackhanjafont| 명령을 인식한다. \hparen{v2.2}
+    \item \verb|interpunctskern| 글꼴 옵션을 없애고 \verb|quoteraise|를
+      추가했다.
+    \item[2.2]---
+    \item 글꼴 옵션 \verb|charraise|를 추가했다.
+    \item \verb|\fallbackhanjafont| 명령을 인식한다.
     \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다.
-      \hparen{v2.2}
+    \item 하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
+      것이 기본값이 되었다.
   \end{itemize}
 \end{quote}
 
@@ -182,12 +186,13 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
   \xetexkofontregime[quotes=latin, puncts=prevfont]{hangul}
 \end{verbatim}
 모든 라틴 문자와 CJK 기호들을 원칙적으로 한글 폰트로 식자하되,
-따옴표는 라틴 폰트로 찍고 마침표 따위는 직전 문자의 폰트를 따라간다는 의미이다.
+따옴표는 라틴 폰트로 찍고 마침표 따위는 현재 폰트를 따라간다는 의미이다.
 옵션은 생략할 수 있다.
 
 명령의 인자에는 latin, hangul, hanja, prevfont 중 하나가 올 수 있어서
 각각 라틴 폰트, 한글 폰트, 한자 폰트로 식자하라는 뜻이며
-마지막의 prevfont는 직전 문자의 폰트를 그대로 이어받도록 지시한다.
+마지막의 prevfont는 \hemph{현재 활성화된 폰트를 그대로 받도록} 지시한다.
+현재 폰트가 직전 문자의 폰트가 아닐 수 있음에 주의할 것.
 
 옵션 키의 종류와 의미는 다음과 같으며 각 키 값은 인자와 마찬가지로
 latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
@@ -202,12 +207,13 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \item[cjksymbols] CJK 구두점, 괄호 및 상징기호
 \end{description}
 
-기본값은 다음 명령을 준 것과 동일하다. \hemph{CJK 기호가 한글폰트로}
+기본값은 다음 명령을 준 것과 동일하다. \hemph{CJK 기호가 한글폰트}로,
+\hemph{하이픈은 라틴폰트}로
 식자되게 기본값이 변경되었음에 유의할 것.
 \begin{verbatim}
-  \xetexkofontregime [
-    puncts=prevfont, hyphens=prevfont, colons=prevfont, cjksymbols=hangul
-  ]{latin}
+  \xetexkofontregime
+  [ puncts=prevfont, colons=prevfont, cjksymbols=hangul ]
+  {latin}
 \end{verbatim}
 
 \begin{plaintex}
@@ -277,7 +283,7 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \item[postcommakern]
   CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 \item[quoteraise]
-  영문 인용부호\hparen{아스키문자로 입력하는 것을 말함}를
+  영문 인용부호\hparens{아스키문자로 입력하는 것을 말함}를
   위로 끌어올리는 정도. 0pt.
 \item[quotewidth]
   영문 인용부호의 폭. 기본값은 natural width.
@@ -512,7 +518,7 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 %\end{figure}
 
 \section{수식 한글}
-수식 모드에서도 한글을 \hparen{hbox로 감싸지 않고} 직접 입력할 수 있다.
+수식 모드에서도 한글을 \hparens{hbox로 감싸지 않고} 직접 입력할 수 있다.
 \begin{quote}
   \verb|$가^{나^다}$|\quad$\Rightarrow\quad가^{나^다}$
 \end{quote}
