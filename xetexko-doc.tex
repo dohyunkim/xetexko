@@ -25,16 +25,17 @@
 \def\grayhrule{{\color{white!80!black}\hrule height2pt}}
 \def\grayvrule{{\color{white!80!black}\vrule width 2pt}}
 \newenvironment{plaintex}
-  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\medbreak\small}
-  {\medbreak\egroup \par\medskip
-    \ifdim\ht0<\dimexpr\pagegoal-\pagetotal\relax
+  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\medskip\par\small}
+  {\par\medskip\egroup \par\medskip\par
+    \dimen0=\dimexpr\pagegoal-\pagetotal\relax
+    \ifdim\ht0<\dimen0
       \hbox{\grayvrule\kern10pt\box0}%
     \else
-      \setbox2=\vsplit0 to\dimexpr\pagegoal-\pagetotal\relax
+      \setbox2=\vsplit0 to\dimen0
       \lineskip=0pt
       \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\fi
       \ifvoid0 \else\hbox{\grayvrule\kern10pt\box0}\fi
-    \fi \par\medskip }
+    \fi \par\medskip\par }
 \newenvironment{example}
   {\hbox\bgroup\grayvrule
     \vbox\bgroup\hsize\dimexpr\textwidth-4pt\relax
@@ -63,7 +64,7 @@
       기본값이 되었다.
     \item \verb|interpunctskern| 글꼴 옵션을 없애고
       \verb|quoteraise| 및 \verb|charraise| \hparen{v2.2}를 추가했다.
-    \item \verb|\fallbackhanjafont| 명령을 추가했다. \hparen{v2.2}
+    \item \verb|\fallbackhanjafont| 명령을 인식한다. \hparen{v2.2}
     \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다.
       \hparen{v2.2}
   \end{itemize}
@@ -113,9 +114,7 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
   절 제목 이하에는 한자 표제가 붙지 않고 숫자로만 표현된다.
   한글이 주된 언어라고 인식하여 줄간격 조정도 수행한다.
 \item[ unfonts ] 은글꼴을 불러온다. \hemph{이 옵션이 없으면
-  사용자가 한글 글꼴을 지정해야} 할 수 있다.\footnote{\texttt{[unfonts]}
-    옵션이 없더라도 \cs{setmainfont}로 지시한 글꼴에
-    한글 글리프가 들어있으면 따로 한글 글꼴을 지정한 필요가 없다.}
+  사용자가 한글 글꼴을 지정해야} 할 수 있다.
 \end{description}
 
 
@@ -126,9 +125,9 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
   \setmainhanjafont [Ligatures=TeX]{은 바탕}
 \end{verbatim}
 각 명령의 의미는 이름이 뜻하는 그대로이며, fontspec 매뉴얼에 따라
-설정한다. 한글폰트를 지정하지 않더라도 경고만 내보낼 뿐
-에러를 발생시키지 않는다.
-한자폰트를 따로 지정하지 않으면 한글폰트가 적용된다.
+설정한다. 한글폰트를 따로 지정하지 않으면 영문폰트가 한글에도 사용된다.
+한자폰트를 따로 지정하지 않으면 한글폰트가 한자에도 적용된다.
+
 마찬가지로 다음 명령들도 제공한다.
 \begin{verbatim}
   \setsansfont \setsanshangulfont \setsanshanjafont
@@ -152,10 +151,10 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 \cs{adhochangulfont}와 \cs{adhochanjafont}는 이들 명령의 다른 이름이다.
 
 \begin{verbatim}
-  \newhangulfontfamily\secthangul[Ligatures=TeX]{나눔고딕}
-  \newhanjafontfamily \secthanja [Ligatures=TeX]{UnGungseo}
-  \newhangulfontface  \secthangul[Ligatures=TeX]{나눔고딕Bold}
-  \newhanjafontface   \secthanja [Ligatures=TeX]{UnDotumBold}
+  \newhangulfontfamily\myhangul[Ligatures=TeX]{나눔고딕}
+  \newhanjafontfamily \myhanja [Ligatures=TeX]{UnGungseo}
+  \newhangulfontface  \myhangul[Ligatures=TeX]{나눔고딕Bold}
+  \newhanjafontface   \myhanja [Ligatures=TeX]{UnDotumBold}
 \end{verbatim}
 fontspec 패키지의 \verb+\newfontfamily+ \verb+\newfontface+ 명령을
 수정한 것이다.
@@ -165,15 +164,14 @@ fontspec 패키지의 \verb+\newfontfamily+ \verb+\newfontface+ 명령을
   \addhanjafontfeature {Color=00FF00}
 \end{verbatim}
 fontspec의 \verb+\addfontfeature+ 명령을 구현한 것이다.
-\cs{addhangulfontfeatures}와\\ \cs{addhanjafontfeatures}는
-이들 명령의 다른 이름이다.
+fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 
 \smallskip
 참고로, 한자와 한글을 같은 글꼴로 식자하고 싶을 때 글꼴 설정을
 번거롭게 두 번 할 필요 없이 한글 글꼴만 설정한 뒤 간단히
   \cs{hanjabyhangulfont}를 선언하면 된다.
 
-한편, 2.2 버전부터는 \cs{fallbackhanjafont}를 정의해두면
+한편 버전 2.2부터는 \cs{fallbackhanjafont}를 정의해두면
 \hemph{한자 글꼴에도 없는 한자}를
 이 글꼴에서 찾아 식자한다. \verb|\newfontfamily| 명령으로 정의한다.
 
