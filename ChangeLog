@@ -1,16 +1,17 @@
-2013-11-26      Dohyun Kim <nomos at ktug org>
+2013-11-28      Dohyun Kim <nomos at ktug org>
 
 	Version 2.2
 
+	* xetexko-space.sty: \latinhyphens is now the default
 	* xetexko-hanging.sty: \hangingpunctuations is not needed any more
 	* xetexko-space.sty: assign missing kana chars including U+30FC to
-	smallkana class due to a change in unicode-letters.tex
+	smallkana class
 	* xetexko-space.sty: assign compatibility jamo chars to hangulsyllable
 	class
 	* xetexko-space.sty: new macros \everyhangul and \everyhanja
-	* xetexko-space.sty: the same stretch/shrink value for inter-hangul
-	and inter-hanja skip
-	* xetexko-font.sty xetexko-space.sty: new font option [charraise]
+	* xetexko-space.sty: same stretch/shrink value for inter-hangul and
+	inter-hanja skip
+	* xetexko-font.sty xetexko-space.sty: new font option `charraise'
 	* xetexko-space.sty: \fallbackhanjafont as a final fallback font
 	* xetexko-josa.sty: fix a bug regarding non-BMP chars
 
