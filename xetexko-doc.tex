@@ -125,8 +125,8 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 \section{글꼴 명령}
 \begin{verbatim}
   \setmainfont      [Ligatures=TeX]{Linux Libertine}
-  \setmainhangulfont[Ligatures=TeX]{나눔명조}
-  \setmainhanjafont [Ligatures=TeX]{은 바탕}
+  \setmainhangulfont[Ligatures=TeX]{NanumMyeongjo}
+  \setmainhanjafont [Ligatures=TeX]{UnBatang}
 \end{verbatim}
 각 명령의 의미는 이름이 뜻하는 그대로이며, fontspec 매뉴얼에 따라
 설정한다. 한글폰트를 따로 지정하지 않으면 영문폰트가 한글에도 사용된다.
@@ -148,16 +148,16 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 \end{plaintex}
 
 \begin{verbatim}
-  \hangulfontspec[Ligatures=TeX]{나눔고딕}
+  \hangulfontspec[Ligatures=TeX]{NanumGothic}
   \hanjafontspec [Ligatures=TeX]{UnGungseo}
 \end{verbatim}
 임시로 사용할 한글·한자 글꼴을 지시한다.
 \cs{adhochangulfont}와 \cs{adhochanjafont}는 이들 명령의 다른 이름이다.
 
 \begin{verbatim}
-  \newhangulfontfamily\myhangul[Ligatures=TeX]{나눔고딕}
+  \newhangulfontfamily\myhangul[Ligatures=TeX]{NanumGothic}
   \newhanjafontfamily \myhanja [Ligatures=TeX]{UnGungseo}
-  \newhangulfontface  \myhangul[Ligatures=TeX]{나눔고딕Bold}
+  \newhangulfontface  \myhangul[Ligatures=TeX]{NanumGothic Bold}
   \newhanjafontface   \myhanja [Ligatures=TeX]{UnDotumBold}
 \end{verbatim}
 fontspec 패키지의 \verb+\newfontfamily+ \verb+\newfontface+ 명령을
@@ -237,7 +237,7 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \section{간격 조정}
 한글 관련 미세 간격 조정은 다음과 같이 폰트 옵션으로 지시한다.
 \begin{verbatim}
-  \setsanshangulfont[interhchar=-.04em]{나눔고딕}
+  \setsanshangulfont[interhchar=-.04em]{NanumGothic}
 \end{verbatim}
 이 때 나눔고딕 글꼴에만 한글 마이너스 자간이 작동한다.
 \dotemph{고정폭 글꼴을 제외한} 한글·한자 글꼴
@@ -432,7 +432,7 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 역시 고급 오픈타입 기능을 이용하는 것이므로
 폰트가 이를 지원해야 한다.
 \begin{verbatim}
-  \setmainhangulfont[ Vertical=RotatedGlyphs ]{Adobe 명조 Std}
+  \setmainhangulfont[ Vertical=RotatedGlyphs ]{Adobe Myungjo Std}
 \end{verbatim}
 문서 전체를 세로쓰기할 때 \cs{verticaltypesetting}을 선언하면
 면주는 그대로 두고 본문만 세로쓰기한다.\footnote{당연히 면주의 글꼴은
@@ -443,7 +443,7 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 보통 그 뒤에  세로쓰기에 사용할 글꼴 명령이 온다.
 \begin{verbatim}
   \begin{vertical}{12em}
-  \hangulfontspec[ Vertical=RotatedGlyphs ]{Adobe 명조 Std}
+    \hangulfontspec[ Vertical=RotatedGlyphs ]{Adobe Myungjo Std}
     세로쓰기로 식자할 부분
   \end{vertical}
 \end{verbatim}
@@ -458,9 +458,9 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \begin{plaintex}
 플레인텍이라면,
 \begin{verbatim}
-    \vertical{16em}\hangulfont="Adobe 명조 Std:vertical"
-      세로쓰기로 식자할 부분
-    \endvertical
+  \vertical{16em}\hangulfont="Adobe Myungjo Std:vertical"
+    세로쓰기로 식자할 부분
+  \endvertical
 \end{verbatim}
 \end{plaintex}
 

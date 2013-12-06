@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2013/11/26 v2.2 Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2013/12/06 v2.2 Font commands for XeTeX-ko]
 
 \RequirePackage{fontspec}
 \RequirePackage{xkeyval}
@@ -317,7 +317,9 @@
 \edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
 \edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
 \edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font\disablehangulspacing}}
-\edef\verbatim@font{\unexpanded\expandafter{\verbatim@font\disablehangulspacingandlinebreak}}
+\edef\verbatim@font{\unexpanded\expandafter{\verbatim@font\disablehangulspacingandlinebreak
+  \def\XKstoreprevfont{\chardef\XKcurrentfont\z@\fontfamily\XKprevfont\selectfont}% latin space
+}}
 
 \AtBeginDocument{
   \ifx\f@family\rmdefault
