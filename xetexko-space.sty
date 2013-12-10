@@ -1424,17 +1424,17 @@
 %%% everyhangul/everyhanja
 %%%  request from karnes at 2013.11.18
 \def\everyhanja#1{%
-  \def\XK@every@hanja##1{#1}%
+  \def\XK@every@hanja##1{#1\chardef\XKcurrentfont\z@}%
   \let\XKcjkcharboxstart\empty
   \let\XKcjkcharboxstop\empty % conflict w. everyhanja
 }
-\everyhanja{#1}
+\def\XK@every@hanja#1{#1}
 \def\everyhangul#1{%
-  \def\XK@every@hangul##1{#1}%
+  \def\XK@every@hangul##1{#1\chardef\XKcurrentfont\z@}%
   \let\XKcjkcharboxstart\empty
   \let\XKcjkcharboxstop\empty % conflict w. everyhangul
 }
-\everyhangul{#1}
+\def\XK@every@hangul#1{#1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% for autojosa, get last chars
@@ -1594,7 +1594,7 @@
   \let\XKzeroskip         \relax
   \let\XKnobreak          \relax
   \let\XKafterboundaryskip\relax
-  \let\XKcjklastchar      \relax
+  \def\XKcjklastchar##1{\let\@let@token##1\XK@save@last@char\XK@every@hangul{##1}}%
   \disablehangulspacing
 }
 
