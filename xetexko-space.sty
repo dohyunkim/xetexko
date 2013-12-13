@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/11/28 v2.2 Spacings and fonts for XeTeX-ko]
+    [2013/12/14 v2.3 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1645,19 +1645,18 @@
 
 %%%%%%%%%%%
 %% for ulem
-\ifcsname selectfont\endcsname
-  \let\xetexkoulemsupport\relax
-\else
-  \def\xetexkoulemsupport{%
-    \UL@hook\expandafter{\the\UL@hook
-      \let\ulem@XK@hangulfont\XK@hangulfont
-      \let\ulem@XK@hanjafont\XK@hanjafont
-      \def\XK@hangulfont{\ulem@XK@hangulfont
-        \aftergroup\aftergroup\aftergroup\ulem@XK@hangulfont}%
-      \def\XK@hanjafont{\ulem@XK@hanjafont
-        \aftergroup\aftergroup\aftergroup\ulem@XK@hanjafont}%
-  }}
-\fi
+\def\xetexkoulemsupport{%
+  \UL@hook\expandafter{\the\UL@hook
+    \let\XK@UL@@@hangulfont\XKhangulfont
+    \let\XK@UL@@@hanjafont \XKhanjafont
+    \def\XKhangulfont{\XK@UL@@@hangulfont
+      \aftergroup\aftergroup\aftergroup\XK@UL@@@hangulfont
+    }%
+    \def\XKhanjafont{\XK@UL@@@hanjafont
+      \aftergroup\aftergroup\aftergroup\XK@UL@@@hanjafont
+    }%
+  }%
+}
 
 %%%%%%%%%%
 %% dotemph
@@ -1689,9 +1688,6 @@
 
 %%% declare to use interchartoken
 \XeTeXinterchartokenstate\@ne
-
-%%% frenchspacing is default
-\frenchspacing
 
 \def\hellipsis{^^^^2026\kern-.1ex^^^^2026}
 
