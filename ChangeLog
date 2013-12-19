@@ -1,3 +1,12 @@
+2013-12-14      Dohyun Kim <nomos at ktug org>
+
+	Version 2.3
+
+	* xetexko-space.sty xetexko.sty: previous release introduced a bug
+	related to ulem package, reported by Insung Cho.
+	* xetexko-space.sty: font-switching had sometimes been confused by
+	everyhangul/everyhanja.
+
 2013-12-06      Dohyun Kim <nomos at ktug org>
 
 	Version 2.2
