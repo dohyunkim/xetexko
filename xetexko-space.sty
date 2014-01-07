@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2013/12/14 v2.3 Spacings and fonts for XeTeX-ko]
+    [2014/01/07 v2.4 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1450,8 +1450,10 @@
 }
 
 \def\XK@fallback@hanja@font@family#1{%
+  \chardef\XK@use@fallback@font\z@
   \iffontchar\font`#1\else
     \ifdefined\fallbackhanjafont
+      \chardef\XK@use@fallback@font\@ne
       \fallbackhanjafont
     \fi
   \fi
@@ -1462,6 +1464,7 @@
   % fallbackhanjafont for, say, HanaMinB
   \XK@fallback@hanja@font@family{#1}%
   \XK@every@hanja{#1}% everyhanja
+  \ifcase\XK@use@fallback@font\else\relax\fi
 }
 
 \def\XKcjklastchar#1{%
