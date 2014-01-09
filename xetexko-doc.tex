@@ -50,14 +50,14 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.3\quad\today}
+\date{Version 2.4\quad\today}
 \maketitle
 
 \begin{quote}\small
   For a summary introduction in English,
   please see \verb+README+ file in this package.
 
-  주요 변경 사항
+  v2.0 이후 주요 변경 사항
   \begin{itemize}\itemsep=0pt
     \item 플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.
     \item \verb+[unfonts]+ 옵션이 없으면 은글꼴을 자동으로 부르지 않는다.
@@ -65,12 +65,15 @@
       기본값이 되었다.
     \item \verb|interpunctskern| 글꼴 옵션을 없애고 \verb|quoteraise|를
       추가했다.
-    \item[2.2]---
+    \item[v2.2]---
     \item 글꼴 옵션 \verb|charraise|를 추가했다.
     \item \verb|\fallbackhanjafont| 명령을 인식한다.
     \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다.
     \item 하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
       것이 기본값이 되었다.
+    \item[v2.4]---
+    \item 한자 변형 글리프 접근을 허용한다.
+      제~\ref{sec:variationselectors} 절을 보라.
   \end{itemize}
 \end{quote}
 
@@ -583,6 +586,24 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 
 \section{hyperref}
 hyperref 패키지는 \verb+[unicode]+ 옵션 없이 쓴다.
+
+\section{Variation Selectors}
+\label{sec:variationselectors}
+트루타입의 cmap 테이블을 통해 변형 글리프로의 접근을 허용하는 폰트를
+사용하는 경우 \verb|\prevfontcjksymbols| 또는 \verb|\hanjacjksymbols|
+명령이 있어야 원하는 결과를 얻을 수 있다. 예컨대
+\begin{verbatim}
+  \hanjafontspec{HanaMinA}
+  \prevfontcjksymbols
+  道
+  道\char"E0100
+  道\char"E0101
+  道\char"E0102
+  道\char"E0103
+\end{verbatim}
+\xetexko 는 Variation Selectors Supplement 영역을 CJK 상징기호로
+인식하는데 이제 이들을 한글폰트에서 찾는 게 기본값이 되었기 때문이다.
 \hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
+
 
 \end{document}
