@@ -72,8 +72,7 @@
     \item 하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
       것이 기본값이 되었다.
     \item[v2.4]---
-    \item 한자 변형 글리프 접근을 허용한다.
-      제~\ref{sec:variationselectors} 절을 보라.
+    \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
   \end{itemize}
 \end{quote}
 
@@ -586,23 +585,6 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 
 \section{hyperref}
 hyperref 패키지는 \verb+[unicode]+ 옵션 없이 쓴다.
-
-\section{Variation Selectors}
-\label{sec:variationselectors}
-트루타입의 cmap 테이블을 통해 변형 글리프로의 접근을 허용하는 폰트를
-사용하는 경우 \verb|\prevfontcjksymbols| 또는 \verb|\hanjacjksymbols|
-명령이 있어야 원하는 결과를 얻을 수 있다. 예컨대
-\begin{verbatim}
-  \hanjafontspec{HanaMinA}
-  \prevfontcjksymbols
-  道
-  道\char"E0100
-  道\char"E0101
-  道\char"E0102
-  道\char"E0103
-\end{verbatim}
-\xetexko 는 Variation Selectors Supplement 영역을 CJK 상징기호로
-인식하는데 이제 이들을 한글폰트에서 찾는 게 기본값이 되었기 때문이다.
 \hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
 
 

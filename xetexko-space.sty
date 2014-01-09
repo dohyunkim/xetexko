@@ -136,11 +136,6 @@
 \XeTeXcharclass "2025 = \XKcjkliaison % ‥
 \XeTeXcharclass "FE30 = \XKcjkliaison % ︰
 
-%%% variation selectors
-\count@="E0100 \loop
-  \XeTeXcharclass\count@ = \XKcjkliaison
-  \ifnum\count@<"E01EF \advance\count@\@ne \repeat
-
 %%% cjk question/exclamation marks
 \newXeTeXintercharclass \XKcjkextrastop
 \XeTeXcharclass "FF1F = \XKcjkextrastop % ？
@@ -320,17 +315,15 @@
   \XeTeXcharclass\count@\XKhangulsyllable
   \ifnum\count@ < "318E
     \advance\count@\@ne \repeat
-
-%%% leading consonants jamo
-\newXeTeXintercharclass \XKhangulchosong
+%%% leading consonants jamo as well
 \count@ "1100
 \loop
-  \XeTeXcharclass\count@\XKhangulchosong
+  \XeTeXcharclass\count@\XKhangulsyllable
   \ifnum\count@ < "115F
     \advance\count@\@ne \repeat
 \count@ "A960
 \loop
-  \XeTeXcharclass\count@\XKhangulchosong
+  \XeTeXcharclass\count@\XKhangulsyllable
   \ifnum\count@ < "A97C
     \advance\count@\@ne \repeat
 
@@ -404,6 +397,12 @@
   \ifnum\count@ < `9
     \advance\count@\@ne \repeat
 
+%%% variation selectors
+\newXeTeXintercharclass \XKhanjacombining
+\count@="E0100 \loop
+  \XeTeXcharclass\count@ = \XKhanjacombining
+  \ifnum\count@<"E01EF \advance\count@\@ne \repeat
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% define inter char tokes
@@ -415,6 +414,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinnumber = {\XKopeningquotestop\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinnumber = {\XKclosingquotestop\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKhanja            \XKlatinnumber = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKlatinnumfont\XKlastchar}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinnumber = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinnumber = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinnumber = {\XKcjkcharboxstop\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinnumber = {\postcjkopenparen\XKlatinnumfont\XKlastchar}
@@ -424,7 +424,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinnumber = {\XKcjkcharboxstop\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinnumber = {\XKcjkcharboxstop\XKhalfsmallbreak\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinnumber = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKlatinnumfont\XKlastchar}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinnumber = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinnumber = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKlatinfullstop    \XKlatinnumber = {\XKperiodboxstop\XKlatinnumfont\XKlastchar}
 \XeTeXinterchartoks \XKlatinquestion    \XKlatinnumber = {\XKquestionboxstop\XKlatinnumfont\XKlastchar}
@@ -442,6 +441,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinchar = {\XKopeningquotestop\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinchar = {\XKclosingquotestop\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKhanja            \XKlatinchar = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKmaybelatinfont\XKlastchar}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinchar = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinchar = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinchar = {\XKcjkcharboxstop\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinchar = {\postcjkopenparen\XKmaybelatinfont\XKlastchar}
@@ -451,7 +451,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinchar = {\XKcjkcharboxstop\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinchar = {\XKcjkcharboxstop\XKhalfsmallbreak\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinchar = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKmaybelatinfont\XKlastchar}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinchar = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinchar = {\XKcjkcharboxstop\XKcjklatinsmallbreak\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKlatinfullstop    \XKlatinchar = {\XKperiodboxstop\XKmaybelatinfont\XKlastchar}
 \XeTeXinterchartoks \XKlatinquestion    \XKlatinchar = {\XKquestionboxstop\XKmaybelatinfont\XKlastchar}
@@ -469,6 +468,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKhanja = {\XKopeningquotestop\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKclosingquote     \XKhanja = {\XKclosingquotestop\XKhanjafont\XKcjklatinbreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKhanja            \XKhanja = {\XKcjkcharboxstop\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
+\XeTeXinterchartoks \XKhanjacombining   \XKhanja = {\XKcjkcharboxstop\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKsmallkana        \XKhanja = {\XKcjkcharboxstop\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKcjksymbol        \XKhanja = {\XKcjkcharboxstop\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKcjkopening       \XKhanja = {\postcjkopenparen\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
@@ -478,7 +478,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKhanja = {\XKcjkcharboxstop\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKcjkextrastop     \XKhanja = {\XKcjkcharboxstop\XKhalfsmallbreak\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKhangulsyllable   \XKhanja = {\XKcjkcharboxstop\XKhanjafont\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
-\XeTeXinterchartoks \XKhangulchosong    \XKhanja = {\XKcjkcharboxstop\XKhanjafont\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKhanguljungjong   \XKhanja = {\XKcjkcharboxstop\XKhanjafont\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKlatinfullstop    \XKhanja = {\XKperiodboxstop\XKhanjafont\XKcjklatinbreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKlatinquestion    \XKhanja = {\XKquestionboxstop\XKhanjafont\XKcjklatinbreak\XKcjkcharboxstart\XKhanjalastchar}
@@ -496,6 +495,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKsmallkana = {\XKopeningquotestop\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKclosingquote     \XKsmallkana = {\XKclosingquotestop\XKhanjafont\XKcjklatinsmallbreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKhanja            \XKsmallkana = {\XKcjkcharboxstop\XKnobreak\XKzeroskip\XKcjkcharboxstart\XKhanjalastchar}
+\XeTeXinterchartoks \XKhanjacombining   \XKsmallkana = {\XKcjkcharboxstop\XKnobreak\XKzeroskip\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKsmallkana        \XKsmallkana = {\XKcjkcharboxstop\XKnobreak\XKzeroskip\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKcjksymbol        \XKsmallkana = {\XKcjkcharboxstop\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKcjkopening       \XKsmallkana = {\postcjkopenparen\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
@@ -505,7 +505,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKsmallkana = {\XKcjkcharboxstop\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKcjkextrastop     \XKsmallkana = {\XKcjkcharboxstop\XKhalfsmallbreak\XKhanjafont\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKhangulsyllable   \XKsmallkana = {\XKcjkcharboxstop\XKhanjafont\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
-\XeTeXinterchartoks \XKhangulchosong    \XKsmallkana = {\XKcjkcharboxstop\XKhanjafont\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKhanguljungjong   \XKsmallkana = {\XKcjkcharboxstop\XKhanjafont\XKinterhanjabreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKlatinfullstop    \XKsmallkana = {\XKperiodboxstop\XKhanjafont\XKcjklatinbreak\XKcjkcharboxstart\XKhanjalastchar}
 \XeTeXinterchartoks \XKlatinquestion    \XKsmallkana = {\XKquestionboxstop\XKhanjafont\XKcjklatinbreak\XKcjkcharboxstart\XKhanjalastchar}
@@ -523,6 +522,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjksymbol = {\XKopeningquotestop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKcjksymbol = {\XKclosingquotestop\XKmaybehanjafont\XKcjklatinsmallbreak\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhanja            \XKcjksymbol = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjksymbol = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKcjksymbol = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 %\XeTeXinterchartoks \XKcjksymbol        \XKcjksymbol = {}
 \XeTeXinterchartoks \XKcjkopening       \XKcjksymbol = {\postcjkopenparen\XKcjkcharboxstart}
@@ -532,7 +532,6 @@
 %\XeTeXinterchartoks \XKcjkliaison       \XKcjksymbol = {}
 \XeTeXinterchartoks \XKcjkextrastop     \XKcjksymbol = {\XKcjkcharboxstop\XKhalfsmallbreak\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjksymbol = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjksymbol = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjksymbol = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjksymbol = {\XKperiodboxstop\XKmaybehanjafont\XKcjklatinbreak\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjksymbol = {\XKquestionboxstop\XKmaybehanjafont\XKcjklatinbreak\XKcjkcharboxstart}
@@ -550,6 +549,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjkopening = {\XKopeningquotestop\XKmaybehanjafont\precjkopenparen}
 \XeTeXinterchartoks \XKclosingquote     \XKcjkopening = {\XKclosingquotestop\XKmaybehanjafont\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKhanja            \XKcjkopening = {\XKcjkcharboxstop\XKhalfsmallbreak\XKmaybehanjafont\precjkopenparen}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjkopening = {\XKcjkcharboxstop\XKhalfsmallbreak\XKmaybehanjafont\precjkopenparen}
 \XeTeXinterchartoks \XKsmallkana        \XKcjkopening = {\XKcjkcharboxstop\XKhalfsmallbreak\XKmaybehanjafont\precjkopenparen}
 \XeTeXinterchartoks \XKcjksymbol        \XKcjkopening = {\XKcjkcharboxstop\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKcjkopening       \XKcjkopening = {\postcjkopenparen\precjkopenparen}
@@ -559,7 +559,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKcjkopening = {\XKcjkcharboxstop\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKcjkextrastop     \XKcjkopening = {\XKcjkcharboxstop\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjkopening = {\XKcjkcharboxstop\XKmaybehanjafont\XKhalfsmallbreak\precjkopenparen}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjkopening = {\XKcjkcharboxstop\XKmaybehanjafont\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjkopening = {\XKcjkcharboxstop\XKmaybehanjafont\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjkopening = {\XKperiodboxstop\XKmaybehanjafont\XKhalfsmallbreak\precjkopenparen}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjkopening = {\XKquestionboxstop\XKmaybehanjafont\XKhalfsmallbreak\precjkopenparen}
@@ -577,6 +576,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjkclosing = {\XKopeningquotestop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKclosingquote     \XKcjkclosing = {\XKclosingquotestop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKhanja            \XKcjkclosing = {\XKcjkcharboxstop\XKmaybehanjafont\precjkcloseparen}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjkclosing = {\XKcjkcharboxstop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKsmallkana        \XKcjkclosing = {\XKcjkcharboxstop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKcjksymbol        \XKcjkclosing = {\XKcjkcharboxstop\precjkcloseparen}
 \XeTeXinterchartoks \XKcjkopening       \XKcjkclosing = {\postcjkopenparen\precjkcloseparen}
@@ -586,7 +586,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKcjkclosing = {\XKcjkcharboxstop\precjkcloseparen}
 \XeTeXinterchartoks \XKcjkextrastop     \XKcjkclosing = {\XKcjkcharboxstop\precjkcloseparen}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjkclosing = {\XKcjkcharboxstop\XKmaybehanjafont\precjkcloseparen}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjkclosing = {\XKcjkcharboxstop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjkclosing = {\XKcjkcharboxstop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjkclosing = {\XKperiodboxstop\XKmaybehanjafont\precjkcloseparen}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjkclosing = {\XKquestionboxstop\XKmaybehanjafont\XKnobreak\XKcjklatinbreak\precjkcloseparen}
@@ -604,6 +603,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinopening = {\XKopeningquotestop\XKlatinparenfont}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinopening = {\XKclosingquotestop\XKzeroskip\XKlatinparenfont}
 \XeTeXinterchartoks \XKhanja            \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinopening = {\postcjkopenparen\XKwascjkchar\XKlatinparenfont}
@@ -613,7 +613,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinopening = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinopening = {\XKcjkcharboxstop\XKhalfsmallbreak\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinopening = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKlatinfullstop    \XKlatinopening = {\XKperiodboxstop\XKlatinparenfont}
 \XeTeXinterchartoks \XKlatinquestion    \XKlatinopening = {\XKquestionboxstop\XKlatinparenfont}
@@ -631,6 +630,7 @@
 %\XeTeXinterchartoks \XKopeningquote     \XKopeningquote = {}
 \XeTeXinterchartoks \XKclosingquote     \XKopeningquote = {\XKclosingquotestop\XKopeningquotestart}
 \XeTeXinterchartoks \XKhanja            \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
+\XeTeXinterchartoks \XKhanjacombining   \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKsmallkana        \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKcjksymbol        \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKcjkopening       \XKopeningquote = {\postcjkopenparen\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
@@ -640,7 +640,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKopeningquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKcjkextrastop     \XKopeningquote = {\XKcjkcharboxstop\XKhalfsmallbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
-\XeTeXinterchartoks \XKhangulchosong    \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKopeningquote = {\XKcjkcharboxstop\XKcjklatinbreak\XKwascjkchar\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKlatinfullstop    \XKopeningquote = {\XKperiodboxstop\XKlatinquotefont\XKopeningquotestart}
 \XeTeXinterchartoks \XKlatinquestion    \XKopeningquote = {\XKquestionboxstop\XKlatinquotefont\XKopeningquotestart}
@@ -658,6 +657,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinclosing = {\XKopeningquotestop\XKlatinparenfont}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinclosing = {\XKclosingquotestop\XKlatinparenfont}
 \XeTeXinterchartoks \XKhanja            \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinclosing = {\postcjkopenparen\XKwascjkchar\XKlatinparenfont}
@@ -667,7 +667,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinclosing = {\XKcjkcharboxstop\XKwascjkchar\XKlatinparenfont}
 \XeTeXinterchartoks \XKlatinfullstop    \XKlatinclosing = {\XKperiodboxstop\XKlatinparenfont}
 \XeTeXinterchartoks \XKlatinquestion    \XKlatinclosing = {\XKquestionboxstop\XKlatinparenfont}
@@ -685,6 +684,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKclosingquote = {\XKopeningquotestop\XKclosingquotestart}
 %\XeTeXinterchartoks \XKclosingquote     \XKclosingquote = {}
 \XeTeXinterchartoks \XKhanja            \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
+\XeTeXinterchartoks \XKhanjacombining   \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKsmallkana        \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKcjksymbol        \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKcjkopening       \XKclosingquote = {\postcjkopenparen\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
@@ -694,7 +694,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKcjkextrastop     \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
-\XeTeXinterchartoks \XKhangulchosong    \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKclosingquote = {\XKcjkcharboxstop\XKwascjkchar\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKlatinfullstop    \XKclosingquote = {\XKperiodboxstop\XKlatinquotefont\XKclosingquotestart}
 \XeTeXinterchartoks \XKlatinquestion    \XKclosingquote = {\XKquestionboxstop\XKlatinquotefont\XKclosingquotestart}
@@ -712,6 +711,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatincolon = {\XKopeningquotestop\XKcolonfont}
 \XeTeXinterchartoks \XKclosingquote     \XKlatincolon = {\XKclosingquotestop\XKcolonfont}
 \XeTeXinterchartoks \XKhanja            \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKsmallkana        \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKcjkopening       \XKlatincolon = {\postcjkopenparen\XKwascjkchar\XKcolonfont}
@@ -721,7 +721,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatincolon = {\XKcjkcharboxstop\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKhalfsmallbreak\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatincolon = {\XKcjkcharboxstop\XKnobreak\XKcjklatinbreak\XKwascjkchar\XKcolonfont}
 \XeTeXinterchartoks \XKlatinfullstop    \XKlatincolon = {\XKperiodboxstop\XKcolonfont}
 \XeTeXinterchartoks \XKlatinquestion    \XKlatincolon = {\XKquestionboxstop\XKcolonfont}
@@ -739,6 +738,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKhangulsyllable = {\XKopeningquotestop\XKhangulfont\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKclosingquote     \XKhangulsyllable = {\XKclosingquotestop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKhanja            \XKhangulsyllable = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKcjklastchar}
+\XeTeXinterchartoks \XKhanjacombining   \XKhangulsyllable = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKsmallkana        \XKhangulsyllable = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKcjksymbol        \XKhangulsyllable = {\XKcjkcharboxstop\XKhangulfont\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKcjkopening       \XKhangulsyllable = {\postcjkopenparen\XKhangulfont\XKcjkcharboxstart\XKcjklastchar}
@@ -748,7 +748,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKhangulsyllable = {\XKcjkcharboxstop\XKhangulfont\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKcjkextrastop     \XKhangulsyllable = {\XKcjkcharboxstop\XKhangulfont\XKhalfsmallbreak\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKhangulsyllable   \XKhangulsyllable = {\XKcjkcharboxstop\XKinterhangulbreak\XKcjkcharboxstart\XKcjklastchar}
-\XeTeXinterchartoks \XKhangulchosong    \XKhangulsyllable = {\XKcjkcharboxstop\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKhanguljungjong   \XKhangulsyllable = {\XKcjkcharboxstop\XKinterhangulbreak\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKlatinfullstop    \XKhangulsyllable = {\XKperiodboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKlatinquestion    \XKhangulsyllable = {\XKquestionboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKcjklastchar}
@@ -758,59 +757,9 @@
 \XeTeXinterchartoks \XKlatinhyphen      \XKhangulsyllable = {\XKhangulfont\XKzeroskip\XKcjkcharboxstart\XKcjklastchar}
 \XeTeXinterchartoks \XKboundary         \XKhangulsyllable = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKcjklastchar}
 
-%%% ? choseong jamo
-\XeTeXinterchartoks \XKlatinchar        \XKhangulchosong = {\XKhangulfont\XKcjklatinsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinnumber      \XKhangulchosong = {\XKhangulfont\XKcjklatinsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinopening     \XKhangulchosong = {\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinclosing     \XKhangulchosong = {\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKopeningquote     \XKhangulchosong = {\XKopeningquotestop\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKclosingquote     \XKhangulchosong = {\XKclosingquotestop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKhanja            \XKhangulchosong = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKsmallkana        \XKhangulchosong = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjksymbol        \XKhangulchosong = {\XKcjkcharboxstop\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkopening       \XKhangulchosong = {\postcjkopenparen\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkclosing       \XKhangulchosong = {\postcjkcloseparen\XKhangulfont\XKhalfsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkcolon         \XKhangulchosong = {\postcjkcolon\XKhangulfont\XKquatersmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkfullstop      \XKhangulchosong = {\postcjkfullstop\XKhangulfont\XKfixedhalfskip\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkliaison       \XKhangulchosong = {\XKcjkcharboxstop\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkextrastop     \XKhangulchosong = {\XKcjkcharboxstop\XKhangulfont\XKhalfsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKhangulsyllable   \XKhangulchosong = {\XKcjkcharboxstop\XKinterhangulbreak\XKcjkcharboxstart\XKlastchar}
-%\XeTeXinterchartoks \XKhangulchosong    \XKhangulchosong = {}
-\XeTeXinterchartoks \XKhanguljungjong   \XKhangulchosong = {\XKcjkcharboxstop\XKinterhangulbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinfullstop    \XKhangulchosong = {\XKperiodboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinquestion    \XKhangulchosong = {\XKquestionboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinexclamation \XKhangulchosong = {\XKexclamationboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatincomma       \XKhangulchosong = {\XKcommaboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatincolon       \XKhangulchosong = {\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinhyphen      \XKhangulchosong = {\XKhangulfont\XKzeroskip\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKboundary         \XKhangulchosong = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKlastchar}
-
 %%% ? jungseong/jongseong jamo
-\XeTeXinterchartoks \XKlatinchar        \XKhanguljungjong = {\XKhangulfont\XKcjklatinsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinnumber      \XKhanguljungjong = {\XKhangulfont\XKcjklatinsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinopening     \XKhanguljungjong = {\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinclosing     \XKhanguljungjong = {\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKopeningquote     \XKhanguljungjong = {\XKopeningquotestop\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKclosingquote     \XKhanguljungjong = {\XKclosingquotestop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKhanja            \XKhanguljungjong = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKsmallkana        \XKhanguljungjong = {\XKcjkcharboxstop\XKhangulfont\XKinterhanjabreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjksymbol        \XKhanguljungjong = {\XKcjkcharboxstop\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkopening       \XKhanguljungjong = {\postcjkopenparen\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkclosing       \XKhanguljungjong = {\postcjkcloseparen\XKhangulfont\XKhalfsmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkcolon         \XKhanguljungjong = {\postcjkcolon\XKhangulfont\XKquatersmallbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkfullstop      \XKhanguljungjong = {\postcjkfullstop\XKhangulfont\XKfixedhalfskip\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkliaison       \XKhanguljungjong = {\XKcjkcharboxstop\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKcjkextrastop     \XKhanguljungjong = {\XKcjkcharboxstop\XKhangulfont\XKhalfsmallbreak\XKcjkcharboxstart\XKlastchar}
 \XeTeXinterchartoks \XKhangulsyllable   \XKhanguljungjong = {\XKlastchar}
-\XeTeXinterchartoks \XKhangulchosong    \XKhanguljungjong = {\XKlastchar}
 \XeTeXinterchartoks \XKhanguljungjong   \XKhanguljungjong = {\XKlastchar}
-\XeTeXinterchartoks \XKlatinfullstop    \XKhanguljungjong = {\XKperiodboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinquestion    \XKhanguljungjong = {\XKquestionboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinexclamation \XKhanguljungjong = {\XKexclamationboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatincomma       \XKhanguljungjong = {\XKcommaboxstop\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatincolon       \XKhanguljungjong = {\XKhangulfont\XKcjklatinbreak\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKlatinhyphen      \XKhanguljungjong = {\XKhangulfont\XKcjkcharboxstart\XKlastchar}
-\XeTeXinterchartoks \XKboundary         \XKhanguljungjong = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKlastchar}
 
 %%% ? latin period [.]
 \XeTeXinterchartoks \XKlatinchar        \XKlatinfullstop = {\XKwaslatinchar\XKpunctsfont\XKperiodboxstart}
@@ -820,6 +769,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinfullstop = {\XKopeningquotestop\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinfullstop = {\XKclosingquotestop\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKhanja            \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinfullstop = {\postcjkopenparen \XKwascjkchar\XKpunctsfont\XKperiodboxstart}
@@ -829,7 +779,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinfullstop = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKperiodboxstart}
 %\XeTeXinterchartoks \XKlatinfullstop    \XKlatinfullstop = {}
 %\XeTeXinterchartoks \XKlatinquestion    \XKlatinfullstop = {}
@@ -847,6 +796,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinquestion  = {\XKopeningquotestop\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinquestion  = {\XKclosingquotestop\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKhanja            \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinquestion  = {\postcjkopenparen\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
@@ -856,7 +806,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinquestion  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKquestionboxstart}
 %\XeTeXinterchartoks \XKlatinfullstop    \XKlatinquestion  = {}
 %\XeTeXinterchartoks \XKlatinquestion    \XKlatinquestion  = {}
@@ -874,6 +823,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinexclamation  = {\XKopeningquotestop\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinexclamation  = {\XKclosingquotestop\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKhanja            \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinexclamation  = {\postcjkopenparen\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
@@ -883,7 +833,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinexclamation  = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKexclamationboxstart}
 %\XeTeXinterchartoks \XKlatinfullstop    \XKlatinexclamation  = {}
 %\XeTeXinterchartoks \XKlatinquestion    \XKlatinexclamation  = {}
@@ -901,6 +850,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatincomma = {\XKopeningquotestop\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKlatincomma = {\XKclosingquotestop\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKhanja            \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKcjkopening       \XKlatincomma = {\postcjkopenparen\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
@@ -910,7 +860,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatincomma = {\XKcjkcharboxstop\XKwascjkchar\XKpunctsfont\XKcommaboxstart}
 %\XeTeXinterchartoks \XKlatinfullstop    \XKlatincomma = {}
 %\XeTeXinterchartoks \XKlatinquestion    \XKlatincomma = {}
@@ -928,6 +877,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKlatinhyphen = {\XKopeningquotestop\XKhyphenfont}
 \XeTeXinterchartoks \XKclosingquote     \XKlatinhyphen = {\XKclosingquotestop\XKhyphenfont}
 \XeTeXinterchartoks \XKhanja            \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
+\XeTeXinterchartoks \XKhanjacombining   \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKsmallkana        \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKcjksymbol        \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKcjkopening       \XKlatinhyphen = {\postcjkopenparen\XKwascjkchar\XKhyphenfont}
@@ -937,7 +887,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKcjkextrastop     \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKhangulsyllable   \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
-\XeTeXinterchartoks \XKhangulchosong    \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKhanguljungjong   \XKlatinhyphen = {\XKcjkcharboxstop\XKwascjkchar\XKhyphenfont}
 \XeTeXinterchartoks \XKlatinfullstop    \XKlatinhyphen = {\XKperiodboxstop\XKhyphenfont}
 \XeTeXinterchartoks \XKlatinquestion    \XKlatinhyphen = {\XKquestionboxstop\XKhyphenfont}
@@ -955,6 +904,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKboundary = {\XKopeningquotestop\XKendboundary\XKstoreprevfont}
 \XeTeXinterchartoks \XKclosingquote     \XKboundary = {\XKclosingquotestop\XKendboundary\XKstoreprevfont}
 \XeTeXinterchartoks \XKhanja            \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
+\XeTeXinterchartoks \XKhanjacombining   \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKsmallkana        \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKcjksymbol        \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKcjkopening       \XKboundary = {\postcjkopenparen\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
@@ -964,7 +914,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKcjkextrastop     \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKhangulsyllable   \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
-\XeTeXinterchartoks \XKhangulchosong    \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKhanguljungjong   \XKboundary = {\XKcjkcharboxstop\XKendboundary\XKwascjkchar\XKignorespaces\XKstoreprevfont}
 \XeTeXinterchartoks \XKlatinfullstop    \XKboundary = {\XKperiodboxstop\XKendboundary\XKstoreprevfont}
 \XeTeXinterchartoks \XKlatinquestion    \XKboundary = {\XKquestionboxstop\XKendboundary\XKstoreprevfont}
@@ -982,6 +931,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjkcolon = {\XKopeningquotestop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKclosingquote     \XKcjkcolon = {\XKclosingquotestop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKhanja            \XKcjkcolon = {\XKcjkcharboxstop\XKnobreak\XKquatersmallbreak\XKmaybehanjafont\precjkcolon}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjkcolon = {\XKcjkcharboxstop\XKnobreak\XKquatersmallbreak\XKmaybehanjafont\precjkcolon}
 \XeTeXinterchartoks \XKsmallkana        \XKcjkcolon = {\XKcjkcharboxstop\XKnobreak\XKquatersmallbreak\XKmaybehanjafont\precjkcolon}
 \XeTeXinterchartoks \XKcjksymbol        \XKcjkcolon = {\XKcjkcharboxstop\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKcjkopening       \XKcjkcolon = {\postcjkopenparen\XKnobreak\XKquatersmallbreak\precjkcolon}
@@ -991,7 +941,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKcjkcolon = {\XKcjkcharboxstop\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKcjkextrastop     \XKcjkcolon = {\XKcjkcharboxstop\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjkcolon = {\XKcjkcharboxstop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjkcolon = {\XKcjkcharboxstop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjkcolon = {\XKcjkcharboxstop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjkcolon = {\XKperiodboxstop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjkcolon = {\XKquestionboxstop\XKmaybehanjafont\XKnobreak\XKquatersmallbreak\precjkcolon}
@@ -1009,6 +958,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjkfullstop = {\XKopeningquotestop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKclosingquote     \XKcjkfullstop = {\XKclosingquotestop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKhanja            \XKcjkfullstop = {\XKcjkcharboxstop\XKmaybehanjafont\precjkfullstop}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjkfullstop = {\XKcjkcharboxstop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKsmallkana        \XKcjkfullstop = {\XKcjkcharboxstop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKcjksymbol        \XKcjkfullstop = {\XKcjkcharboxstop\precjkfullstop}
 \XeTeXinterchartoks \XKcjkopening       \XKcjkfullstop = {\postcjkopenparen\precjkfullstop}
@@ -1018,7 +968,6 @@
 \XeTeXinterchartoks \XKcjkliaison       \XKcjkfullstop = {\XKcjkcharboxstop\precjkfullstop}
 \XeTeXinterchartoks \XKcjkextrastop     \XKcjkfullstop = {\XKcjkcharboxstop\precjkfullstop}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjkfullstop = {\XKcjkcharboxstop\XKmaybehanjafont\precjkfullstop}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjkfullstop = {\XKcjkcharboxstop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjkfullstop = {\XKcjkcharboxstop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjkfullstop = {\XKperiodboxstop\XKmaybehanjafont\precjkfullstop}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjkfullstop = {\XKquestionboxstop\XKmaybehanjafont\precjkfullstop}
@@ -1036,6 +985,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjkliaison = {\XKopeningquotestop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKcjkliaison = {\XKclosingquotestop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhanja            \XKcjkliaison = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjkliaison = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKcjkliaison = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 %\XeTeXinterchartoks \XKcjksymbol        \XKcjkliaison = {}
 \XeTeXinterchartoks \XKcjkopening       \XKcjkliaison = {\postcjkopenparen\XKcjkcharboxstart}
@@ -1045,7 +995,6 @@
 %\XeTeXinterchartoks \XKcjkliaison       \XKcjkliaison = {}
 %\XeTeXinterchartoks \XKcjkextrastop     \XKcjkliaison = {}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjkliaison = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjkliaison = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjkliaison = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjkliaison = {\XKperiodboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjkliaison = {\XKquestionboxstop\XKmaybehanjafont\XKcjkcharboxstart}
@@ -1063,6 +1012,7 @@
 \XeTeXinterchartoks \XKopeningquote     \XKcjkextrastop = {\XKopeningquotestop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKclosingquote     \XKcjkextrastop = {\XKclosingquotestop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhanja            \XKcjkextrastop = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
+\XeTeXinterchartoks \XKhanjacombining   \XKcjkextrastop = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKsmallkana        \XKcjkextrastop = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 %\XeTeXinterchartoks \XKcjksymbol        \XKcjkextrastop = {}
 \XeTeXinterchartoks \XKcjkopening       \XKcjkextrastop = {\postcjkopenparen\XKcjkcharboxstart}
@@ -1072,7 +1022,6 @@
 %\XeTeXinterchartoks \XKcjkliaison       \XKcjkextrastop = {}
 %\XeTeXinterchartoks \XKcjkextrastop     \XKcjkextrastop = {}
 \XeTeXinterchartoks \XKhangulsyllable   \XKcjkextrastop = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
-\XeTeXinterchartoks \XKhangulchosong    \XKcjkextrastop = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKhanguljungjong   \XKcjkextrastop = {\XKcjkcharboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKlatinfullstop    \XKcjkextrastop = {\XKperiodboxstop\XKmaybehanjafont\XKcjkcharboxstart}
 \XeTeXinterchartoks \XKlatinquestion    \XKcjkextrastop = {\XKquestionboxstop\XKmaybehanjafont\XKcjkcharboxstart}
@@ -1510,8 +1459,6 @@
   \global\XeTeXinterchartoks\XKboundary\XKhanja          = {\empty}%
   \global\XeTeXinterchartoks\XKboundary\XKsmallkana      = {\empty}%
   \global\XeTeXinterchartoks\XKboundary\XKhangulsyllable = {\empty}%
-  \global\XeTeXinterchartoks\XKboundary\XKhanguljungjong = {\empty}%
-  \global\XeTeXinterchartoks\XKboundary\XKhangulchosong  = {\empty}%
 }
 \def\XKendboundary{%
   \global\XeTeXinterchartoks\XKboundary\XKlatinnumber    = {\XKundoignorespaces\XKlatinnumfont  \XKbeginboundary\XKlastchar}%
@@ -1519,8 +1466,6 @@
   \global\XeTeXinterchartoks\XKboundary\XKhanja          = {\XKhanjafont \XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKhanjalastchar}%
   \global\XeTeXinterchartoks\XKboundary\XKsmallkana      = {\XKhanjafont \XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKhanjalastchar}%
   \global\XeTeXinterchartoks\XKboundary\XKhangulsyllable = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKcjklastchar}%
-  \global\XeTeXinterchartoks\XKboundary\XKhanguljungjong = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKlastchar}%
-  \global\XeTeXinterchartoks\XKboundary\XKhangulchosong  = {\XKhangulfont\XKafterboundaryskip\XKbeginboundary\XKcjkcharboxstart\XKlastchar}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1542,7 +1487,6 @@
 
 \protected\def\disablejamoautojosa{% newly added by v2.1
   \XeTeXinterchartoks\XKhangulsyllable\XKhanguljungjong = {}%
-  \XeTeXinterchartoks\XKhangulchosong \XKhanguljungjong = {}%
   \XeTeXinterchartoks\XKhanguljungjong\XKhanguljungjong = {}%
 }
 
