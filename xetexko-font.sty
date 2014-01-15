@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2013/12/14 v2.3 Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2014/01/15 v2.4 Font commands for XeTeX-ko]
 
 \RequirePackage{fontspec}
 \RequirePackage{xkeyval}
@@ -121,7 +121,11 @@
 % adhochangulfont/adhochanjafont, hangulfontspec/hanjafontspec
 \protected\def\adhochangulfont{\@ifnextchar[\@adhochangulfont{\@adhochangulfont[]}}
 \def\@adhochangulfont[#1]{%
-  \def\XKhangulfont{\chardef\XKcurrentfont\@ne\XK@adhoc@hangul@font\XK@adhoc@hangul@options}%
+  \def\XKhangulfont{%
+    \XK@storeltnfont\chardef\XKcurrentfont\@ne
+    \XK@adhoc@hangul@font\XK@adhoc@hangul@options
+    \XK@storecjkfont
+  }%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#1}%
   \edef\XK@adhoc@hangul@options{\the\XK@font@options}%
@@ -130,7 +134,11 @@
 
 \protected\def\adhochanjafont{\@ifnextchar[\@adhochanjafont{\@adhochanjafont[]}}
 \def\@adhochanjafont[#1]{%
-  \def\XKhanjafont{\chardef\XKcurrentfont\tw@\XK@adhoc@hanja@font\XK@adhoc@hanja@options}%
+  \def\XKhanjafont{%
+    \XK@storeltnfont\chardef\XKcurrentfont\tw@
+    \XK@adhoc@hanja@font\XK@adhoc@hanja@options
+    \XK@storecjkfont
+  }%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#1}%
   \edef\XK@adhoc@hanja@options{\the\XK@font@options}%
@@ -144,8 +152,12 @@
 \protected\def\newhangulfontfamily#1{%
   \@ifnextchar[{\@newhangulfontfamily#1}{\@newhangulfontfamily#1[]}}
 \def\@newhangulfontfamily#1[#2]{%
-  \protected\def#1{\def\XKhangulfont{\chardef\XKcurrentfont\@ne\csname\XK@newfont@family\string#1\endcsname
-    \csname\XK@newfont@options\string#1\endcsname}}%
+  \protected\def#1{\def\XKhangulfont{%
+      \XK@storeltnfont\chardef\XKcurrentfont\@ne
+      \csname\XK@newfont@family \string#1\endcsname
+      \csname\XK@newfont@options\string#1\endcsname
+      \XK@storecjkfont
+  }}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
   \expandafter\edef\csname\XK@newfont@options\string#1\endcsname
@@ -157,8 +169,12 @@
 \protected\def\newhanjafontfamily#1{%
   \@ifnextchar[{\@newhanjafontfamily#1}{\@newhanjafontfamily#1[]}}
 \def\@newhanjafontfamily#1[#2]{%
-  \protected\def#1{\def\XKhanjafont{\chardef\XKcurrentfont\tw@\csname\XK@newfont@family\string#1\endcsname
-    \csname\XK@newfont@options\string#1\endcsname}}%
+  \protected\def#1{\def\XKhanjafont{%
+      \XK@storeltnfont\chardef\XKcurrentfont\tw@
+      \csname\XK@newfont@family\string#1\endcsname
+      \csname\XK@newfont@options\string#1\endcsname
+      \XK@storecjkfont
+  }}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
   \expandafter\edef\csname\XK@newfont@options\string#1\endcsname
@@ -171,8 +187,12 @@
 \protected\def\newhangulfontface#1{%
   \@ifnextchar[{\@newhangulfontface#1}{\@newhangulfontface#1[]}}
 \def\@newhangulfontface#1[#2]{%
-  \protected\def#1{\def\XKhangulfont{\chardef\XKcurrentfont\@ne\csname\XK@newfont@family\string#1\endcsname
-    \csname\XK@newfont@options\string#1\endcsname}}%
+  \protected\def#1{\def\XKhangulfont{%
+      \XK@storeltnfont\chardef\XKcurrentfont\@ne
+      \csname\XK@newfont@family\string#1\endcsname
+      \csname\XK@newfont@options\string#1\endcsname
+      \XK@storecjkfont
+  }}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
   \expandafter\edef\csname\XK@newfont@options\string#1\endcsname
@@ -184,8 +204,13 @@
 \protected\def\newhanjafontface#1{%
   \@ifnextchar[{\@newhanjafontface#1}{\@newhanjafontface#1[]}}
 \def\@newhanjafontface#1[#2]{%
-  \protected\def#1{\def\XKhanjafont{\chardef\XKcurrentfont\tw@\csname\XK@newfont@family\string#1\endcsname
-    \csname\XK@newfont@options\string#1\endcsname}}%
+  \protected\def#1{\def\XKhanjafont{%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\tw@
+      \csname\XK@newfont@family\string#1\endcsname
+      \csname\XK@newfont@options\string#1\endcsname
+      \XK@storecjkfont
+  }}%
   \XK@font@options{}%
   \setkeys*[xtxko]{font}{#2}%
   \expandafter\edef\csname\XK@newfont@options\string#1\endcsname
@@ -292,44 +317,68 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % font switching for latex
-\def\XKstoreprevfont{\chardef\XKcurrentfont\z@\fontfamily\XKprevfont}
-\def\XK@storeprevfont{\edef\XKprevfont{\f@family}} \XK@storeprevfont
-
-\protected\edef\selectfont{\unexpanded\expandafter{\selectfont
-    \ifcase\XKcurrentfont\XK@storeprevfont\fi
-}}
-
-\def\XKlatinfont{\chardef\XKcurrentfont\z@\fontfamily\XKprevfont\selectfont}
+\let\XKstoreprevfont\relax
+\def\XK@storeltnfont{\ifcase\XKcurrentfont\let\XKltnprevfont\f@family\fi}
+\def\XK@storecjkfont{\let\XKcjkprevfont\f@family}
+\def\XKlatinfont{%
+  \ifx\f@family\XKcjkprevfont \let\f@family\XKltnprevfont \fi
+  \chardef\XKcurrentfont\z@\selectfont
+}
 
 \def\XK@rm@korean@font{%
-  \def\XKhangulfont{\chardef\XKcurrentfont\@ne\kormainfont}%
-  \def\XKhanjafont {\chardef\XKcurrentfont\tw@\hnjmainfont}%
+  \def\XKhangulfont{%
+    \XK@storeltnfont
+    \chardef\XKcurrentfont\@ne\kormainfont
+    \XK@storecjkfont
+  }%
+  \def\XKhanjafont {%
+    \XK@storeltnfont
+    \chardef\XKcurrentfont\tw@\hnjmainfont
+    \XK@storecjkfont
+  }%
 }
 \def\XK@sf@korean@font{%
-  \def\XKhangulfont{\chardef\XKcurrentfont\@ne\korsansfont}%
-  \def\XKhanjafont {\chardef\XKcurrentfont\tw@\hnjsansfont}%
+  \def\XKhangulfont{%
+    \XK@storeltnfont
+    \chardef\XKcurrentfont\@ne\korsansfont
+    \XK@storecjkfont
+  }%
+  \def\XKhanjafont {%
+    \XK@storeltnfont
+    \chardef\XKcurrentfont\tw@\hnjsansfont
+    \XK@storecjkfont
+  }%
 }
 \def\XK@tt@korean@font{%
-  \def\XKhangulfont{\chardef\XKcurrentfont\@ne\kormonofont}%
-  \def\XKhanjafont {\chardef\XKcurrentfont\tw@\hnjmonofont}%
+  \def\XKhangulfont{%
+    \XK@storeltnfont
+    \chardef\XKcurrentfont\@ne\kormonofont
+    \XK@storecjkfont
+  }%
+  \def\XKhanjafont {%
+    \XK@storeltnfont
+    \chardef\XKcurrentfont\tw@\hnjmonofont
+    \XK@storecjkfont
+  }%
 }
 
 \edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
 \edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
 \edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font\disablehangulspacing}}
-\edef\verbatim@font{\unexpanded\expandafter{\verbatim@font\disablehangulspacingandlinebreak
-  \def\XKstoreprevfont{\chardef\XKcurrentfont\z@\fontfamily\XKprevfont\selectfont}% latin space
+\edef\verbatim@font{\unexpanded\expandafter{\verbatim@font
+    \disablehangulspacingandlinebreak
+    \let\XKstoreprevfont\XKlatinfont
 }}
 
 \AtBeginDocument{
   \ifx\f@family\rmdefault
-    \rmfamily
+    \XK@rm@korean@font
     \protected\edef\normalfont{\unexpanded\expandafter{\normalfont\XK@rm@korean@font}}
   \else \ifx\f@family\sfdefault
-    \sffamily
+    \XK@sf@korean@font
     \protected\edef\normalfont{\unexpanded\expandafter{\normalfont\XK@sf@korean@font}}
   \else
-    \ttfamily
+    \XK@tt@korean@font
     \protected\edef\normalfont{\unexpanded\expandafter{\normalfont\XK@tt@korean@font}}
   \fi\fi
   \let\reset@font\normalfont
