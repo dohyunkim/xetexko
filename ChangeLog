@@ -1,3 +1,11 @@
+2014-01-16      Dohyun Kim <nomos at ktug org>
+
+	Version 2.4
+
+	* xetexko-space.sty: support Ideographic Variation Selector.
+	* xetexko-font.sty: fix a conflict with everysel.sty, reported by
+	Hoze Lee & Juho Lee
+
 2013-12-14      Dohyun Kim <nomos at ktug org>
 
 	Version 2.3
