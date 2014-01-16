@@ -4,7 +4,7 @@
 
 	* xetexko-space.sty: support Ideographic Variation Selector.
 	* xetexko-font.sty: fix a conflict with everysel.sty, reported by
-	Hoze Lee & Juho Lee
+	Hoze Yi & Juho Lee
 
 2013-12-14      Dohyun Kim <nomos at ktug org>
 
