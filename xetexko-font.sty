@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2014/01/15 v2.4 Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2014/01/29 v2.5 Font commands for XeTeX-ko]
 
 \RequirePackage{fontspec}
 \RequirePackage{xkeyval}
@@ -317,13 +317,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % font switching for latex
-\let\XKstoreprevfont\relax
-\def\XK@storeltnfont{\ifcase\XKcurrentfont\let\XKltnprevfont\f@family\fi}
+\def\XKstoreprevfont{\ifx\f@family\XKcjkprevfont\let\f@family\XKltnprevfont\fi}
+\def\XK@storeltnfont{\ifx\f@family\XKcjkprevfont\else\let\XKltnprevfont\f@family\fi}
 \def\XK@storecjkfont{\let\XKcjkprevfont\f@family}
-\def\XKlatinfont{%
-  \ifx\f@family\XKcjkprevfont \let\f@family\XKltnprevfont \fi
-  \chardef\XKcurrentfont\z@\selectfont
-}
+\edef\XKlatinfont{\unexpanded\expandafter{\XKstoreprevfont\chardef\XKcurrentfont\z@\selectfont}}
 
 \def\XK@rm@korean@font{%
   \def\XKhangulfont{%
