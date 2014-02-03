@@ -7,8 +7,10 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
-\setmainhangulfont[UprightFont=* Light, Ligatures=TeX]{KoPubBatang_Pro}
-\setsanshangulfont[UprightFont=* Light, Ligatures=TeX]{KoPubDotum_Pro}
+\setmainhangulfont[BoldFont=KoPubBatang_Pro Bold.otf,
+  Ligatures=TeX]{KoPubBatang_Pro Light.otf}
+\setsanshangulfont[BoldFont=KoPubDotum_Pro Bold.otf,
+  Ligatures=TeX]{KoPubDotum_Pro Medium.otf}
 \usepackage{xetexko-hanging}
 \usepackage{hologo,xcolor,ulem}
 \usepackage[bookmarksnumbered]{hyperref}
@@ -50,15 +52,15 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.5\quad\today}
+\date{Version 2.4\quad\today}
 \maketitle
 
 \begin{quote}\small
   For a summary introduction in English,
   please see \verb+README+ file in this package.
 
-  v2.0 이후 주요 변경 사항
   \begin{itemize}\itemsep=0pt
+    \item[v2.0]---
     \item 플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.
     \item \verb+[unfonts]+ 옵션이 없으면 은글꼴을 자동으로 부르지 않는다.
     \item CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
@@ -149,6 +151,11 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 \end{verbatim}
 \end{plaintex}
 
+한편 버전 2.2부터는 \cs{fallbackhanjafont}를 정의해두면
+\hemph{한자 글꼴에도 없는 한자}를
+이 글꼴에서 찾아 식자한다. \verb|\newfontfamily| 명령으로 정의한다.
+
+\section{글꼴 명령 (계속)}
 \begin{verbatim}
   \hangulfontspec[Ligatures=TeX]{NanumGothic}
   \hanjafontspec [Ligatures=TeX]{UnGungseo}
@@ -172,14 +179,9 @@ fontspec 패키지의 \verb+\newfontfamily+ \verb+\newfontface+ 명령을
 fontspec의 \verb+\addfontfeature+ 명령을 구현한 것이다.
 fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 
-\smallskip
 참고로, 한자와 한글을 같은 글꼴로 식자하고 싶을 때 글꼴 설정을
 번거롭게 두 번 할 필요 없이 한글 글꼴만 설정한 뒤 간단히
   \cs{hanjabyhangulfont}를 선언하면 된다.
-
-한편 버전 2.2부터는 \cs{fallbackhanjafont}를 정의해두면
-\hemph{한자 글꼴에도 없는 한자}를
-이 글꼴에서 찾아 식자한다. \verb|\newfontfamily| 명령으로 정의한다.
 
 
 \section{기호 글꼴 명령}
@@ -322,7 +324,7 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
   \item[\cs{everyhangul}, \cs{everyhanja}]
     한글 또는 한자에 대해 글자마다 지시한 명령을 수행한다. 예컨대
     \verb|\everyhangul{\fbox{#1}}| 명령은 모든
-    {\everyhangul{\fbox{#1}}\fboxsep=0.4pt 한글 주위에 박스}를
+    {\everyhangul{\fbox{#1}}\fboxsep=1pt 한글 주위에 박스}를
     두른다.  2.2 버전의 새로운 명령. 다른 글꼴 옵션과 충돌할 수 있으므로
     주의를 요한다.
 
@@ -390,7 +392,6 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 \end{figure}
 
 옛한글을 사용하기 위해선 \verb|Script=Hangul| 옵션을 주는 것으로 족하다.
-호환성을 위해서 \verb|YetHangul| 옵션도 제공한다.
 옛한글 식자는 고급 오픈타입 기능을 이용하므로
 폰트가 이런 기능을 제공해야만 가능한 일이다.\footnote{%
 \today\ 현재, 이런 기능을 제공하는 폰트로는 마이크로소프트 오피스 플러스팩이
@@ -411,7 +412,7 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{16em}
-  \hangulfontspec[Vertical=RotatedGlyphs]{Adobe Myungjo Std}
+  \hangulfontspec[Vertical=RotatedGlyphs]{AdobeMyungjoStd-Medium.otf}
   \hangulmarks \hanjabyhangulfont \parindent-1em\leftskip1em
   \disablecjksymbolspacing
 \noindent 님의 침묵 {\small(The Silent Beloved)}
