@@ -376,11 +376,10 @@
     \let\XKstoreprevfont\XKlatinfont
 }}
 
-\edef\reserved@a{\familydefault}
-\ifx\reserved@a\rmdefault
+\expandafter\ifx\familydefault\rmdefault
   \XK@rm@korean@font
   \protected\edef\normalfont{\unexpanded\expandafter{\normalfont\XK@rm@korean@font}}
-\else \ifx\reserved@a\sfdefault
+\else \expandafter\ifx\familydefault\sfdefault
   \XK@sf@korean@font
   \protected\edef\normalfont{\unexpanded\expandafter{\normalfont\XK@sf@korean@font}}
 \else
