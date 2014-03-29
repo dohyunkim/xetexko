@@ -10,9 +10,11 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2014/03/18 v2.5 Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2014/03/28 v2.5 Font commands for XeTeX-ko]
 
+\let\xetexko@f@size\f@size
 \RequirePackage{fontspec}
+\let\f@size\xetexko@f@size
 \RequirePackage{xkeyval}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
