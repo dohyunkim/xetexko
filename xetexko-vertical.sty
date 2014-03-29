@@ -63,9 +63,15 @@
   \else
     \def\XK@vert@half@em{.5em}%
   \fi
-  \def\precjkopenparen {\leavevmode\hbox to\XK@vert@half@em\bgroup\hss}%
-  \def\precjkcloseparen{\leavevmode\hbox to\XK@vert@half@em\bgroup}%
-  \def\precjkfullstop  {\leavevmode\hbox to\XK@vert@half@em\bgroup}%
+  \def\precjkopenparen {\leavevmode
+    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+    \hbox to\XK@vert@half@em\bgroup\hss}%
+  \def\precjkcloseparen{\leavevmode
+    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+    \hbox to\XK@vert@half@em\bgroup}%
+  \def\precjkfullstop  {\leavevmode
+    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+    \hbox to\XK@vert@half@em\bgroup}%
   \spaceskip\XK@vert@half@em plus\XK@vert@half@em\relax
   \parindent\XK@vert@half@em \parindent2\parindent
 }

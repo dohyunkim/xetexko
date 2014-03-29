@@ -411,11 +411,14 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 
 \begin{figure}
 \begin{example}
-\hfil\begin{vertical}{16em}
-  \hangulfontspec[Vertical=RotatedGlyphs]{AdobeMyungjoStd-Medium.otf}
-  \hangulmarks \hanjabyhangulfont \parindent-1em\leftskip1em
-  \disablecjksymbolspacing
-\noindent 님의 침묵 {\small(The Silent Beloved)}
+  \verticalem=1.05em % hcr fonts' vertical em
+\hfil\begin{vertical}{16\verticalem}
+  \sffamily % hcr fonts do not have vrt2 feature
+  \hangulfontspec[Vertical=RotatedGlyphs,RawFeature=+vert,charraise=.5ex]
+    {HCR Dotum LVT}
+  \hanjabyhangulfont \parindent-\verticalem\leftskip\verticalem
+  \def\hellipsis{$\cdots\cdots$} % hcr fonts' ellipsis not good
+\noindent 님의 침묵 (The Silent Beloved)
 \smallbreak
 \hfil\hfil 한 용 운\hfil
 \bigbreak
@@ -454,9 +457,10 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \cs{verticalem=1.05em}과 같은 선언을 미리 해두는 것이 좋다.
 
 혹시 세로로 식자되지 않는 라틴문자 부분이 있다면
-\cs{vertlatin} 명령으로 감싸야 세로쓰기에 어울리는
-결과를 얻을 수 있다. 다만 이때 인자는 박스로 처리되므로
-그 안에서 줄바꿈이 일어나지 않는다.
+베이스라인이 한글과 어울리지 않을 수 있다. 이를 교정하려면
+\verb|charraise| 옵션을 한글 폰트에 준다.
+이 방법이 여의치 않으면 라틴문자 부분을 \cs{vertlatin} 명령으로 감쌀 수도
+있는데, 이때 인자가 박스로 처리되어 그 안에서 줄바꿈이 일어나지 않는다.
 \medbreak
 \begin{plaintex}
 플레인텍이라면,

@@ -1,8 +1,9 @@
-2014-03-18      Dohyun Kim <nomos at ktug org>
+2014-03-28      Dohyun Kim <nomos at ktug org>
 
 	Version 2.5
 
 	* xetexko-font.sty: fixed a bug wrt hangul in preamble
+	* xetexko-vertical.sty: fixed a bug wrt 'charraise' of CJK symbols
 
 2014-02-02      Dohyun Kim <nomos at ktug org>
 
