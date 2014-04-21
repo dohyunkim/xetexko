@@ -414,7 +414,7 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
   \verticalem=1.05em % hcr fonts' vertical em
 \hfil\begin{vertical}{16\verticalem}
   \sffamily % hcr fonts do not have vrt2 feature
-  \hangulfontspec[Vertical=RotatedGlyphs,RawFeature=+vert,charraise=.5ex]
+  \hangulfontspec[RawFeature=vertical;+vert;+vhal,charraise=.5ex]
     {HCR Dotum LVT}
   \hanjabyhangulfont \parindent-\verticalem\leftskip\verticalem
   \def\hellipsis{$\cdots\cdots$} % hcr fonts' ellipsis not good
@@ -505,6 +505,8 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
   \usepackage{xetexko-hanging}
 \end{verbatim}
 \cs{hangingpunctuation} 명령은 버전 2.2 이후 불필요해졌다.
+글자 내밀기 기본값에 차이가 좀 있긴 하지만,
+microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 있다.
 
 %\begin{figure}
 %\Large

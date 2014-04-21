@@ -23,8 +23,7 @@
   \def\hangulfont{\font\hangfnt}
   \def\hanjafont {\font\hanifnt}
   %\hangulfont="[UnBatang]:mapping=tex-text" at 10pt
-  %\let\hanifnt\hangfnt
-  \let\hangfnt\relax \let\hanifnt\relax
+  \let\hangfnt\relax \def\hanifnt{\hangfnt}
   %%% 수식 한글
   \newfam\symmathhangul
   \def\setmathhangulfont#1#{\setmathhangulfont@}
@@ -43,7 +42,7 @@
   \expandafter\endinput
 \fi
 
-\ProvidesPackage{xetexko}[2013/12/14 v2.3 Typesetting Korean with XeLaTeX]
+\ProvidesPackage{xetexko}[2014/03/28 v2.5 Typesetting Korean with XeLaTeX]
 
 \newif\if@hangul
 \newif\if@hanja
