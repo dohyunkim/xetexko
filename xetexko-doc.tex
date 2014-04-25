@@ -52,7 +52,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.4\quad\today}
+\date{Version 2.5\quad\today}
 \maketitle
 
 \begin{quote}\small
@@ -246,7 +246,7 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 이 때 나눔고딕 글꼴에만 한글 마이너스 자간이 작동한다.
 \dotemph{고정폭 글꼴을 제외한} 한글·한자 글꼴
 명령에 이런 옵션을 쓸 수 있다.
-허용되는 옵션은 다음과 같다. 각 항목의 길이값은 기본값을 뜻한다.
+허용되는 옵션은 다음과 같다. 각 항목의 길이값은 디폴트값을 뜻한다.
 \begin{description}\itemsep0pt
 \item[hu]
   영문자와 한글 사이 간격. 영문 괄호와 한글 사이 간격은 그 두 배이다. 0.06em.
@@ -338,13 +338,8 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 
   \item[\cs{disablejamoautojosa}]
 옛한글 자모에 한해서 자동조사 기능을 끈다.
-옛한글 자모 사용시 이를테면 \verb|[Mapping=tm-reorder]|\footnote{%
-  \url{http://raw.github.com/dohyunkim/kotex-utils/master/tm-reorder.map}.
-  음절 끝의 방점을 음절 처음으로 옮기는 기능을 한다.  윈도8에 포함된
-  맑은고딕이나 최근 버전의 함초롬 LVT 글꼴로 옛한글을 조판할 때 필요할 수
-  있다. 이 맵핑 파일을 사용하려면 \texttt{teckit\_compile} 명령을 이용해서
-  미리 컴파일해두어야 한다.}
-글꼴 옵션을 주어 글자를 맵핑하려면 이 명령을 선언해두어야 정상 작동한다.
+옛한글 자모에 영향을 주는 \verb+Mapping+ 글꼴 옵션을 사용해야 한다면
+이 명령을 선언해두어야 정상 작동한다.
 버전 2.1에서 새롭게 추가된 명령이다.
 
   \item[\cs{disablecjksymbolspacing}]
@@ -355,8 +350,7 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
   \item[\cs{disablehangulspacing}]
 한글조판에 관련된 모든 미세간격을 영(zero)으로 돌린다. 한글 자간도,
 영문자와 한글 사이 간격도, 구두점 위치 조정도, 구두점 사이의 간격도
-모두 작동하지 않게 된다. 그러나 CJK 글자 사이의 줄바꿈 허용만은 여전히
-동작한다.
+모두 작동하지 않는다. 그러나 CJK 글자 사이의 줄바꿈 허용만은 유지된다.
 
   \item[\cs{disablehangulspacingandlinebreak}]
 위 명령과 마찬가지로 모든 미세간격을 금지할 뿐만 아니라 CJK 글자 사이의
@@ -534,7 +528,7 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 수식 한글은 따로 설정하지 않으면 문서의 기본 글꼴을 따라가지만
 굳이 설정하려면 다음과 같이 한다. 이 명령은 플레인텍에서도 쓸 수 있다.
 \begin{verbatim}
-  \setmathhangulfont[ExternalLocation]{UnBatang}
+  \setmathhangulfont{NanumGothic}
 \end{verbatim}
 현재 한글만 쓸 수 있게 설정되어 있다.
 한자도 수식에 직접 입력하려면 사용자는
