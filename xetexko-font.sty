@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2014/03/28 v2.5 Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2014/05/11 v2.6 Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}
@@ -19,21 +19,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% for old hangul rendering
-\ExplSyntaxOn
-\fontspec_define_font_feature:n {YetHangul}
-\keys_define:nn {fontspec}
-  {
-    YetHangul .default:n = {On} ,
-    YetHangul / On .code:n = {
-      \fontspec_update_fontid:n  {yethangul:on}
-      \fontspec_update_featstr:n {script=hang}
-    } ,
-    YetHangul / Off .code:n = {
-      \fontspec_update_fontid:n  {yethangul:off}
-      \fontspec_update_featstr:n {-ljmo;-vjmo;-tjmo}
-    }
-  }
-\ExplSyntaxOff
+\newfontfeature{YetHangul}{script=hang}
 
 %%%%%%%%%%%%%%%%%%%%%
 % hangul font options

@@ -368,7 +368,7 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 
 \begin{figure}
   \begin{example}
-    \hangulfontspec[YetHangul]{HCR Dotum LVT}
+    \hangulfontspec[Script=Hangul]{HCR Dotum LVT}
     \hanjabyhangulfont%\parindent1em
     \obeylines\leftskip10em
 뎨 가ᄂᆞᆫ 뎌 각시 본 듯도 ᄒᆞᆫ뎌이고.
@@ -405,14 +405,10 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 
 \begin{figure}
 \begin{example}
-  \verticalem=1.05em % hcr fonts' vertical em
-\hfil\begin{vertical}{16\verticalem}
-  \sffamily % hcr fonts do not have vrt2 feature
-  \hangulfontspec[RawFeature=vertical;+vert;+vhal,charraise=.5ex]
-    {HCR Dotum LVT}
-  \hanjabyhangulfont \parindent-\verticalem\leftskip\verticalem
-  \def\hellipsis{$\cdots\cdots$} % hcr fonts' ellipsis not good
-\noindent 님의 침묵 (The Silent Beloved)
+\hfil\begin{vertical}{16em}
+  \hangulfontspec[Vertical=RotatedGlyphs]{AdobeMyungjoStd-Medium.otf}
+  \hangulmarks \hanjabyhangulfont \parindent-1em\leftskip1em
+\noindent 님의 침묵 {\small(The Silent Beloved)}
 \smallbreak
 \hfil\hfil 한 용 운\hfil
 \bigbreak

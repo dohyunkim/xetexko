@@ -1,5 +1,5 @@
 
-XeTeX-ko Package version 2.4 (2014/03/28)
+XeTeX-ko Package version 2.6 (2014/05/11)
 =========================================
 
 XeTeX-ko is a macro package for Xe(La)TeX which supports typesetting
@@ -25,7 +25,7 @@ Author
 ------
 Please report any errors or suggestions to
     Dohyun Kim <nomos at ktug org>
-or leave messages in the issue tracker at: 
+or leave messages in the issue tracker at:
     <http://github.com/dohyunkim/xetexko>
 
 
