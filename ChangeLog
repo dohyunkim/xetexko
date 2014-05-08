@@ -2,8 +2,10 @@
 
 	Version 2.6
 
-	* xetexko-font.sty: Font option YetHangul is still there, but
-	YetHangul=Off has gone now.
+	* xetexko-font.sty: font option YetHangul is still there, but
+	YetHangul=Off has been removed
+	* xetexko-font.sty: use latex3 syntax for defining font commands;
+	remove dependency on xkeyval package
 
 2014-03-28      Dohyun Kim <nomos at ktug org>
 
