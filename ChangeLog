@@ -2,6 +2,8 @@
 
 	Version 2.6
 
+	* xetexko-space.sty: assign U+FE00 block to IVS char as per
+	unicode 6.3
 	* xetexko-font.sty: font option YetHangul is still there, but
 	YetHangul=Off has been removed
 	* xetexko-font.sty: use latex3 syntax for defining font commands;

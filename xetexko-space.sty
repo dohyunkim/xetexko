@@ -33,6 +33,14 @@
 %%%%%%%%%%%%%%%%%%%%%
 % assign char classes
 
+\def\XK@assign@char@class#1#2#3{%
+\count@=#1\relax
+\loop
+  \XeTeXcharclass\count@ = #3\relax
+  \ifnum\count@<#2\relax \advance\count@\@ne
+\repeat
+}
+
 %%% default assignments (see unicode-letters.tex)
 % CJK hanja                   = class 1
 % CJK openings                = class 2
@@ -70,12 +78,8 @@
 \XeTeXcharclass "30F5 = \XKsmallkana
 \XeTeXcharclass "30F6 = \XKsmallkana
 \XeTeXcharclass "30FC = \XKsmallkana
-\count@="31F0 \loop
-  \XeTeXcharclass\count@ = \XKsmallkana
-  \ifnum\count@<"31FF \advance\count@\@ne \repeat
-\count@="FF67 \loop
-  \XeTeXcharclass\count@ = \XKsmallkana
-  \ifnum\count@<"FF70 \advance\count@\@ne \repeat
+\XK@assign@char@class{"31F0}{"31FF}\XKsmallkana
+\XK@assign@char@class{"FF67}{"FF70}\XKsmallkana
 
 %%%
 \XeTeXcharclass "25A1 = \XKhanja         % □
@@ -179,22 +183,10 @@
 \XeTeXcharclass "215C = \XKcjksymbol % ⅜
 \XeTeXcharclass "215D = \XKcjksymbol % ⅝
 \XeTeXcharclass "215E = \XKcjksymbol % ⅞
-\count@ "2160 % Ⅰ
-\loop
-  \XeTeXcharclass\count@\XKcjksymbol
-  \ifnum\count@ < "216B % Ⅻ
-    \advance\count@\@ne \repeat
-\count@ "2170 % ⅰ
-\loop
-  \XeTeXcharclass\count@\XKcjksymbol
-  \ifnum\count@ < "217B % ⅻ
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{"2160}{"216B}\XKcjksymbol % Ⅰ .. Ⅻ
+\XK@assign@char@class{"2170}{"217B}\XKcjksymbol % ⅰ .. ⅻ
 %% math symbols (?)
-\count@ "2190 % ←
-\loop
-  \XeTeXcharclass\count@\XKcjksymbol
-  \ifnum\count@ < "2199 % ↙
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{"2190}{"2199}\XKcjksymbol % ← .. ↙
 \XeTeXcharclass "21D2 = \XKcjksymbol % ⇒
 \XeTeXcharclass "21D4 = \XKcjksymbol % ⇔
 \XeTeXcharclass "2200 = \XKcjksymbol % ∀
@@ -234,20 +226,12 @@
 \XeTeXcharclass "2299 = \XKcjksymbol % ⊙
 \XeTeXcharclass "22A5 = \XKcjksymbol % ⊥
 \XeTeXcharclass "2312 = \XKcjksymbol % ⌒
-\count@ "2460 % ①
-\loop
-  \XeTeXcharclass\count@\XKcjksymbol
-  \ifnum\count@ < "24EA % ⓪
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{"2460}{"24EA}\XKcjksymbol % ① .. ⓪
 \XeTeXcharclass "2500 = \XKcjksymbol % ─
 \XeTeXcharclass "2501 = \XKcjksymbol % ━
 \XeTeXcharclass "2502 = \XKcjksymbol % │
 \XeTeXcharclass "2503 = \XKcjksymbol % ┃
-\count@ "250C % ─
-\loop
-  \XeTeXcharclass\count@\XKcjksymbol
-  \ifnum\count@ < "254B % ╋
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{"250C}{"254B}\XKcjksymbol % ─ .. ╋
 \XeTeXcharclass "2592 = \XKcjksymbol % ▒
 \XeTeXcharclass "25A0 = \XKcjksymbol % ■
 %\XeTeXcharclass "25A1 = \XKcjksymbol % □
@@ -305,40 +289,17 @@
 
 %%% hangul syllables
 \newXeTeXintercharclass \XKhangulsyllable
-\count@ "AC00
-\loop
-  \XeTeXcharclass\count@\XKhangulsyllable
-  \ifnum\count@ < "D7A3
-    \advance\count@\@ne \repeat
-\count@ "3131 % treat compatibility jamo as hangul syllable
-\loop
-  \XeTeXcharclass\count@\XKhangulsyllable
-  \ifnum\count@ < "318E
-    \advance\count@\@ne \repeat
-%%% leading consonants jamo as well
-\count@ "1100
-\loop
-  \XeTeXcharclass\count@\XKhangulsyllable
-  \ifnum\count@ < "115F
-    \advance\count@\@ne \repeat
-\count@ "A960
-\loop
-  \XeTeXcharclass\count@\XKhangulsyllable
-  \ifnum\count@ < "A97C
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{"AC00}{"D7A3}\XKhangulsyllable
+% treat compatibility jamo as hangul syllable
+\XK@assign@char@class{"3131}{"318E}\XKhangulsyllable
+% leading consonants jamo as well
+\XK@assign@char@class{"1100}{"115F}\XKhangulsyllable
+\XK@assign@char@class{"A960}{"A97C}\XKhangulsyllable
 
 %%% jungseong/jongseong jamo including tone marks
 \newXeTeXintercharclass \XKhanguljungjong
-\count@ "1160
-\loop
-  \XeTeXcharclass\count@\XKhanguljungjong
-  \ifnum\count@ < "11FF
-    \advance\count@\@ne \repeat
-\count@ "D7B0
-\loop
-  \XeTeXcharclass\count@\XKhanguljungjong
-  \ifnum\count@ < "D7FB
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{"1160}{"11FF}\XKhanguljungjong
+\XK@assign@char@class{"D7B0}{"D7FB}\XKhanguljungjong
 \XeTeXcharclass "302E = \XKhanguljungjong
 \XeTeXcharclass "302F = \XKhanguljungjong
 
@@ -391,21 +352,12 @@
 
 %%% latin numbers
 \newXeTeXintercharclass \XKlatinnumber
-\count@ `0
-\loop
-  \XeTeXcharclass\count@\XKlatinnumber
-  \ifnum\count@ < `9
-    \advance\count@\@ne \repeat
+\XK@assign@char@class{`0}{`9}\XKlatinnumber
 
 %%% variation selectors
 \newXeTeXintercharclass \XKhanjacombining
-\count@="FE00 \loop
-  \XeTeXcharclass\count@ = \XKhanjacombining
-  \ifnum\count@<"FE0F \advance\count@\@ne \repeat
-\count@="E0100 \loop
-  \XeTeXcharclass\count@ = \XKhanjacombining
-  \ifnum\count@<"E01EF \advance\count@\@ne \repeat
-
+\XK@assign@char@class{"FE00}{"FE0F}\XKhanjacombining
+\XK@assign@char@class{"E0100}{"E01EF}\XKhanjacombining
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% define inter char tokes
