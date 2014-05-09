@@ -98,6 +98,7 @@
     CharRaise .code:n =
       { \keys_set:nn { xtxko-font } { charraise = {#1} } } ,
   }
+\tl_new:N \l_xtxko_rem_tl
 \cs_new:Nn \__xtxko_assign_font_opts:Nn
   {
     \tl_set_eq:NN \l_xtxko_font_opts_tl \l_xtxko_font_opts_init_tl

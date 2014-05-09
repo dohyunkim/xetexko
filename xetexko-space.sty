@@ -399,6 +399,9 @@
 
 %%% variation selectors
 \newXeTeXintercharclass \XKhanjacombining
+\count@="FE00 \loop
+  \XeTeXcharclass\count@ = \XKhanjacombining
+  \ifnum\count@<"FE0F \advance\count@\@ne \repeat
 \count@="E0100 \loop
   \XeTeXcharclass\count@ = \XKhanjacombining
   \ifnum\count@<"E01EF \advance\count@\@ne \repeat
