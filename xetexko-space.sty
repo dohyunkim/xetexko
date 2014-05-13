@@ -1380,7 +1380,11 @@
   \let\@let@token#1\XK@save@last@char
   % and supress char orphan
   \toks@{\XK@every@hangul{#1}}% everyhangul 가
-  \XK@futurelet@let@token
+  \ifnum\lastpenalty=\z@ % bypass 가\\나 case
+    \expandafter\XK@futurelet@let@token
+  \else
+    \expandafter\XK@normal@the@toks@
+  \fi
 }
 \def\XK@check@next@char{%
   \ifx\par\@let@token
