@@ -179,8 +179,8 @@
 \DeclareDocumentCommand \newhangulfontfamily { m O{} m }
   {
     \__xtxko_assign_font_opts:cn { XK@newfont@options \token_to_str:N #1 } {#2}
-    \exp_after:wN \newfontfamily
-      \cs:w XK@newfont@family \token_to_str:N #1 \cs_end: [\l_xtxko_rem_tl] {#3}
+    \exp_args:Nc \newfontfamily  { XK@newfont@family  \token_to_str:N #1 }
+      [\l_xtxko_rem_tl] {#3}
     \DeclareRobustCommand #1
       {
         \tl_set:Nn \XKhangulfont
@@ -196,8 +196,8 @@
 \DeclareDocumentCommand \newhanjafontfamily { m O{} m }
   {
     \__xtxko_assign_font_opts:cn { XK@newfont@options \token_to_str:N #1 } {#2}
-    \exp_after:wN \newfontfamily
-      \cs:w XK@newfont@family \token_to_str:N #1 \cs_end: [\l_xtxko_rem_tl] {#3}
+    \exp_args:Nc \newfontfamily  { XK@newfont@family  \token_to_str:N #1 }
+      [\l_xtxko_rem_tl] {#3}
     \DeclareRobustCommand #1
       {
         \tl_set:Nn \XKhanjafont
@@ -213,8 +213,8 @@
 \DeclareDocumentCommand \newhangulfontface { m O{} m }
   {
     \__xtxko_assign_font_opts:cn { XK@newfont@options \token_to_str:N #1 } {#2}
-    \exp_after:wN \newfontface
-      \cs:w XK@newfont@family \token_to_str:N #1 \cs_end: [\l_xtxko_rem_tl] {#3}
+    \exp_args:Nc \newfontface    { XK@newfont@family  \token_to_str:N #1 }
+      [\l_xtxko_rem_tl] {#3}
     \DeclareRobustCommand #1
       {
         \tl_set:Nn \XKhangulfont
@@ -230,8 +230,8 @@
 \DeclareDocumentCommand \newhanjafontface { m O{} m }
   {
     \__xtxko_assign_font_opts:cn { XK@newfont@options \token_to_str:N #1 } {#2}
-    \exp_after:wN \newfontface
-      \cs:w XK@newfont@family \token_to_str:N #1 \cs_end: [\l_xtxko_rem_tl] {#3}
+    \exp_args:Nc \newfontface    { XK@newfont@family  \token_to_str:N #1 }
+      [\l_xtxko_rem_tl] {#3}
     \DeclareRobustCommand #1
       {
         \tl_set:Nn \XKhanjafont
