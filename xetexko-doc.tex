@@ -7,12 +7,15 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
-\setmainhangulfont[BoldFont=KoPubBatang_Pro Bold.otf,
-  Ligatures=TeX]{KoPubBatang_Pro Light.otf}
-\setsanshangulfont[BoldFont=KoPubDotum_Pro Bold.otf,
-  Ligatures=TeX]{KoPubDotum_Pro Medium.otf}
-\usepackage{xetexko-hanging}
-\usepackage{hologo,xcolor,ulem}
+\setmainhangulfont{KoPubBatang_Pro Light.otf}[
+  BoldFont=KoPubBatang_Pro Bold.otf,
+  Ligatures=TeX,
+]
+\setsanshangulfont{KoPubDotum_Pro Medium.otf}[
+  BoldFont=KoPubDotum_Pro Bold.otf,
+  Ligatures=TeX,
+]
+\usepackage{xetexko-hanging, hologo, xcolor, ulem}
 \usepackage[bookmarksnumbered]{hyperref}
 
 \edef\verbatim{\unexpanded\expandafter{\verbatim
@@ -47,12 +50,12 @@
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
 \def\hparens#1{\leavevmode\unskip---{\small #1}---\ignorespaces}
-\parindent0pt
+
 \begin{document}
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.6\quad 2014/05/11}
+\date{Version 2.7\quad 2014/06/02}
 \maketitle
 
 \begin{quote}\small
@@ -69,14 +72,19 @@
       추가했다.
     \item[v2.2]---
     \item 글꼴 옵션 \verb|charraise|를 추가했다.
-    \item \verb|\fallbackhanjafont| 명령을 인식한다.
-    \item \verb|\everyhangul|, \verb|\everyhanja| 명령이 추가되었다.
+    \item \cs{fallbackhanjafont} 명령을 인식한다.
+    \item \cs{everyhangul}, \cs{everyhanja} 명령이 추가되었다.
     \item 하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
       것이 기본값이 되었다.
     \item[v2.4]---
     \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
+    \item[v2.7]---
+    \item \cs{defaulthangulfontfeatures} 및 \cs{defaulthanjafontfeatures}
+      명령이 추가되었다.
   \end{itemize}
 \end{quote}
+
+\smallskip
 
 \section{입력 인코딩}
 입력은 원칙적으로 UTF-8으로 한다.
@@ -92,8 +100,8 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 않아도 한글을 찍을 수 있다.
 \begin{verbatim}
   \usepackage{fontspec}
-  \setmainfont[Ligatures=TeX]{UnBatang}
-  \setsansfont[Ligatures=TeX]{UnDotum}
+  \setmainfont{UnBatang}[Ligatures=TeX]
+  \setsansfont{UnDotum}[Ligatures=TeX]
   \setmonofont{UnTaza}
   \XeTeXlinebreaklocale="ko"
   \XeTeXlinebreakpenalty=50
@@ -128,9 +136,9 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 
 \section{글꼴 명령}
 \begin{verbatim}
-  \setmainfont      [Ligatures=TeX]{Linux Libertine}
-  \setmainhangulfont[Ligatures=TeX]{NanumMyeongjo}
-  \setmainhanjafont [Ligatures=TeX]{UnBatang}
+  \setmainfont      {Linux Libertine}[Ligatures=TeX]
+  \setmainhangulfont{NanumMyeongjo}[Ligatures=TeX]
+  \setmainhanjafont {UnBatang}[Ligatures=TeX]
 \end{verbatim}
 각 명령의 의미는 이름이 뜻하는 그대로이며, fontspec 매뉴얼에 따라
 설정한다. 한글폰트를 따로 지정하지 않으면 영문폰트가 한글에도 사용된다.
@@ -157,17 +165,17 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 
 \section{글꼴 명령 (계속)}
 \begin{verbatim}
-  \hangulfontspec[Ligatures=TeX]{NanumGothic}
-  \hanjafontspec [Ligatures=TeX]{UnGungseo}
+  \hangulfontspec{NanumGothic}[Ligatures=TeX]
+  \hanjafontspec {UnGungseo}[Ligatures=TeX]
 \end{verbatim}
 임시로 사용할 한글·한자 글꼴을 지시한다.
 \cs{adhochangulfont}와 \cs{adhochanjafont}는 이들 명령의 다른 이름이다.
 
 \begin{verbatim}
-  \newhangulfontfamily\myhangul[Ligatures=TeX]{NanumGothic}
-  \newhanjafontfamily \myhanja [Ligatures=TeX]{UnGungseo}
-  \newhangulfontface  \myhangul[Ligatures=TeX]{NanumGothic Bold}
-  \newhanjafontface   \myhanja [Ligatures=TeX]{UnDotumBold}
+  \newhangulfontfamily\myhangul{NanumGothic}[Ligatures=TeX]
+  \newhanjafontfamily \myhanja {UnGungseo}[Ligatures=TeX]
+  \newhangulfontface  \myhangul{NanumGothic Bold}[Ligatures=TeX]
+  \newhanjafontface   \myhanja {UnDotumBold}[Ligatures=TeX]
 \end{verbatim}
 fontspec 패키지의 \verb+\newfontfamily+ \verb+\newfontface+ 명령을
 수정한 것이다.
@@ -187,7 +195,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \section{기호 글꼴 명령}
 라틴 문자나 CJK 기호를 어떤 폰트로 식자할 것인가를 사용자가 지정할 수 있다.
 \begin{verbatim}
-  \xetexkofontregime[quotes=latin, puncts=prevfont]{hangul}
+  \xetexkofontregime{hangul}[quotes=latin, puncts=prevfont]
 \end{verbatim}
 모든 라틴 문자와 CJK 기호들을 원칙적으로 한글 폰트로 식자하되,
 따옴표는 라틴 폰트로 찍고 마침표 따위는 현재 폰트를 따라간다는 의미이다.
@@ -215,9 +223,8 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \hemph{하이픈은 라틴폰트}로
 식자되게 기본값이 변경되었음에 유의할 것.
 \begin{verbatim}
-  \xetexkofontregime
-  [ puncts=prevfont, colons=prevfont, cjksymbols=hangul ]
-  {latin}
+  \xetexkofontregime {latin}%
+    [ puncts=prevfont, colons=prevfont, cjksymbols=hangul ]
 \end{verbatim}
 
 \begin{plaintex}
@@ -241,7 +248,7 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \section{간격 조정}
 한글 관련 미세 간격 조정은 다음과 같이 폰트 옵션으로 지시한다.
 \begin{verbatim}
-  \setsanshangulfont[interhchar=-.04em]{NanumGothic}
+  \setsanshangulfont{NanumGothic}[interhchar=-.04em]
 \end{verbatim}
 이 때 나눔고딕 글꼴에만 한글 마이너스 자간이 작동한다.
 \dotemph{고정폭 글꼴을 제외한} 한글·한자 글꼴
@@ -290,7 +297,7 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
 \item[postcommakern]
   CJK 문자 직후의 쉼표 뒤에 들어가는 간격. 0pt.
 \item[quoteraise]
-  영문 인용부호\hparens{아스키문자로 입력하는 것을 말함}를
+  영문 인용부호\hparens{아스키문자로 입력하는 것}를
   위로 끌어올리는 정도. 0pt.
 \item[quotewidth]
   영문 인용부호의 폭. 기본값은 natural width.
@@ -321,6 +328,17 @@ latin, hangul, hanja, prevfont 가운데 하나를 허용한다.
   \def\xetexkopostmathskip{0.2em }
 \end{verbatim}
 \end{plaintex}
+
+\LaTeX 에서는 한글·한자 글꼴 옵션의 기본값을 지정할 수 있다.
+\begin{verbatim}
+  \defaulthangulfontfeatures {hu=.1em, interhchar=-.1em}
+  \defaulthangulfontfeatures+{hu=.1em, interhchar=-.1em}
+  \defaulthanjafontfeatures  {hu=.1em}
+  \defaulthanjafontfeatures +{hu=.1em}
+\end{verbatim}
+fontspec 패키지의 \cs{defaultfontfeatures}에 상응하는 것이지만,
+오직 이 절에서 언급한 옵션들만 인식하며 나머지는 무시된다는 점을 유의하라.
+
 
 \section{그밖의 명령들}
 \begin{description}
@@ -369,9 +387,16 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 
 \section{옛한글}
 
+옛한글을 사용하기 위해선 \verb|Script=Hangul| 옵션을 주는 것으로 족하다.
+옛한글 식자는 고급 오픈타입 기능을 이용하므로
+폰트가 이런 기능을 제공해야만 가능한 일이다.\footnote{%
+\today\ 현재, 이런 기능을 제공하는 폰트로는 마이크로소프트 오피스 플러스팩이
+제공하는 옛한글 글꼴과 윈도즈~8에 번들된 맑은고딕이 있으며
+공개폰트로는 은바탕과 KTUG판 함초롬 글꼴이 있다.}
+
 \begin{figure}
   \begin{example}
-    \hangulfontspec[Script=Hangul]{HCR Dotum LVT}
+    \hangulfontspec{HCR Dotum LVT}[Script=Hangul]
     \hanjabyhangulfont%\parindent1em
     \obeylines\leftskip10em
 뎨 가ᄂᆞᆫ 뎌 각시 본 듯도 ᄒᆞᆫ뎌이고.
@@ -388,14 +413,8 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
   \caption{옛한글 조판 보기}\label{fig:yethangul}
 \end{figure}
 
-옛한글을 사용하기 위해선 \verb|Script=Hangul| 옵션을 주는 것으로 족하다.
-옛한글 식자는 고급 오픈타입 기능을 이용하므로
-폰트가 이런 기능을 제공해야만 가능한 일이다.\footnote{%
-\today\ 현재, 이런 기능을 제공하는 폰트로는 마이크로소프트 오피스 플러스팩이
-제공하는 옛한글 글꼴과 윈도즈~8에 번들된 맑은고딕이 있으며
-공개폰트로는 은바탕과 KTUG판 함초롬 글꼴이 있다.}
 \begin{verbatim}
-  \setmainhangulfont[ Script=Hangul ]{Malgun Gothic}
+  \setmainhangulfont{Malgun Gothic}[ Script=Hangul ]
 \end{verbatim}
 \begin{plaintex}
 플레인텍이라면,
@@ -406,10 +425,25 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 
 \section{세로쓰기}
 
+세로쓰기를 위한 글꼴 지정은 다음과 같다.
+역시 고급 오픈타입 기능을 이용하는 것이므로
+폰트가 이를 지원해야 한다.\footnote{%
+만일 폰트의 세로쓰기 em 박스 크기가 가로쓰기와 다르다면
+\cs{verticalem=1.05em}과 같은 선언을 미리 해두는 것이 좋다.}
+\begin{verbatim}
+  \setmainhangulfont{Adobe Myungjo Std}[ Vertical=RotatedGlyphs ]
+\end{verbatim}
+문서 전체를 세로쓰기할 때 \cs{verticaltypesetting}을 선언하면
+면주는 그대로 두고 본문만 세로쓰기한다.\footnote{당연히 면주의 글꼴은
+\texttt{Vertical} 옵션이 없는 것이라야 할 것이다.
+면주 글꼴을 따로 지정하는 것은 사용자의 몫이다. }
+문서의 일부를 세로쓰기 하려면 vertical 환경을 이용한다.
+vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
+보통 그 뒤에  세로쓰기에 사용할 글꼴 명령이 온다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{16em}
-  \hangulfontspec[Vertical=RotatedGlyphs]{AdobeMyungjoStd-Medium.otf}
+  \hangulfontspec{AdobeMyungjoStd-Medium.otf}[Vertical=RotatedGlyphs]
   \hangulmarks \hanjabyhangulfont \parindent-1em\leftskip1em
 \noindent 님의 침묵 {\small(The Silent Beloved)}
 \smallbreak
@@ -427,24 +461,9 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 \caption{세로쓰기 보기}\label{fig:vertical}
 \end{figure}
 
-세로쓰기를 위한 글꼴 지정은 다음과 같다.
-역시 고급 오픈타입 기능을 이용하는 것이므로
-폰트가 이를 지원해야 한다.\footnote{%
-만일 폰트의 세로쓰기 em 박스 크기가 가로쓰기와 다르다면
-\cs{verticalem=1.05em}과 같은 선언을 미리 해두는 것이 좋다.}
-\begin{verbatim}
-  \setmainhangulfont[ Vertical=RotatedGlyphs ]{Adobe Myungjo Std}
-\end{verbatim}
-문서 전체를 세로쓰기할 때 \cs{verticaltypesetting}을 선언하면
-면주는 그대로 두고 본문만 세로쓰기한다.\footnote{당연히 면주의 글꼴은
-\texttt{Vertical} 옵션이 없는 것이라야 할 것이다.
-면주 글꼴을 따로 지정하는 것은 사용자의 몫이다. }
-문서의 일부를 세로쓰기 하려면 vertical 환경을 이용한다.
-vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
-보통 그 뒤에  세로쓰기에 사용할 글꼴 명령이 온다.
 \begin{verbatim}
   \begin{vertical}{12em}
-    \hangulfontspec[ Vertical=RotatedGlyphs ]{Adobe Myungjo Std}
+    \hangulfontspec{Adobe Myungjo Std}[ Vertical=RotatedGlyphs ]
     세로쓰기로 식자할 부분
   \end{vertical}
 \end{verbatim}
@@ -464,7 +483,15 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \end{verbatim}
 \end{plaintex}
 
-\section{일본어·중국어·고문헌}
+\section{고문헌·일본어·중국어}
+
+띄어쓰기가 없는 옛문헌이나 일본어 단락 따위를 삽입할 때
+japanese 혹은 chinese 환경을 선언하는 것이 좋다.
+들여쓰기\footnote {들여쓰기 기본값은 japanese는 1em 이고 chinese는 2em 이다.}
+및 자간 조절이 자동으로 이루어지며
+사용자가 입력한 불필요한 공백도 없애준다.
+Schinese 환경은 chinese의 다른 이름이다.
+Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환경을 이용하라.
 
 \begin{figure}
   \begin{example}
@@ -476,17 +503,13 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 子曰：「巧言令色，鮮矣仁！」
 
 曾子曰：「吾日三省吾身：為人謀，而不忠乎？與朋友交，而不信乎？傳，不習乎？」
+
+子曰：「道千乘之國，敬事而信，節用而愛人，使民以時。」
+
+子曰：「弟子入則孝，出則弟；謹而信，汎愛衆；而親仁，行有餘力，則以學文。」
   \end{example}
 \caption{고문헌 조판 보기}\label{fig:ancientdoc}
 \end{figure}
-
-띄어쓰기가 없는 옛문헌이나 일본어 단락 따위를 삽입할 때
-japanese 혹은 chinese 환경을 선언하는 것이 좋다.
-들여쓰기\footnote {들여쓰기 기본값은 japanese는 1em 이고 chinese는 2em 이다.}
-및 자간 조절이 자동으로 이루어지며
-사용자가 입력한 불필요한 공백도 없애준다.
-Schinese 환경은 chinese의 다른 이름이다.
-Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환경을 이용하라.
 
 \cs{inhibitglue} 명령은 일본어 등 환경에서 가끔 유용한데,
 해당 지점에 자동 삽입되는 공백을 영(zero)으로

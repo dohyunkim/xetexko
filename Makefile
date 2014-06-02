@@ -17,16 +17,16 @@ doc: $(PDFFILE)
 
 $(PDFFILE): $(TEXFILE) $(RUNFILES)
 	@$(DO_LATEX) | tee $(MYTMPFILE)
-	@if( grep Rerun $(MYTMPFILE) ); then $(DO_LATEX); fi
-	@$(RM) -f $(MYTMPFILE)
+	@if( grep Rerun $(MYTMPFILE) > /dev/null ); then $(DO_LATEX); fi
+	@$(RM) $(MYTMPFILE)
 
 ctan: $(ZIPFILE)
 
 $(ZIPFILE): $(RUNFILES) $(DOCFILES)
-	@$(RM) -f $@
+	@$(RM) $@
 	@mkdir -p $(NAME) && cp $^ $(NAME)
 	@zip -q -r -9 $@ $(NAME) && ls -l $@
-	@$(RM) -rf $(NAME)
+	@$(RM) -r $(NAME)
 
 install: $(RUNFILES) $(DOCFILES)
 	@echo Installing into: $(TEXMFDIR)
