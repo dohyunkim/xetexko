@@ -2,9 +2,10 @@
 
 	Version 2.7
 
+	* xetexko-font.sty: Ligatures=TeX is now default option for main/sans
+	hangul/hanja fonts. Requires fontspec v2.4
 	* xetexko-font.sty: new macros \defaulthangulfontfeatures and
 	\defaulthanjafontfeatures
-	* xetexko-font.sty: minor changes following new fontspec package v2.4
 
 2014-05-11      Dohyun Kim <nomos at ktug org>
 

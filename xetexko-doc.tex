@@ -79,6 +79,8 @@
     \item[v2.4]---
     \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
     \item[v2.7]---
+    \item main/sans hangul/hanja 글꼴에는 디폴트 옵션으로
+      \verb|Ligatures=TeX|이 주어진다.
     \item \cs{defaulthangulfontfeatures} 및 \cs{defaulthanjafontfeatures}
       명령이 추가되었다.
   \end{itemize}
@@ -149,6 +151,8 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
   \setsansfont \setsanshangulfont \setsanshanjafont
   \setmonofont \setmonohangulfont \setmonohanjafont
 \end{verbatim}
+main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX|을 지시하지 않더라도
+자동으로 주어진다.
 
 \begin{plaintex}
 플레인텍이라면 다음처럼 한다.
