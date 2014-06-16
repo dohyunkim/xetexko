@@ -89,14 +89,10 @@
       { \__xtxko_add_font_opt:Nn \xetexkoquotewidth          {#1} } ,
     charraise .code:n =
       { \__xtxko_add_font_opt:Nn \xetexkocharraise           {#1} } ,
-    InterLatinCJK .code:n =
-      { \keys_set:nn { xtxko-font } { hu = {#1} } } ,
-    InterHangul .code:n =
-      { \keys_set:nn { xtxko-font } { interhchar = {#1} } } ,
-    PunctRaise .code:n =
-      { \keys_set:nn { xtxko-font } { lowerperiod = { \dim_eval:n {-#1} } } } ,
-    CharRaise .code:n =
-      { \keys_set:nn { xtxko-font } { charraise = {#1} } } ,
+    InterLatinCJK .meta:n = { hu          = {#1} } ,
+    InterHangul   .meta:n = { interhchar  = {#1} } ,
+    PunctRaise    .meta:n = { lowerperiod = { \dim_eval:n {-#1} } } ,
+    CharRaise     .meta:n = { charraise   = {#1} } ,
   }
 \tl_new:N \l_xtxko_rem_tl
 \tl_set_eq:NN \l_xtxko_hangul_font_opts_init_tl \l_xtxko_font_opts_init_tl
