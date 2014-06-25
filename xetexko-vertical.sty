@@ -17,7 +17,16 @@
 \fi
 
 % do not veticalize headline/footline
-\ifdefined\selectfont % for latex
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname selectfont\endcsname\relax % plain
+  \protected\def\verticaltypesetting{%
+    \dimen@\hsize\hsize\vsize\vsize\dimen@
+    \edef\plainoutput{\unexpanded{\dimen@\hsize\hsize\vsize\vsize\dimen@}%
+      \unexpanded\expandafter{\plainoutput}}%
+    \def\pagebody{\setbox\z@\vbox to\hsize{\boxmaxdepth=\maxdepth
+      \pagecontents}\xetexko@rotatebox\z@\box\z@}%
+    \maxdepth\z@ \XK@vertical@spacing}
+\else % latex
   \protected\def\verticaltypesetting{%
     \AtBeginDocument{\XK@vertical@spacing}%
     \maxdepth\z@
@@ -29,14 +38,6 @@
       \unexpanded\expandafter{\@outputpage}}%
   }
   \@onlypreamble\verticaltypesetting
-\else % for plain
-  \protected\def\verticaltypesetting{%
-    \dimen@\hsize\hsize\vsize\vsize\dimen@
-    \edef\plainoutput{\unexpanded{\dimen@\hsize\hsize\vsize\vsize\dimen@}%
-      \unexpanded\expandafter{\plainoutput}}%
-    \def\pagebody{\setbox\z@\vbox to\hsize{\boxmaxdepth=\maxdepth
-      \pagecontents}\xetexko@rotatebox\z@\box\z@}%
-    \maxdepth\z@ \XK@vertical@spacing}
 \fi
 
 \def\xetexko@rotatebox#1{%
