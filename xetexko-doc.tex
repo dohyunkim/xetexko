@@ -28,14 +28,15 @@
 \def\grayhrule{{\color{white!80!black}\hrule height2pt}}
 \def\grayvrule{{\color{white!80!black}\vrule width 2pt}}
 \newenvironment{plaintex}
-  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax\kern10pt\par\small
+  {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax
+    \hrule width0pt\kern5pt\par\small
   \noindent}
-  {\par\vskip-\lastskip\kern10pt\egroup \par\medskip\par
-    \dimen0=\dimexpr\pagegoal-\pagetotal-1ex\relax
+  {\par \vskip-\lastskip\kern5pt\hrule width0pt\egroup \par\medskip\par
+    \dimen0=\dimexpr\pagegoal-\pagetotal\relax
+    \ifdim\dimen0<2\baselineskip\relax \dimen0\maxdimen \fi
     \ifdim\ht0<\dimen0
       \hbox{\grayvrule\kern10pt\box0}%
     \else
-      \lineskip=0pt \splittopskip=10pt
       \setbox2=\vsplit0 to\dimen0
       \ifvoid2 \else\hbox{\grayvrule\kern10pt\box2}\fi
       \ifvoid0 \else\hbox{\grayvrule\kern10pt\box0}\fi

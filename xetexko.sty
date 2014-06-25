@@ -10,8 +10,13 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ifx\ProvidesPackage\relax \let\ProvidesPackage\undefined \fi
-\ifx\ProvidesPackage\undefined
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
+  \ProvidesPackage{xetexko}[2014/06/17 v2.7 Typesetting Korean with XeTeX]
+\fi
+
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname selectfont\endcsname\relax
   \chardef\catcodeofATcharacter\catcode`@
   \catcode`\@ = 11
 
@@ -41,8 +46,6 @@
   \catcode`\@\catcodeofATcharacter
   \expandafter\endinput
 \fi
-
-\ProvidesPackage{xetexko}[2014/06/17 v2.7 Typesetting Korean with XeLaTeX]
 
 \newif\if@hangul
 \newif\if@hanja

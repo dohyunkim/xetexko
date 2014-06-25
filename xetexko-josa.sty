@@ -15,8 +15,10 @@
   \ProvidesPackage{xetexko-josa}[2014/06/17 v2.7 Auto-josa for XeTeX-ko]
 \fi
 
-\unless\ifcsname @tempcnta\endcsname\newcount\@tempcnta\fi
-\unless\ifcsname @tempcntb\endcsname\newcount\@tempcntb\fi
+\unless\ifcsname @tempcnta\endcsname
+  \alloc@0\count\countdef\insc@unt\@tempcnta\fi
+\unless\ifcsname @tempcntb\endcsname
+  \alloc@0\count\countdef\insc@unt\@tempcntb\fi
 
 %%% user commands
 \protected\def\jong {\global\let\XK@last@char=0}

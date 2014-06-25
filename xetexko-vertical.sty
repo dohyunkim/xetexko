@@ -16,12 +16,8 @@
     [2014/06/17 v2.7 Vertical environment for XeTeX-ko]
 \fi
 
-\unless\ifcsname @tempdima\endcsname\newdimen\@tempdima\fi
-\unless\ifcsname @tempdimb\endcsname\newdimen\@tempdimb\fi
-\unless\ifcsname @tempdimc\endcsname\newdimen\@tempdimc\fi
-
 % do not veticalize headline/footline
-\ifdefined\ProvidesPackage % for latex
+\ifdefined\selectfont % for latex
   \protected\def\verticaltypesetting{%
     \AtBeginDocument{\XK@vertical@spacing}%
     \maxdepth\z@
@@ -88,11 +84,10 @@
 
 \protected\def\endvertical{%
   \egroup
-  \@tempdima\wd\z@
-  \@tempdimb\ht\z@
-  \@tempdimc\dp\z@
+  \dimen@\dimexpr\ht\z@+\dp\z@\relax
+  \dimen@ii\dimexpr\wd\z@-\dp\z@\relax
   \setbox\z@\hbox{%
-    \kern\dimexpr\@tempdimb+0.5em\relax
+    \kern\dimexpr\ht\z@+0.5em\relax
     \wd\z@\z@
     \ht\z@\z@
     \dp\z@\z@
@@ -100,11 +95,11 @@
     \special{x:rotate -90}%
     \box\z@
     \special{x:grestore}}%
-  \wd\z@\dimexpr\@tempdimb+\@tempdimc\relax
+  \wd\z@\dimen@
   \ht\z@\z@
   \dp\z@\z@
   \leavevmode
-  \raise\dimexpr\@tempdima-\@tempdimc\relax\box\z@
+  \raise\dimen@ii\box\z@
 }
 
 \protected\def\vertlatin#1{\leavevmode\lower0.5ex\hbox{\latinmarks #1}}
