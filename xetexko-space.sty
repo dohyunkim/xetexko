@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2014/06/17 v2.7 Spacings and fonts for XeTeX-ko]
+    [2014/07/27 v2.8 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -289,7 +289,12 @@
 
 %%% hangul syllables
 \newXeTeXintercharclass \XKhangulsyllable
-\XK@assign@char@class{"AC00}{"D7A3}\XKhangulsyllable
+\count@="AC00
+\loop
+  \catcode\count@ = 12 % revert recent change of unicode-letters.tex
+  \XeTeXcharclass\count@ = \XKhangulsyllable
+  \ifnum\count@<"D7A3 \advance\count@\@ne
+\repeat
 % treat compatibility jamo as hangul syllable
 \XK@assign@char@class{"3131}{"318E}\XKhangulsyllable
 % leading consonants jamo as well
@@ -1602,6 +1607,6 @@
 %%% declare to use interchartoken
 \XeTeXinterchartokenstate\@ne
 
-\def\hellipsis{^^^^2026\kern-.1ex^^^^2026}
+\def\hellipsis{^^^^2026^^^^2026}
 
 \endinput

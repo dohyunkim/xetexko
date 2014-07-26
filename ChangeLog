@@ -1,3 +1,11 @@
+2014-07-27      Dohyun Kim <nomos at ktug org>
+
+	Version 2.8
+
+	* xetexko-space.sty: revert recent change of unicode-letters.tex.
+	Hangul syllables were traditionally catcode 12, and this is deeply
+	interwined with Automatic Josa Selection.
+
 2014-06-17      Dohyun Kim <nomos at ktug org>
 
 	Version 2.7

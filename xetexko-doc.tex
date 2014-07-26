@@ -10,9 +10,10 @@
 \setmainhangulfont{KoPubBatang_Pro Light.otf}[
   BoldFont=KoPubBatang_Pro Bold.otf,
 ]
-\setsanshangulfont{KoPubDotum_Pro Medium.otf}[
-  BoldFont=KoPubDotum_Pro Bold.otf,
-]
+\setsanshangulfont{Source Han Sans}[
+  Script=Hangul, Language=Korean,
+  UprightFont=* Normal,
+  BoldFont=* Bold Bold ] % <-----
 \usepackage{xetexko-hanging, hologo, xcolor, ulem}
 \usepackage[bookmarksnumbered]{hyperref}
 
@@ -55,7 +56,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.7\quad 2014/06/17}
+\date{Version 2.8\quad 2014/07/27}
 \maketitle
 
 \begin{quote}\small
@@ -64,25 +65,35 @@
 
   \begin{itemize}\itemsep=0pt\linespread{1.3}\selectfont
     \item[v2.0]---
-    \item 플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.
-    \item \verb+[unfonts]+ 옵션이 없으면 은글꼴을 자동으로 부르지 않는다.
-    \item CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
-      기본값이 되었다.
-    \item \verb|interpunctskern| 글꼴 옵션을 없애고 \verb|quoteraise|를
-      추가했다.
+    \item \hyperref[sec:loading]
+      {플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.}
+    \item \hyperref[sec:loading]
+      {\texttt{[unfonts]} 옵션이 없으면 은글꼴을 자동으로 부르지 않는다.}
+    \item \hyperref[sec:symbolfont]
+      {CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
+      기본값이 되었다.}
+    \item \hyperref[sec:fontopts]
+      {\texttt{interpunctskern} 글꼴 옵션을 없애고 \texttt{quoteraise}를
+      추가했다.}
     \item[v2.2]---
-    \item 글꼴 옵션 \verb|charraise|를 추가했다.
-    \item \cs{fallbackhanjafont} 명령을 인식한다.
-    \item \cs{everyhangul}, \cs{everyhanja} 명령이 추가되었다.
-    \item 하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
-      것이 기본값이 되었다.
+    \item \hyperref[sec:fontopts]
+      {글꼴 옵션 \texttt{charraise}를 추가했다.}
+    \item \hyperref[sec:fontcmds]
+      {\cs{fallbackhanjafont} 명령을 인식한다.}
+    \item \hyperref[sec:etccmds]
+      {\cs{everyhangul}, \cs{everyhanja} 명령이 추가되었다.}
+    \item \hyperref[sec:symbolfont]
+      {하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
+      것이 기본값이 되었다.}
     \item[v2.4]---
     \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
     \item[v2.7]---
-    \item main/sans hangul/hanja 글꼴에는 디폴트 옵션으로
-      \verb|Ligatures=TeX|이 주어진다.
-    \item \cs{defaulthangulfontfeatures} 및 \cs{defaulthanjafontfeatures}
-      명령이 추가되었다.
+    \item \hyperref[sec:fontcmds]
+      {main/sans hangul/hanja 글꼴에는 디폴트 옵션으로
+      \texttt{Ligatures=TeX}이 주어진다.}
+    \item \hyperref[sec:fontopts]
+      {\cs{defaulthangulfontfeatures}와 \cs{defaulthanjafontfeatures}
+      명령이 생겼다.}
   \end{itemize}
 \end{quote}
 
@@ -113,14 +124,14 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 한글 사이 자간이나 영문자와 한글 사이 간격 따위의 \xetexko 가 제공하는
 기능을 포기해야 할 것이다.
 
-\section{\xetexko\ 부르기}
+\section{\xetexko\ 부르기}\label{sec:loading}
 \xetexko\ 로드하기: \cs{usepackage\{xetexko\}} 혹은 \cs{usepackage\{kotex\}}.
 이 명령으로 fontspec 및 xunicode 패키지도 함께 불려온다.
 종전과 달리 xltxtra 패키지를 함께 부르지 않음을 주의할 것.
 fontspec에 옵션을 주려면 \xetexko를 부르기 전에 fontspec을 따로 로드하면 된다.
 
 \begin{plaintex}
-플레인텍이라면 \verb|\input xetexko.sty|.
+플레인텍이라면 \verb|\input xetexko.sty| 혹은 \verb|\input kotex.sty|.
 \end{plaintex}
 
 패키지 옵션:
@@ -136,7 +147,7 @@ fontspec에 옵션을 주려면 \xetexko를 부르기 전에 fontspec을 따로 
 \end{description}
 
 
-\section{글꼴 명령}
+\section{글꼴 명령}\label{sec:fontcmds}
 \begin{verbatim}
   \setmainfont      {Linux Libertine}
   \setmainhangulfont{NanumMyeongjo}
@@ -198,7 +209,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
   상태이기 때문이다.}
 
 
-\section{기호 글꼴 명령}
+\section{기호 글꼴 명령}\label{sec:symbolfont}
 라틴 문자나 CJK 기호를 어떤 폰트로 식자할 것인가를 사용자가 지정할 수 있다.
 \begin{verbatim}
   \xetexkofontregime{hangul}[quotes=latin, puncts=prevfont]
@@ -246,7 +257,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \end{verbatim}
 \end{plaintex}
 
-\section{간격 조정 옵션}
+\section{간격 조정 옵션}\label{sec:fontopts}
 \dotemph{고정폭 글꼴을 제외한} 한글·한자 글꼴 명령에 미세 간격 옵션을
 쓸 수 있다.
 \begin{verbatim}
@@ -338,7 +349,7 @@ fontspec 패키지의 \cs{defaultfontfeatures}에 상응하는 것이지만,
 오직 이 절에서 언급한 옵션들만 인식하며 나머지는 무시된다는 점을 유의하라.
 
 
-\section{그밖의 명령들}
+\section{그밖의 명령들}\label{sec:etccmds}
 \begin{description}
   \item[\cs{everyhangul}, \cs{everyhanja}]
     한글 또는 한자에 대해 글자마다 지시한 명령을 수행한다. 예컨대
@@ -391,9 +402,7 @@ CJK 구두점의 폭을 0.5em으로 강제설정하는 것을 방지한다.
 
 \begin{figure}
   \begin{example}
-    \hangulfontspec{HCR Dotum LVT}[Script=Hangul]
-    \hanjabyhangulfont%\parindent1em
-    \obeylines\leftskip10em
+    \sffamily \obeylines\leftskip10em
 뎨 가ᄂᆞᆫ 뎌 각시 본 듯도 ᄒᆞᆫ뎌이고.
 天텬上상白ᄇᆡᆨ玉옥京경을 엇디ᄒᆞ야 離니別별ᄒᆞ고
 ᄒᆡ 다 져믄 날의 눌을 보라 가시ᄂᆞᆫ고
@@ -438,9 +447,9 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{16em}
-  \hangulfontspec{AdobeMyungjoStd-Medium.otf}[Vertical=RotatedGlyphs]
-  \hangulmarks \hanjabyhangulfont \parindent-1em\leftskip1em
-\noindent 님의 침묵 {\small(The Silent Beloved)}
+  \sffamily\addhangulfontfeatures{Vertical=RotatedGlyphs,CharRaise=.5ex}
+  \hanjabyhangulfont \parindent-1em\leftskip1em
+  \noindent 님의 침묵 (The Silent Beloved)
 \smallbreak
 \hfil\hfil 한 용 운\hfil
 \bigbreak
@@ -489,7 +498,7 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 
 \begin{figure}
   \begin{example}\linespread{1.3}
-    \hanjafontspec{STFangsong}\chinese
+    \sffamily\chinese
 子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？」
 
 有子曰：「其爲人也孝弟，而好犯上者，鮮矣！不好犯上，而好作亂者，未之有也！君子務本，本立而道生；孝弟也者，其爲仁之本與？」
