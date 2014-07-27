@@ -2,9 +2,13 @@
 
 	Version 2.8
 
-	* xetexko-space.sty: revert recent change of unicode-letters.tex.
-	Hangul syllables were traditionally catcode 12, and this is deeply
-	interwined with Automatic Josa Selection.
+	* xetexko-space.sty: adapt to recent update of unicode-letters.tex.
+	Hangul syllables were of catcode 12 traditionally, and this is deeply
+	interwined with Automatic Josa Selection. So, recent change of
+	unicode-letters.tex, assigning catcode 11 to Hangul, is hereby
+	reverted.
+	* xetexko-font.sty: allow font option only once, as per future release
+	of fontspec
 
 2014-06-17      Dohyun Kim <nomos at ktug org>
 

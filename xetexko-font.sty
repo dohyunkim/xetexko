@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2014/06/17 v2.7 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2014/07/27 v2.8 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}[2014/05/25]
@@ -107,50 +107,72 @@
     \tl_set_eq:NN \l_xtxko_font_opts_tl \l_xtxko_hanja_font_opts_init_tl
     \keys_set_known:nxN { xtxko-font } {#1} \l_xtxko_rem_tl
   }
+\cs_new:Nn \__xtxko_pass_args:nnn
+  {
+    \IfNoValueTF {#2}
+      { \__xtxko_post_args:w {#1} {#3} }
+      { #1 {#2} {#3} }
+  }
+\NewDocumentCommand \__xtxko_post_args:w { m m O{} }
+  { #1 {#3} {#2} }
 %%%%%%%%%%%%%%%%%%%%
 % user font commands
-\DeclareDocumentCommand \setmainhangulfont { O{} m O{} }
+\DeclareDocumentCommand \setmainhangulfont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setmainhangulfont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setmainhangulfont:nn
   {
-    \__xtxko_hangul_assign_font_opts:n {#1,#3}
+    \__xtxko_hangul_assign_font_opts:n {#1}
     \newfontfamily \kormainfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \kormainfont \l_xtxko_font_opts_tl
     \ignorespaces
   }
-\DeclareDocumentCommand \setsanshangulfont { O{} m O{} }
+\DeclareDocumentCommand \setsanshangulfont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setsanshangulfont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setsanshangulfont:nn
   {
-    \__xtxko_hangul_assign_font_opts:n {#1,#3}
+    \__xtxko_hangul_assign_font_opts:n {#1}
     \newfontfamily \korsansfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \korsansfont \l_xtxko_font_opts_tl
     \ignorespaces
   }
-\DeclareDocumentCommand \setmonohangulfont { O{} m O{} }
+\DeclareDocumentCommand \setmonohangulfont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setmonohangulfont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setmonohangulfont:nn
   {
-    \newfontfamily \kormonofont [#1,#3] {#2}
+    \newfontfamily \kormonofont [#1] {#2}
     \ignorespaces
   }
-\DeclareDocumentCommand \setmainhanjafont { O{} m O{} }
+\DeclareDocumentCommand \setmainhanjafont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setmainhanjafont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setmainhanjafont:nn
   {
-    \__xtxko_hanja_assign_font_opts:n {#1,#3}
+    \__xtxko_hanja_assign_font_opts:n {#1}
     \newfontfamily \hnjmainfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \hnjmainfont \l_xtxko_font_opts_tl
     \ignorespaces
   }
-\DeclareDocumentCommand \setsanshanjafont { O{} m O{} }
+\DeclareDocumentCommand \setsanshanjafont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setsanshanjafont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setsanshanjafont:nn
   {
-    \__xtxko_hanja_assign_font_opts:n {#1,#3}
+    \__xtxko_hanja_assign_font_opts:n {#1}
     \newfontfamily \hnjsansfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \hnjsansfont \l_xtxko_font_opts_tl
     \ignorespaces
   }
-\DeclareDocumentCommand \setmonohanjafont { O{} m O{} }
+\DeclareDocumentCommand \setmonohanjafont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setmonohanjafont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setmonohanjafont:nn
   {
-    \newfontfamily \hnjmonofont [#1,#3] {#2}
+    \newfontfamily \hnjmonofont [#1] {#2}
     \ignorespaces
   }
 %% {hangul,hanja}fontspec = adhoc{hangul,hanja}font
-\DeclareDocumentCommand \adhochangulfont { O{} m O{} }
+\DeclareDocumentCommand \adhochangulfont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_adhochangulfont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_adhochangulfont:nn
   {
-    \__xtxko_hangul_assign_font_opts:n {#1,#3}
+    \__xtxko_hangul_assign_font_opts:n {#1}
     \newfontfamily \XK@adhoc@hangul@font [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \XK@adhoc@hangul@font \l_xtxko_font_opts_tl
     \tl_set:Nn \XKhangulfont
@@ -163,9 +185,11 @@
     \ignorespaces
   }
 \cs_set_eq:NN \hangulfontspec \adhochangulfont
-\DeclareDocumentCommand \adhochanjafont { O{} m O{} }
+\DeclareDocumentCommand \adhochanjafont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_adhochanjafont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_adhochanjafont:nn
   {
-    \__xtxko_hanja_assign_font_opts:n {#1,#3}
+    \__xtxko_hanja_assign_font_opts:n {#1}
     \newfontfamily \XK@adhoc@hanja@font [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \XK@adhoc@hanja@font \l_xtxko_font_opts_tl
     \tl_set:Nn \XKhanjafont
@@ -179,9 +203,11 @@
   }
 \cs_set_eq:NN \hanjafontspec \adhochanjafont
 %% new{hangul,hanja}font{family,face}
-\DeclareDocumentCommand \newhangulfontfamily { m O{} m O{} }
+\DeclareDocumentCommand \newhangulfontfamily { m o m }
+  { \__xtxko_pass_args:nnn { \__xtxko_newhangulfontfamily:Nnn #1 } {#2} {#3} }
+\cs_new:Nn \__xtxko_newhangulfontfamily:Nnn
   {
-    \__xtxko_hangul_assign_font_opts:n {#2,#4}
+    \__xtxko_hangul_assign_font_opts:n {#2}
     \exp_args:Nc \newfontfamily { XK@newfont@family \token_to_str:N #1 }
       [\l_xtxko_rem_tl] {#3}
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
@@ -197,9 +223,11 @@
           }
       }
   }
-\DeclareDocumentCommand \newhanjafontfamily { m O{} m O{} }
+\DeclareDocumentCommand \newhanjafontfamily { m o m }
+  { \__xtxko_pass_args:nnn { \__xtxko_newhanjafontfamily:Nnn #1 } {#2} {#3} }
+\cs_new:Nn \__xtxko_newhanjafontfamily:Nnn
   {
-    \__xtxko_hanja_assign_font_opts:n {#2,#4}
+    \__xtxko_hanja_assign_font_opts:n {#2}
     \exp_args:Nc \newfontfamily { XK@newfont@family \token_to_str:N #1 }
       [\l_xtxko_rem_tl] {#3}
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
@@ -215,9 +243,11 @@
           }
       }
   }
-\DeclareDocumentCommand \newhangulfontface { m O{} m O{} }
+\DeclareDocumentCommand \newhangulfontface { m o m }
+  { \__xtxko_pass_args:nnn { \__xtxko_newhangulfontface:Nnn #1 } {#2} {#3} }
+\cs_new:Nn \__xtxko_newhangulfontface:Nnn
   {
-    \__xtxko_hangul_assign_font_opts:n {#2,#4}
+    \__xtxko_hangul_assign_font_opts:n {#2}
     \exp_args:Nc \newfontface { XK@newfont@family \token_to_str:N #1 }
       [\l_xtxko_rem_tl] {#3}
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
@@ -233,9 +263,11 @@
           }
       }
   }
-\DeclareDocumentCommand \newhanjafontface { m O{} m O{} }
+\DeclareDocumentCommand \newhanjafontface { m o m }
+  { \__xtxko_pass_args:nnn { \__xtxko_newhanjafontface:Nnn #1 } {#2} {#3} }
+\cs_new:Nn \__xtxko_newhanjafontface:Nnn
   {
-    \__xtxko_hanja_assign_font_opts:n {#2,#4}
+    \__xtxko_hanja_assign_font_opts:n {#2}
     \exp_args:Nc \newfontface { XK@newfont@family \token_to_str:N #1 }
       [\l_xtxko_rem_tl] {#3}
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
@@ -325,9 +357,11 @@
     \tl_set_eq:NN \l_xtxko_hanja_font_opts_init_tl \l_xtxko_font_opts_tl
   }
 %% math hangul font
-\DeclareDocumentCommand \setmathhangulfont { O{} m O{} }
+\DeclareDocumentCommand \setmathhangulfont { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_setmathhangulfont:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_setmathhangulfont:nn
   {
-    \fontspec_set_family:Nnn \xetexko@math@hangul@family {#1,#3} {#2}
+    \fontspec_set_family:Nnn \xetexko@math@hangul@family {#1} {#2}
   }
 %%%%%%%%%%%%%%%%%%%%
 %% xetexkofontregime
@@ -342,10 +376,12 @@
     hyphens     .code:n = \use:c { #1hyphens } ,
     cjksymbols  .code:n = \use:c { #1cjksymbols } ,
   }
-\DeclareDocumentCommand \xetexkofontregime { O{} m O{} }
+\DeclareDocumentCommand \xetexkofontregime { o m }
+  { \__xtxko_pass_args:nnn \__xtxko_xetexkofontregime:nn {#1} {#2} }
+\cs_new:Nn \__xtxko_xetexkofontregime:nn
   {
     \use:c { #2marks }
-    \keys_set:nn { xtxko-char } { #1, #3 }
+    \keys_set:nn { xtxko-char } { #1 }
   }
 \ExplSyntaxOff
 
