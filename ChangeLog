@@ -1,3 +1,10 @@
+2014-08-04      Dohyun Kim <nomos at ktug org>
+
+	Version 2.9
+
+	* xetexko-font.sty: Nanum Truetype fonts will be used as default
+	hangul/hanja fonts if no hangul/hanja font is specified by users.
+
 2014-07-27      Dohyun Kim <nomos at ktug org>
 
 	Version 2.8
