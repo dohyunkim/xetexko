@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2014/07/27 v2.8 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2014/08/04 v2.9 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}[2014/05/25]
@@ -422,17 +422,6 @@
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-% for lazy font setting
-\AtBeginDocument{%
-  \ifdefined\kormainfont\else \let\kormainfont\relax       \fi
-  \ifdefined\korsansfont\else \let\korsansfont\kormainfont \fi
-  \ifdefined\kormonofont\else \let\kormonofont\korsansfont \fi
-  \ifdefined\hnjmainfont\else \let\hnjmainfont\kormainfont \fi
-  \ifdefined\hnjsansfont\else \let\hnjsansfont\korsansfont \fi
-  \ifdefined\hnjmonofont\else \let\hnjmonofont\kormonofont \fi
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
 % font switching for latex
 \def\XKstoreprevfont{%
   \ifx\f@family\XKcjkprevfont\let\f@family\XKltnprevfont\fi
@@ -514,9 +503,60 @@
 \fi\fi
 \let\reset@font\normalfont
 
-%%%%%%%%%%%%%%%%%%%%%
-% hangul in math mode
 \AtBeginDocument{%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  % default main hangul: nanummyeongjo
+  \ifdefined\kormainfont\else
+    \begingroup
+    \fontfamily\rmdefault\selectfont
+    \edef\x{\endgroup
+      \iffontchar\font"AC00
+        \let\noexpand\kormainfont\relax
+      \else
+      \noexpand\setmainhangulfont{NanumMyeongjo}[BoldFont=*ExtraBold]
+      \fi
+    }\x
+  \fi
+  % default main hanja: nanumgothic
+  \ifdefined\hnjmainfont\else
+    \begingroup
+    \kormainfont
+    \edef\x{\endgroup
+      \iffontchar\font"4E00
+        \let\noexpand\hnjmainfont\noexpand\kormainfont
+      \else
+        \noexpand\setmainhanjafont{NanumGothic}
+      \fi
+    }\x
+  \fi
+  % default sans hangul: nanumgothic
+  \ifdefined\korsansfont\else
+    \begingroup
+    \fontfamily\sfdefault\selectfont
+    \edef\x{\endgroup
+      \iffontchar\font"AC00
+        \let\noexpand\korsansfont\relax
+      \else
+        \noexpand\setsanshangulfont{NanumGothic}
+      \fi
+    }\x
+  \fi
+  % default sans hanja: nanumgothic
+  \ifdefined\hnjsansfont\else
+    \begingroup
+    \korsansfont
+    \edef\x{\endgroup
+      \iffontchar\font"4E00
+        \let\noexpand\hnjsansfont\noexpand\korsansfont
+      \else
+        \noexpand\setsanshanjafont{NanumGothic}
+      \fi
+    }\x
+  \fi
+  \ifdefined\kormonofont\else \let\kormonofont\korsansfont \fi
+  \ifdefined\hnjmonofont\else \let\hnjmonofont\kormonofont \fi
+  %%%%%%%%%%%%%%%%%%%%%
+  % hangul in math mode
   \begingroup
     \ifx\xetexko@math@hangul@family\undefined
       \edef\@tempb{\sfdefault}\edef\@tempc{\ttdefault}%
