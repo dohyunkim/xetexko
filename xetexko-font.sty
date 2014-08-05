@@ -503,55 +503,72 @@
 \fi\fi
 \let\reset@font\normalfont
 
+% for default font loading
+\def\XKiffontisaccessible#1#2#3{%
+  \begingroup
+  \suppressfontnotfounderror\@ne
+  \font\x="#1" at 10pt
+  \expandafter
+  \endgroup
+  \ifx\x\nullfont #3\else #2\fi
+}
+\def\XKiffonthasunichar#1#2#3#4{%
+  \begingroup #1\expandafter\endgroup
+  \iffontchar\font"#2\relax #3\else #4\fi
+}
+
 \AtBeginDocument{%
   %%%%%%%%%%%%%%%%%%%%%%%%%%
-  % default main hangul: nanummyeongjo
+  % default main hangul: nanummyeongjo, batang if absent
   \ifdefined\kormainfont\else
-    \begingroup
-    \fontfamily\rmdefault\selectfont
-    \edef\x{\endgroup
-      \iffontchar\font"AC00
-        \let\noexpand\kormainfont\relax
-      \else
-      \noexpand\setmainhangulfont{NanumMyeongjo}[BoldFont=*ExtraBold]
-      \fi
-    }\x
+    \XKiffonthasunichar{\fontfamily\rmdefault\selectfont}{AC00}
+      {\let\kormainfont\relax}
+      {\XKiffontisaccessible{NanumMyeongjoExtraBold}
+        {\setmainhangulfont{NanumMyeongjo}[BoldFont=*ExtraBold]}
+        {\XKiffontisaccessible{NanumMyeongjo}
+          {\setmainhangulfont{NanumMyeongjo}}
+          {\XKiffontisaccessible{Batang}
+            {\setmainhangulfont{Batang}[AutoFakeBold]}
+            {\let\kormainfont\relax}%
+          }%
+        }%
+      }%
   \fi
-  % default main hanja: nanumgothic
+  % default main hanja: nanumgothic, batang if absent
   \ifdefined\hnjmainfont\else
-    \begingroup
-    \kormainfont
-    \edef\x{\endgroup
-      \iffontchar\font"4E00
-        \let\noexpand\hnjmainfont\noexpand\kormainfont
-      \else
-        \noexpand\setmainhanjafont{NanumGothic}
-      \fi
-    }\x
+    \XKiffonthasunichar{\kormainfont}{4E00}
+      {\let\hnjmainfont\kormainfont}
+      {\XKiffontisaccessible{NanumGothic}
+        {\setmainhanjafont{NanumGothic}}
+        {\XKiffontisaccessible{Batang}
+          {\setmainhanjafont{Batang}[AutoFakeBold]}
+          {\let\hnjmainfont\kormainfont}%
+        }%
+      }%
   \fi
-  % default sans hangul: nanumgothic
+  % default sans hangul: nanumgothic, dotum if absent
   \ifdefined\korsansfont\else
-    \begingroup
-    \fontfamily\sfdefault\selectfont
-    \edef\x{\endgroup
-      \iffontchar\font"AC00
-        \let\noexpand\korsansfont\relax
-      \else
-        \noexpand\setsanshangulfont{NanumGothic}
-      \fi
-    }\x
+    \XKiffonthasunichar{\fontfamily\sfdefault\selectfont}{AC00}
+      {\let\korsansfont\relax}
+      {\XKiffontisaccessible{NanumGothic}
+        {\setsanshangulfont{NanumGothic}}
+        {\XKiffontisaccessible{Dotum}
+          {\setsanshangulfont{Dotum}[AutoFakeBold]}
+          {\let\korsansfont\relax}%
+        }%
+      }%
   \fi
-  % default sans hanja: nanumgothic
+  % default sans hanja: nanumgothic, dotum if absent
   \ifdefined\hnjsansfont\else
-    \begingroup
-    \korsansfont
-    \edef\x{\endgroup
-      \iffontchar\font"4E00
-        \let\noexpand\hnjsansfont\noexpand\korsansfont
-      \else
-        \noexpand\setsanshanjafont{NanumGothic}
-      \fi
-    }\x
+    \XKiffonthasunichar{\korsansfont}{4E00}
+      {\let\hnjsansfont\korsansfont}
+      {\XKiffontisaccessible{NanumGothic}
+        {\setsanshanjafont{NanumGothic}}
+        {\XKiffontisaccessible{Dotum}
+          {\setsanshanjafont{Dotum}[AutoFakeBold]}
+          {\let\hnjsansfont\korsansfont}%
+        }%
+      }%
   \fi
   \ifdefined\kormonofont\else \let\kormonofont\korsansfont \fi
   \ifdefined\hnjmonofont\else \let\hnjmonofont\kormonofont \fi
