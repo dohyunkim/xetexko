@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2014/07/27 v2.8 Spacings and fonts for XeTeX-ko]
+    [2014/08/18 v2.10 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1262,7 +1262,12 @@
   \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
   \leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-  \hbox to\dimen@\bgroup\hss
+  \hbox
+  \ifx\XKdisablecjksymbolspacing\empty
+    \bgroup
+  \else % default: half
+    to\dimen@ \bgroup\hss
+  \fi
   \XeTeXinterchartoks\XKboundary\XKcjkopening = {\empty}}
 \def\postcjkopenparen{\egroup}
 
@@ -1274,9 +1279,17 @@
   \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
   \leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-  \hbox to\dimen@\bgroup
+  \hbox
+  \ifx\XKdisablecjksymbolspacing\empty\else % default: half
+    to\dimen@
+  \fi
+  \bgroup
   \XeTeXinterchartoks\XKboundary\XKcjkclosing = {\empty}}
-\def\postcjkcloseparen{\hss\egroup}
+\def\postcjkcloseparen{%
+  \ifx\XKdisablecjksymbolspacing\empty\else % default: half
+    \hss
+  \fi
+  \egroup}
 
 \def\precjkfullstop{\futurelet\@let@token\precjkfullstop@}
 \def\precjkfullstop@{%
@@ -1286,14 +1299,32 @@
   \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
   \leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-  \hbox to\dimen@\bgroup
+  \hbox
+  \ifx\XKdisablecjksymbolspacing\empty\else % default: half
+    to\dimen@
+  \fi
+  \bgroup
   \XeTeXinterchartoks\XKboundary\XKcjkfullstop = {\empty}}
-\def\postcjkfullstop{\hss\egroup}
+\def\postcjkfullstop{%
+  \ifx\XKdisablecjksymbolspacing\empty\else % default: half
+    \hss
+  \fi
+  \egroup}
 
 \def\precjkcolon {\leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-  \hbox to 0.5em\bgroup\hss}
-\def\postcjkcolon{\hss\egroup}
+  \hbox
+  \ifx\XKdisablecjksymbolspacing\empty
+    \bgroup
+  \else % default: half
+    to 0.5em\bgroup\hss
+  \fi
+}
+\def\postcjkcolon{%
+  \ifx\XKdisablecjksymbolspacing\empty\else % default: half
+    \hss
+  \fi
+  \egroup}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % various spaces
@@ -1476,14 +1507,14 @@
 }
 
 \protected\def\disablecjksymbolspacing{% for natural width of 。「」 etc
+  \let\XKdisablecjksymbolspacing\empty
+}
+
+\protected\def\disablehangulspacing{% all micro-spacing is 0pt
   \let\precjkopenparen \relax  \let\postcjkopenparen \relax
   \let\precjkcloseparen\relax  \let\postcjkcloseparen\relax
   \let\precjkfullstop  \relax  \let\postcjkfullstop  \relax
   \let\precjkcolon     \relax  \let\postcjkcolon     \relax
-}
-
-\protected\def\disablehangulspacing{% all micro-spacing is 0pt
-  \disablecjksymbolspacing
   \let\XKopeningquotestart    \relax    \let\XKopeningquotestop   \relax
   \let\XKclosingquotestart    \relax    \let\XKclosingquotestop   \relax
   \let\XKperiodboxstart       \relax    \let\XKperiodboxstop      \relax

@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-hanging}
-    [2014/06/17 v2.7 Hanging punctuations for XeTeX-ko]
+    [2014/08/18 v2.10 Hanging punctuations for XeTeX-ko]
 \fi
 
 \chardef\catcodeofATcharacter\catcode`@
@@ -92,7 +92,14 @@
       \XKH@pre@hang\dimen@ii
     \else\ifx^^^^2018\@let@token \XKH@pre@hang\dimen@
     \fi\fi
-    \leavevmode\hbox to\dimen@\bgroup\hss
+    \leavevmode
+    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+    \hbox
+    \ifx\XKdisablecjksymbolspacing\empty
+      \bgroup
+    \else
+      to\dimen@\bgroup\hss
+    \fi
     \XeTeXinterchartoks\XKboundary\XKcjkopening = {\empty}%
   }%
   \def\postcjkcloseparen{%

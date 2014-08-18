@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-vertical}
-    [2014/06/17 v2.7 Vertical environment for XeTeX-ko]
+    [2014/08/18 v2.10 Vertical environment for XeTeX-ko]
 \fi
 
 % do not veticalize headline/footline
@@ -62,13 +62,27 @@
   \fi
   \def\precjkopenparen {\leavevmode
     \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox to\XK@vert@half@em\bgroup\hss}%
+    \hbox
+    \ifx\XKdisablecjksymbolspacing\empty
+      \bgroup
+    \else
+      to\XK@vert@half@em \bgroup \hss
+    \fi
+  }%
   \def\precjkcloseparen{\leavevmode
     \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox to\XK@vert@half@em\bgroup}%
+    \hbox
+    \ifx\XKdisablecjksymbolspacing\empty\else
+      to\XK@vert@half@em
+    \fi
+    \bgroup}%
   \def\precjkfullstop  {\leavevmode
     \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox to\XK@vert@half@em\bgroup}%
+    \hbox
+    \ifx\XKdisablecjksymbolspacing\empty\else
+      to\XK@vert@half@em
+    \fi
+    \bgroup}%
   \spaceskip\XK@vert@half@em plus\XK@vert@half@em\relax
   \parindent\XK@vert@half@em \parindent2\parindent
 }
