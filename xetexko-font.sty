@@ -524,9 +524,9 @@
     \XKiffonthasunichar{\fontfamily\rmdefault\selectfont}{AC00}
       {\let\kormainfont\relax}
       {\XKiffontisaccessible{NanumMyeongjoExtraBold}
-        {\setmainhangulfont{NanumMyeongjo}[BoldFont=*ExtraBold]}
+        {\setmainhangulfont{NanumMyeongjo}[Renderer=OpenType,BoldFont=*ExtraBold]}
         {\XKiffontisaccessible{NanumMyeongjo}
-          {\setmainhangulfont{NanumMyeongjo}}
+          {\setmainhangulfont{NanumMyeongjo}[Renderer=OpenType]}
           {\XKiffontisaccessible{Batang}
             {\setmainhangulfont{Batang}[AutoFakeBold]}
             {\let\kormainfont\relax}%
@@ -539,7 +539,7 @@
     \XKiffonthasunichar{\kormainfont}{4E00}
       {\let\hnjmainfont\kormainfont}
       {\XKiffontisaccessible{NanumGothic}
-        {\setmainhanjafont{NanumGothic}}
+        {\setmainhanjafont{NanumGothic}[Renderer=OpenType]}
         {\XKiffontisaccessible{Batang}
           {\setmainhanjafont{Batang}[AutoFakeBold]}
           {\let\hnjmainfont\kormainfont}%
@@ -551,7 +551,7 @@
     \XKiffonthasunichar{\fontfamily\sfdefault\selectfont}{AC00}
       {\let\korsansfont\relax}
       {\XKiffontisaccessible{NanumGothic}
-        {\setsanshangulfont{NanumGothic}}
+        {\setsanshangulfont{NanumGothic}[Renderer=OpenType]}
         {\XKiffontisaccessible{Dotum}
           {\setsanshangulfont{Dotum}[AutoFakeBold]}
           {\let\korsansfont\relax}%
@@ -563,7 +563,7 @@
     \XKiffonthasunichar{\korsansfont}{4E00}
       {\let\hnjsansfont\korsansfont}
       {\XKiffontisaccessible{NanumGothic}
-        {\setsanshanjafont{NanumGothic}}
+        {\setsanshanjafont{NanumGothic}[Renderer=OpenType]}
         {\XKiffontisaccessible{Dotum}
           {\setsanshanjafont{Dotum}[AutoFakeBold]}
           {\let\hnjsansfont\korsansfont}%
