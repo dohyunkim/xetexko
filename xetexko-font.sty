@@ -488,21 +488,6 @@
     \let\XKstoreprevfont\XKlatinfont
 }}
 
-\expandafter\ifx\familydefault\rmdefault
-  \XK@rm@korean@font
-  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
-    \XK@rm@korean@font}}
-\else \expandafter\ifx\familydefault\sfdefault
-  \XK@sf@korean@font
-  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
-    \XK@sf@korean@font}}
-\else
-  \XK@tt@korean@font
-  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
-    \XK@tt@korean@font}}
-\fi\fi
-\let\reset@font\normalfont
-
 % for default font loading
 \def\XKiffontisaccessible#1#2#3{%
   \begingroup
@@ -572,6 +557,22 @@
   \fi
   \ifdefined\kormonofont\else \let\kormonofont\korsansfont \fi
   \ifdefined\hnjmonofont\else \let\hnjmonofont\kormonofont \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% reset hangul font and normalfont
+\expandafter\ifx\familydefault\rmdefault
+  \XK@rm@korean@font
+  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
+    \XK@rm@korean@font}}
+\else \expandafter\ifx\familydefault\sfdefault
+  \XK@sf@korean@font
+  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
+    \XK@sf@korean@font}}
+\else
+  \XK@tt@korean@font
+  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
+    \XK@tt@korean@font}}
+\fi\fi
+\let\reset@font\normalfont
   %%%%%%%%%%%%%%%%%%%%%
   % hangul in math mode
   \begingroup
