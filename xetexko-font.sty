@@ -442,40 +442,52 @@
 }}
 
 \def\XK@rm@korean@font{%
-  \def\XKhangulfont{%
-    \XK@storeltnfont
-    \chardef\XKcurrentfont\@ne\kormainfont
-    \XK@storecjkfont
-  }%
-  \def\XKhanjafont {%
-    \XK@storeltnfont
-    \chardef\XKcurrentfont\tw@\hnjmainfont
-    \XK@storecjkfont
-  }%
+  \ifx\XKhangulfont\relax\else
+    \def\XKhangulfont{%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\@ne\kormainfont
+      \XK@storecjkfont
+    }%
+  \fi
+  \ifx\XKhanjafont\relax\else
+    \def\XKhanjafont {%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\tw@\hnjmainfont
+      \XK@storecjkfont
+    }%
+  \fi
 }
 \def\XK@sf@korean@font{%
-  \def\XKhangulfont{%
-    \XK@storeltnfont
-    \chardef\XKcurrentfont\@ne\korsansfont
-    \XK@storecjkfont
-  }%
-  \def\XKhanjafont {%
-    \XK@storeltnfont
-    \chardef\XKcurrentfont\tw@\hnjsansfont
-    \XK@storecjkfont
-  }%
+  \ifx\XKhangulfont\relax\else
+    \def\XKhangulfont{%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\@ne\korsansfont
+      \XK@storecjkfont
+    }%
+  \fi
+  \ifx\XKhanjafont\relax\else
+    \def\XKhanjafont {%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\tw@\hnjsansfont
+      \XK@storecjkfont
+    }%
+  \fi
 }
 \def\XK@tt@korean@font{%
-  \def\XKhangulfont{%
-    \XK@storeltnfont
-    \chardef\XKcurrentfont\@ne\kormonofont
-    \XK@storecjkfont
-  }%
-  \def\XKhanjafont {%
-    \XK@storeltnfont
-    \chardef\XKcurrentfont\tw@\hnjmonofont
-    \XK@storecjkfont
-  }%
+  \ifx\XKhangulfont\relax\else
+    \def\XKhangulfont{%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\@ne\kormonofont
+      \XK@storecjkfont
+    }%
+  \fi
+  \ifx\XKhanjafont\relax\else
+    \def\XKhanjafont {%
+      \XK@storeltnfont
+      \chardef\XKcurrentfont\tw@\hnjmonofont
+      \XK@storecjkfont
+    }%
+  \fi
 }
 
 \edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
