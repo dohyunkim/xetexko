@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2014/08/04 v2.9 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2015/01/16 v2.10 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}[2014/05/25]
@@ -383,43 +383,6 @@
     \keys_set:nn { xtxko-char } { #1 }
   }
 \ExplSyntaxOff
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% set unfonts if [unfonts]
-\if@unfonts
-  %% 한글폰트 지정하기 :
-  \setmainhangulfont
-    [ ExternalLocation,
-      Mapping=tex-text,
-      BoldFont=UnBatangBold,
-      ItalicFont=UnBatang, ItalicFeatures={FakeSlant=0.17},
-      SlantedFont=UnBatang, SlantedFeatures={FakeSlant=0.17},
-      BoldItalicFont=UnBatangBold, BoldItalicFeatures={FakeSlant=0.17},
-      BoldSlantedFont=UnBatangBold, BoldSlantedFeatures={FakeSlant=0.17},
-      interhchar=-0.045em,
-      lowerperiod=0.1em ]
-    {UnBatang}
-  \setsanshangulfont
-    [ ExternalLocation,
-      Mapping=tex-text,
-      BoldFont=UnDotumBold,
-      ItalicFont=UnDotum, ItalicFeatures={FakeSlant=0.17},
-      SlantedFont=UnDotum, SlantedFeatures={FakeSlant=0.17},
-      BoldItalicFont=UnDotumBold, BoldItalicFeatures={FakeSlant=0.17},
-      BoldSlantedFont=UnDotumBold, BoldSlantedFeatures={FakeSlant=0.17},
-      lowerperiod=0.1em ]
-    {UnDotum}
-  \setmonohangulfont
-    [ ExternalLocation,
-      Scale=1.05,
-      BoldFont=UnTaza, BoldFeatures={FakeBold=2},
-      ItalicFont=UnTaza, ItalicFeatures={FakeSlant=0.17},
-      SlantedFont=UnTaza, SlantedFeatures={FakeSlant=0.17},
-      BoldItalicFont=UnTaza, BoldItalicFeatures={FakeBold=2,FakeSlant=0.17},
-      BoldSlantedFont=UnTaza, BoldSlantedFeatures={FakeBold=2,FakeSlant=0.17}]
-    {UnTaza}
-  \let\hnjmonofont\korsansfont
-\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % font switching for latex

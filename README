@@ -1,4 +1,4 @@
-XeTeX-ko Package version 2.9 (2014/08/04)
+XeTeX-ko Package version 2.10 (2015/01/16)
 =========================================
 
 XeTeX-ko is a macro package for Xe(La)TeX which supports typesetting
@@ -74,9 +74,8 @@ spacing.
     [hanja]
 Load Hanja captions. Also adjusts spacing as [hangul] option does.
 
-    [unfonts]
-Load font setting predefined for Un TrueType fonts available at
-http://kldp.net/projects/unfonts/.
+Note that [unfonts] option is removed starting with v2.10, and so
+Nanum TrueType will be used when no Hangul/Hanja font is declared.
 
 
 Hangul Font Commands

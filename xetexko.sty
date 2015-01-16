@@ -12,7 +12,7 @@
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
-  \ProvidesPackage{xetexko}[2014/06/17 v2.7 Typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2015/01/16 v2.10 Typesetting Korean with XeTeX]
 \fi
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
@@ -49,10 +49,9 @@
 
 \newif\if@hangul
 \newif\if@hanja
-\newif\if@unfonts
 \DeclareOption{hangul}{\@hangultrue}
 \DeclareOption{hanja}{\@hangultrue\@hanjatrue}
-\DeclareOption{unfonts}{\@unfontstrue}
+\DeclareOption{unfonts}{}
 \ProcessOptions\relax
 
 \RequirePackage{xetexko-space}

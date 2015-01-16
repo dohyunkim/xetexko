@@ -1,3 +1,10 @@
+2015-01-16      Dohyun Kim <nomos at ktug org>
+
+	Version 2.10
+
+	* xetexko.sty, xetexko-font.sty: package option [unfonts] is removed
+	* *.sty: minor fixes and updated copyright year
+
 2014-08-04      Dohyun Kim <nomos at ktug org>
 
 	Version 2.9
