@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2015/01/16 v2.10 Spacings and fonts for XeTeX-ko]
+    [2015/01/18 v2.11 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1599,14 +1599,16 @@
 %% for ulem
 \def\xetexkoulemsupport{%
   \UL@hook\expandafter{\the\UL@hook
-    \let\XK@UL@@@hangulfont\XKhangulfont
-    \let\XK@UL@@@hanjafont \XKhanjafont
-    \def\XKhangulfont{\XK@UL@@@hangulfont
-      \aftergroup\aftergroup\aftergroup\XK@UL@@@hangulfont
-    }%
-    \def\XKhanjafont{\XK@UL@@@hanjafont
-      \aftergroup\aftergroup\aftergroup\XK@UL@@@hanjafont
-    }%
+    \ifdefined\XK@UL@@@hangulfont\else
+      \let\XK@UL@@@hangulfont\XKhangulfont
+      \let\XK@UL@@@hanjafont \XKhanjafont
+      \def\XKhangulfont{\XK@UL@@@hangulfont
+        \aftergroup\aftergroup\aftergroup\XK@UL@@@hangulfont
+      }%
+      \def\XKhanjafont{\XK@UL@@@hanjafont
+        \aftergroup\aftergroup\aftergroup\XK@UL@@@hanjafont
+      }%
+    \fi
   }%
 }
 
