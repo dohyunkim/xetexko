@@ -12,7 +12,7 @@
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
-  \ProvidesPackage{xetexko}[2015/01/16 v2.10 Typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2015/03/26 v2.12 Typesetting Korean with XeTeX]
 \fi
 
 \begingroup\expandafter\expandafter\expandafter\endgroup
@@ -28,7 +28,6 @@
   \def\hangulfont{\font\hangfnt}
   \def\hanjafont {\font\hanifnt}
   %\hangulfont="[UnBatang]:mapping=tex-text" at 10pt
-  \let\hangfnt\relax \def\hanifnt{\hangfnt}
   %%% 수식 한글
   \newfam\symmathhangul
   \def\setmathhangulfont#1#{\setmathhangulfont@}

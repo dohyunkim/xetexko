@@ -1,8 +1,9 @@
-xxxx-xx-xx      Dohyun Kim <nomos at ktug org>
+2015-03-26      Dohyun Kim <nomos at ktug org>
 
 	Version 2.12
 
 	* xetexko-space.sty: assign catcode 12 to Hangul Jamo
+	* fix bug #2
 
 2015-01-18      Dohyun Kim <nomos at ktug org>
 
