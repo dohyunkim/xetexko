@@ -58,7 +58,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.12\quad 2015/03/26}
+\date{Version 2.13\quad 2015/05/28}
 \maketitle
 
 \begin{quote}\small
@@ -101,6 +101,9 @@
     \item[v2.10]---
     \item 패키지 옵션 \texttt{[unfonts]}를 더는 지원하지 않는다. 이 옵션을
       사용한 기존 문서는 기본 글꼴인 나눔 트루타입으로 식자될 것이다.
+    \item[v2.13]---
+    \item \hyperref[sec:verttype]
+      {\texttt{horizontal} 환경이 추가되었다.}
   \end{itemize}
 \end{quote}
 
@@ -436,7 +439,7 @@ Noto Sans CJK, 나눔명조옛한글, 나눔바른고딕옛한글 등이 있다.
 \end{verbatim}
 \end{plaintex}
 
-\section{세로쓰기}
+\section{세로쓰기}\label{sec:verttype}
 
 세로쓰기를 위한 글꼴 지정은 다음과 같다.
 역시 고급 오픈타입 기능을 이용하는 것이므로
@@ -494,6 +497,9 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
   \endvertical
 \end{verbatim}
 \end{plaintex}
+세로쓰기 도중에 문서의 일부를 가로쓰기하려면 horizontal 환경을 이용하라.
+horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한다.
+가로쓰기 영역의 폰트 설정은 사용자의 몫이다.
 
 \section{고문헌·일본어·중국어}
 

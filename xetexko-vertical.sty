@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-vertical}
-    [2015/01/16 v2.10 Vertical environment for XeTeX-ko]
+    [2015/05/28 v2.13 Vertical environment for XeTeX-ko]
 \fi
 
 % do not veticalize headline/footline
@@ -60,6 +60,9 @@
   \else
     \def\XK@vert@half@em{.5em}%
   \fi
+  \let\xk@horiz@precjkopenparen \precjkopenparen
+  \let\xk@horiz@precjkcloseparen\precjkcloseparen
+  \let\xk@horiz@precjkfullstop  \precjkfullstop
   \def\precjkopenparen {\leavevmode
     \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
     \hbox
@@ -87,7 +90,7 @@
   \parindent\XK@vert@half@em \parindent2\parindent
 }
 
-\protected\long\def\vertical#1{%
+\protected\def\vertical#1{%
   \setbox\z@\vbox\bgroup
     \hsize=#1%
     \leftskip\z@
@@ -115,6 +118,41 @@
   \dp\z@\z@
   \leavevmode
   \raise\dimen@ii\box\z@
+}
+
+% horizontal box inside vertical typesetting
+\protected\def\horizontal#1{%
+  \setbox\z@\vbox\bgroup
+    \hsize=#1%
+    \leftskip \z@
+    \rightskip\z@
+    \parindent\z@
+    \everypar {}%
+    \spaceskip     \fontdimen2\font
+              plus \fontdimen3\font
+              minus\fontdimen4\font
+    \ifdefined\xk@horiz@precjkopenparen
+      \let\precjkopenparen \xk@horiz@precjkopenparen
+      \let\precjkcloseparen\xk@horiz@precjkcloseparen
+      \let\precjkfullstop  \xk@horiz@precjkfullstop
+    \fi
+}
+\protected\def\endhorizontal{%
+  \egroup
+  \dimen@\dimexpr\ht\z@+\dp\z@\relax
+  \dimen@ii\dimexpr\wd\z@+1ex\relax
+  \setbox\z@\hbox\bgroup
+    \wd\z@\z@\ht\z@\z@\dp\z@\z@
+    \special{x:gsave}%
+    \special{x:rotate 90}%
+    \box\z@
+    \special{x:grestore}%
+  \egroup
+  \wd\z@\dimen@
+  \ht\z@\dimen@ii
+  \dp\z@\z@
+  \fboxsep=-\fboxrule
+  \leavevmode\lower1ex\box\z@
 }
 
 \protected\def\vertlatin#1{\leavevmode\lower0.5ex\hbox{\latinmarks #1}}
