@@ -140,7 +140,7 @@
 \protected\def\endhorizontal{%
   \egroup
   \dimen@\dimexpr\ht\z@+\dp\z@\relax
-  \dimen@ii\dimexpr\wd\z@+1ex\relax
+  \dimen@ii\dimexpr\wd\z@+.5ex\relax
   \setbox\z@\hbox\bgroup
     \wd\z@\z@\ht\z@\z@\dp\z@\z@
     \special{x:gsave}%
@@ -152,7 +152,7 @@
   \ht\z@\dimen@ii
   \dp\z@\z@
   \fboxsep=-\fboxrule
-  \leavevmode\lower1ex\box\z@
+  \leavevmode\lower.5ex\box\z@
 }
 
 \protected\def\vertlatin#1{\leavevmode\lower0.5ex\hbox{\latinmarks #1}}
