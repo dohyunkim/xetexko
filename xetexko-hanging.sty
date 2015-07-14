@@ -84,9 +84,7 @@
   }%
   \def\precjkopenparen@{%
     \@josa@char@to@number\@let@token\count@
-    \dimen@\XeTeXglyphbounds\@ne\XeTeXcharglyph\count@
-    \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
-    \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
+    \XK@side@bearing\count@\@ne
     \ifx^^^^201c\@let@token
       \dimen@ii\dimen@ \advance\dimen@ii-.125em
       \XKH@pre@hang\dimen@ii

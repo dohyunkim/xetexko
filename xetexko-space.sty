@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2015/06/16 v2.13 Spacings and fonts for XeTeX-ko]
+    [2015/07/14 v2.14 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1254,12 +1254,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% cjk openings and closings
 %%% considering bounding box
+\def\XK@side@bearing#1#2{% 1: char index; 2: left=1 or right=3 -> dimen@
+  \ifdim\XeTeXglyphbounds#2\XeTeXcharglyph#1>.5em
+    \dimen@.5em
+  \else
+    \dimen@\fontcharwd\font\count@
+  \fi
+}
 \def\precjkopenparen{\futurelet\@let@token\precjkopenparen@}
 \def\precjkopenparen@{%
   \@josa@char@to@number\@let@token\count@
-  \dimen@\XeTeXglyphbounds\@ne\XeTeXcharglyph\count@
-  \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
-  \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
+  \XK@side@bearing\count@\@ne
   \leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox
@@ -1274,9 +1279,7 @@
 \def\precjkcloseparen{\futurelet\@let@token\precjkcloseparen@}
 \def\precjkcloseparen@{%
   \@josa@char@to@number\@let@token\count@
-  \dimen@\XeTeXglyphbounds\thr@@\XeTeXcharglyph\count@
-  \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
-  \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
+  \XK@side@bearing\count@\thr@@
   \leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox
@@ -1294,9 +1297,7 @@
 \def\precjkfullstop{\futurelet\@let@token\precjkfullstop@}
 \def\precjkfullstop@{%
   \@josa@char@to@number\@let@token\count@
-  \dimen@\XeTeXglyphbounds\thr@@\XeTeXcharglyph\count@
-  \dimen@\dimexpr\fontcharwd\font\count@-\dimen@\relax
-  \ifdim\dimen@<.5em \dimen@.5em \else\advance\dimen@.1em \fi
+  \XK@side@bearing\count@\thr@@
   \leavevmode
   \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
   \hbox
@@ -1340,11 +1341,12 @@
 \def\XKquaterskip           {\hskip0.25em minus 0.25em }
 \def\XKhalfminusquaterskip  {\hskip0.5em minus 0.25em }
 \def\XKthreequaterskip      {\hskip0.75em minus 0.25em }
+\def\XKinterhangulpenalty   {\penalty50 }
 
 \def\XKinterhangulbreak
-  {\ifcjtypeset\else\penalty50 \fi
+  {\ifcjtypeset\else\XKinterhangulpenalty\fi
   \hskip\dimexpr\xetexkointerhchar + \z@\relax \XKskipstretchshrink}
-\def\XKinterhanjabreak    {\ifcjtypeset\else\penalty50 \fi \XKzeroskip}
+\def\XKinterhanjabreak    {\ifcjtypeset\else\XKinterhangulpenalty\fi \XKzeroskip}
 \def\XKcjklatinbreak      {\ifcjtypeset\XKxkanjiskip\else\XKsmallskip\fi}
 \def\XKcjklatinsmallbreak {\ifcjtypeset\XKxkanjiskip\else\XKsmallsmallskip\fi}
 \def\XKhalfsmallbreak     {\ifcjtypeset\XKhalfskip\else\XKsmallsmallskip\fi}

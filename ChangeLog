@@ -1,3 +1,9 @@
+2015-XX-XX      Dohyun Kim <nomos at ktug org>
+
+	Version 2.14
+
+	* xetexko-space.sty: do not compress already narrow cjk parentheses
+
 2015-06-16      Dohyun Kim <nomos at ktug org>
 
 	Version 2.13
