@@ -3,6 +3,7 @@
 	Version 2.14
 
 	* xetexko-space.sty: do not compress already narrow cjk parentheses
+	* xetexko-space.sty: assign U+FF62, U+FF63 to cjkopening/closing resp.
 
 2015-06-16      Dohyun Kim <nomos at ktug org>
 

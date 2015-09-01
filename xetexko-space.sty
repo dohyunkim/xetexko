@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2015/07/14 v2.14 Spacings and fonts for XeTeX-ko]
+    [2015/09/01 v2.14 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -90,6 +90,7 @@
 %%%
 \XeTeXcharclass "2018 = \XKcjkopening    % ‘
 \XeTeXcharclass "201C = \XKcjkopening    % “
+\XeTeXcharclass "FF62 = \XKcjkopening    % ｢
 
 %%% cjk closing parentheses
 \newXeTeXintercharclass \XKcjkclosing
@@ -119,6 +120,7 @@
 \XeTeXcharclass "FE44 = \XKcjkclosing    % 』 vert
 \XeTeXcharclass "3011 = \XKcjkclosing    % 】
 \XeTeXcharclass "FE3C = \XKcjkclosing    % 】 vert
+\XeTeXcharclass "FF63 = \XKcjkclosing    % ｣
 
 %%% cjk colons
 \newXeTeXintercharclass \XKcjkcolon
