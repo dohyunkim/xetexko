@@ -1,6 +1,6 @@
 % xetexko-space.sty
 %
-% Copyright (c) 2013-2015 Dohyun Kim  <nomos at ktug org>
+% Copyright (c) 2013-2016 Dohyun Kim  <nomos at ktug org>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3c
@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2015/09/01 v2.14 Spacings and fonts for XeTeX-ko]
+    [2016/01/07 v2.14 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -44,14 +44,22 @@
   \repeat
 }
 
-%%% default assignments (see unicode-letters.tex)
-% CJK hanja                   = class 1
-% CJK openings                = class 2
-% CJK closings and small kana = class 3
-% others                      = class 0
-\chardef \XKhanja         \@ne
-\chardef \XKcjkopening    \tw@
-\chardef \XKsmallkana     \thr@@
+% from JW
+\ifdefined\XeTeXcharclassID\else
+  \newXeTeXintercharclass\XeTeXcharclassID
+  \newXeTeXintercharclass\XeTeXcharclassOP
+  \newXeTeXintercharclass\XeTeXcharclassCL
+  \let\XeTeXcharclassEX\XeTeXcharclassCL
+  \let\XeTeXcharclassIS\XeTeXcharclassCL
+  \let\XeTeXcharclassNS\XeTeXcharclassCL
+  \chardef\XeTeXcharclassCM=256 %
+  \input load-unicode-xetex-classes %
+\fi
+
+\let     \XKhanja         \XeTeXcharclassID
+\let     \XKcjkopening    \XeTeXcharclassOP
+\let     \XKsmallkana     \XeTeXcharclassCL
+
 \chardef \XKlatinchar     \z@
 \chardef \XKboundary      \@cclv
 

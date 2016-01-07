@@ -1,7 +1,8 @@
-2015-XX-XX      Dohyun Kim <nomos at ktug org>
+2016-XX-XX      Dohyun Kim <nomos at ktug org>
 
 	Version 2.14
 
+	* xetexko-space.sty: updates for latex 2016
 	* xetexko-space.sty: do not compress already narrow cjk parentheses
 	* xetexko-space.sty: assign U+FF62, U+FF63 to cjkopening/closing resp.
 
