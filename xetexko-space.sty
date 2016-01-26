@@ -46,14 +46,20 @@
 
 % from JW
 \ifdefined\XeTeXcharclassID\else
-  \newXeTeXintercharclass\XeTeXcharclassID
-  \newXeTeXintercharclass\XeTeXcharclassOP
-  \newXeTeXintercharclass\XeTeXcharclassCL
-  \let\XeTeXcharclassEX\XeTeXcharclassCL
-  \let\XeTeXcharclassIS\XeTeXcharclassCL
-  \let\XeTeXcharclassNS\XeTeXcharclassCL
-  \chardef\XeTeXcharclassCM=256 %
-  \input load-unicode-xetex-classes %
+  \ifdefined\xtxHanGlue
+    \let\XeTeXcharclassID\@ne
+    \let\XeTeXcharclassOP\tw@
+    \let\XeTeXcharclassCL\thr@@
+  \else
+    \newXeTeXintercharclass\XeTeXcharclassID
+    \newXeTeXintercharclass\XeTeXcharclassOP
+    \newXeTeXintercharclass\XeTeXcharclassCL
+    \let\XeTeXcharclassEX\XeTeXcharclassCL
+    \let\XeTeXcharclassIS\XeTeXcharclassCL
+    \let\XeTeXcharclassNS\XeTeXcharclassCL
+    \chardef\XeTeXcharclassCM=256 %
+    \input load-unicode-xetex-classes %
+  \fi
 \fi
 
 \let     \XKhanja         \XeTeXcharclassID
