@@ -44,6 +44,14 @@
   \repeat
 }
 
+% xetex 0.99994 extended char class limit.
+\ifdim\the\XeTeXversion\XeTeXrevision pt<0.99994pt
+  \let\XeTeXcharclassIgnore\@cclvi
+  \let\XKboundary\@cclv
+\else
+  \chardef\XeTeXcharclassIgnore=4096
+  \chardef\XKboundary=4095
+\fi
 % from JW
 \ifdefined\XeTeXcharclassID\else
   \ifdefined\xtxHanGlue
@@ -57,19 +65,26 @@
     \let\XeTeXcharclassEX\XeTeXcharclassCL
     \let\XeTeXcharclassIS\XeTeXcharclassCL
     \let\XeTeXcharclassNS\XeTeXcharclassCL
-    \chardef\XeTeXcharclassCM=256 %
+    \let\XeTeXcharclassCM\XeTeXcharclassIgnore
     \input load-unicode-xetex-classes %
   \fi
 \fi
 
 \let     \XKhanja         \XeTeXcharclassID
 \let     \XKcjkopening    \XeTeXcharclassOP
-\let     \XKsmallkana     \XeTeXcharclassCL
+\let     \XKcjkclosing    \XeTeXcharclassCL
+\let     \XKlatinchar     \z@
 
-\chardef \XKlatinchar     \z@
-\chardef \XKboundary      \@cclv
+\XeTeXcharclass "2018 = \XKcjkopening    % ‘
+\XeTeXcharclass "201C = \XKcjkopening    % “
+
+\XeTeXcharclass "2019 = \XKcjkclosing    % ’
+\XeTeXcharclass "201D = \XKcjkclosing    % ”
+
+\XeTeXcharclass "25A1 = \XKhanja         % □
 
 %%% small kana (something has changed)
+\newXeTeXintercharclass \XKsmallkana
 \XeTeXcharclass "3041 = \XKsmallkana
 \XeTeXcharclass "3043 = \XKsmallkana
 \XeTeXcharclass "3045 = \XKsmallkana
@@ -97,44 +112,6 @@
 \XeTeXcharclass "30FC = \XKsmallkana
 \XK@assign@char@class{"31F0}{"31FF}\XKsmallkana
 \XK@assign@char@class{"FF67}{"FF70}\XKsmallkana
-
-%%%
-\XeTeXcharclass "25A1 = \XKhanja         % □
-
-%%%
-\XeTeXcharclass "2018 = \XKcjkopening    % ‘
-\XeTeXcharclass "201C = \XKcjkopening    % “
-\XeTeXcharclass "FF62 = \XKcjkopening    % ｢
-
-%%% cjk closing parentheses
-\newXeTeXintercharclass \XKcjkclosing
-\XeTeXcharclass "2019 = \XKcjkclosing    % ’
-\XeTeXcharclass "201D = \XKcjkclosing    % ”
-\XeTeXcharclass "3001 = \XKcjkclosing    % 、
-\XeTeXcharclass "FE11 = \XKcjkclosing    % 、 vert
-\XeTeXcharclass "FF0C = \XKcjkclosing    % ，
-\XeTeXcharclass "FE10 = \XKcjkclosing    % ， vert
-\XeTeXcharclass "2019 = \XKcjkclosing    % ’
-\XeTeXcharclass "201D = \XKcjkclosing    % ”
-\XeTeXcharclass "FF09 = \XKcjkclosing    % ）
-\XeTeXcharclass "FE36 = \XKcjkclosing    % ） vert
-\XeTeXcharclass "3015 = \XKcjkclosing    % 〕
-\XeTeXcharclass "FE3A = \XKcjkclosing    % 〕 vert
-\XeTeXcharclass "FF3D = \XKcjkclosing    % ］
-\XeTeXcharclass "FE48 = \XKcjkclosing    % ］ vert
-\XeTeXcharclass "FF5D = \XKcjkclosing    % ｝
-\XeTeXcharclass "FE38 = \XKcjkclosing    % ｝ vert
-\XeTeXcharclass "3009 = \XKcjkclosing    % 〉
-\XeTeXcharclass "FE40 = \XKcjkclosing    % 〉 vert
-\XeTeXcharclass "300B = \XKcjkclosing    % 》
-\XeTeXcharclass "FE3E = \XKcjkclosing    % 》 vert
-\XeTeXcharclass "300D = \XKcjkclosing    % 」
-\XeTeXcharclass "FE42 = \XKcjkclosing    % 」 vert
-\XeTeXcharclass "300F = \XKcjkclosing    % 』
-\XeTeXcharclass "FE44 = \XKcjkclosing    % 』 vert
-\XeTeXcharclass "3011 = \XKcjkclosing    % 】
-\XeTeXcharclass "FE3C = \XKcjkclosing    % 】 vert
-\XeTeXcharclass "FF63 = \XKcjkclosing    % ｣
 
 %%% cjk colons
 \newXeTeXintercharclass \XKcjkcolon
