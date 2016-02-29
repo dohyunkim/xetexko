@@ -62,10 +62,11 @@
     \newXeTeXintercharclass\XeTeXcharclassID
     \newXeTeXintercharclass\XeTeXcharclassOP
     \newXeTeXintercharclass\XeTeXcharclassCL
-    \let\XeTeXcharclassEX\XeTeXcharclassCL
-    \let\XeTeXcharclassIS\XeTeXcharclassCL
-    \let\XeTeXcharclassNS\XeTeXcharclassCL
-    \let\XeTeXcharclassCM\XeTeXcharclassIgnore
+    \global\let\XeTeXcharclassCJ\XeTeXcharclassID
+    \global\let\XeTeXcharclassEX\XeTeXcharclassCL
+    \global\let\XeTeXcharclassIS\XeTeXcharclassCL
+    \global\let\XeTeXcharclassNS\XeTeXcharclassCL
+    \global\let\XeTeXcharclassCM\XeTeXcharclassIgnore
     \input load-unicode-xetex-classes %
   \fi
 \fi

@@ -207,8 +207,14 @@
 \def\로{\makejosa{}{으}로}
 \def\라{\makejosa{라}{이라}}
 \def\makejosa@I{%
-  \ifx\dhucs@next라%
+  \ifcat\dhucs@next\dhucs@cat@twelve
+    \expandafter\expandafter\expandafter\count@\expandafter
+    \strip@characternum@meaning@prefix\meaning\dhucs@next\end
+    \ifnum 0\ifnum\count@>"ABFF \ifnum\count@<"D7A4 1\fi\fi>\z@
       \makejosa\relax{이}%
+    \else
+      \makejosa{가}{이}%
+    \fi
   \else
     \makejosa{가}{이}%
   \fi
