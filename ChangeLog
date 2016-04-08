@@ -1,3 +1,10 @@
+2016-04-04      Dohyun Kim <nomos at ktug org>
+
+	Version 2.15
+
+	* xetexko-space.sty: update for xetex 0.99994 or later
+	* xetexko-Josa.sty: fix automatic selection of josa
+
 2016-02-01      Dohyun Kim <nomos at ktug org>
 
 	Version 2.14
