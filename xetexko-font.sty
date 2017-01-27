@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2016/04/04 v2.15 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2017/01/27 v2.16 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}[2014/05/25]
@@ -485,11 +485,6 @@
   \fi
 }
 
-\edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
-\edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
-\edef\ttfamily{\unexpanded\expandafter{\ttfamily
-    \XK@tt@korean@font\disablehangulspacing
-}}
 \edef\verbatim@font{\unexpanded\expandafter{\verbatim@font
     \disablehangulspacingandlinebreak
     \let\XKstoreprevfont\XKlatinfont
@@ -510,6 +505,12 @@
 }
 
 \AtBeginDocument{%
+%%% fontspec 2017
+\edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
+\edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
+\edef\ttfamily{\unexpanded\expandafter{\ttfamily
+  \XK@tt@korean@font\disablehangulspacing
+}}
   %%%%%%%%%%%%%%%%%%%%%%%%%%
   % default main hangul: nanummyeongjo, batang if absent
   \ifdefined\kormainfont\else
