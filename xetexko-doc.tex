@@ -10,10 +10,10 @@
 \setmainhangulfont{KoPubBatang_Pro Light.otf}[
   BoldFont=KoPubBatang_Pro Bold.otf,
 ]
-\setsanshangulfont{Source Han Sans K}[
+\setsanshangulfont{Noto Sans CJK KR}[
   CharRaise=-0.1ex, % BASE?
   Script=Hangul, Language=Korean,
-  UprightFont=* Normal,
+  UprightFont=* DemiLight,
 ]
 \usepackage{xetexko-hanging, hologo, xcolor, ulem}
 \usepackage[bookmarksnumbered,hidelinks]{hyperref}
@@ -58,7 +58,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.15\quad 2016/04/04}
+\date{Version 2.16\quad 2017/02/06}
 \maketitle
 
 \begin{quote}\small
@@ -458,7 +458,8 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{16em}
-  \sffamily\addhangulfontfeatures{Vertical=RotatedGlyphs,CharRaise=.5ex}
+  \sffamily\addhangulfontfeatures{Vertical=RotatedGlyphs,CharRaise=.5ex,
+  RawFeature=vertical}
   \hanjabyhangulfont \parindent-1em\leftskip1em
   \noindent 님의 침묵 (The Silent Beloved)
 \smallbreak

@@ -1,3 +1,9 @@
+2017-02-06      Dohyun Kim <nomos at ktug org>
+
+	Version 2.16
+
+	* xetexko-font.sty: patching {rm,sf,tt}family of fontspec 2017
+
 2016-04-04      Dohyun Kim <nomos at ktug org>
 
 	Version 2.15
