@@ -7,11 +7,12 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
-\setmainhangulfont{KoPubBatang_Pro Light.otf}[
-  BoldFont=KoPubBatang_Pro Bold.otf,
+\setmainhangulfont{Noto Serif CJK KR}[
+  Script=Hangul, Language=Korean,
+  UprightFont=* Light,
+  BoldFont=* Bold,
 ]
 \setsanshangulfont{Noto Sans CJK KR}[
-  CharRaise=-0.1ex, % BASE?
   Script=Hangul, Language=Korean,
   UprightFont=* DemiLight,
 ]
@@ -58,14 +59,14 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.16\quad 2017/02/06}
+\date{Version 2.17\quad 2017/09/29}
 \maketitle
 
 \begin{quote}\small
   For a summary introduction in English,
   please see \verb+README+ file in this package.
 
-  \begin{itemize}\itemsep=0pt\linespread{1.3}\selectfont
+  \begin{itemize}\itemsep=0pt\linespread{1.2}\selectfont
     \item[v2.0]---
     \item \hyperref[sec:loading]
       {플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.}
@@ -144,7 +145,7 @@ fontspec에 옵션을 주려면 \xetexko를 부르기 전에 fontspec을 따로 
 \end{plaintex}
 
 패키지 옵션:
-\begin{description}
+\begin{description}\hangulquotes
 \item[ hangul ] `제1장' `표' `차례' 등 한글 표제를 이용한다.
   절 제목 이하에는 한글 표제가 붙지 않고 숫자로만 표현된다.
   한글이 주된 언어라고 인식하여 줄간격 조정도 수행한다.

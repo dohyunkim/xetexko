@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2017/02/06 v2.16 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2017/09/29 v2.17 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}[2014/05/25]
@@ -607,10 +607,10 @@
       \kormainfont \fi\fi
       \xdef\xetexko@math@hangul@family{\f@family}\fi
   \endgroup
-  \DeclareSymbolFont{mathhangul}\zf@enc\xetexko@math@hangul@family
+  \DeclareSymbolFont{mathhangul}\f@encoding\xetexko@math@hangul@family
     \mddefault\updefault
-  \ifcsname \zf@enc/\xetexko@math@hangul@family/\bfdefault/\updefault\endcsname
-    \SetSymbolFont{mathhangul}{bold}\zf@enc\xetexko@math@hangul@family
+  \ifcsname \f@encoding/\xetexko@math@hangul@family/\bfdefault/\updefault\endcsname
+    \SetSymbolFont{mathhangul}{bold}\f@encoding\xetexko@math@hangul@family
       \bfdefault\updefault
   \fi
   \setmathhangulblock{AC00}{D7A3}
