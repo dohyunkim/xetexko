@@ -1,6 +1,6 @@
 % xetexko-space.sty
 %
-% Copyright (c) 2013-2017 Dohyun Kim  <nomos at ktug org>
+% Copyright (c) 2013-2018 Dohyun Kim  <nomos at ktug org>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3c
@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2017/02/06 v2.16 Spacings and fonts for XeTeX-ko]
+    [2018/02/01 v2.18 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1064,7 +1064,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % options regarding micro-spacing
-\def\xetexkohu                  {0.06em }
+\def\xetexkohu                  {0.05em }
 \def\xetexkointerhchar          {}
 \def\xetexkolowerperiod         {}
 \def\xetexkolowerquestion       {}
@@ -1323,7 +1323,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % various spaces
-\def\XKskipstretchshrink    {plus .0625em minus .0625ex}
+\def\XKskipstretchshrink    {plus .04em minus .02em}
 \def\XKzeroskip             {\hskip\z@\XKskipstretchshrink}
 \def\XKsmallskip
   {\hskip\dimexpr (\xetexkohu + \z@) * \tw@ \relax \XKskipstretchshrink}
@@ -1512,6 +1512,7 @@
 }
 
 \protected\def\disablehangulspacing{% all micro-spacing is 0pt
+  \let\XKskipstretchshrink\relax
   \let\precjkopenparen \relax  \let\postcjkopenparen \relax
   \let\precjkcloseparen\relax  \let\postcjkcloseparen\relax
   \let\precjkfullstop  \relax  \let\postcjkfullstop  \relax

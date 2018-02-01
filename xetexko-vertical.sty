@@ -1,6 +1,6 @@
 % xetexko-vertical.sty
 %
-% Copyright (c) 2013-2017 Dohyun Kim  <nomos at ktug org>
+% Copyright (c) 2013-2018 Dohyun Kim  <nomos at ktug org>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3c
@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-vertical}
-    [2017/02/06 v2.16 Vertical environment for XeTeX-ko]
+    [2018/02/01 v2.18 Vertical environment for XeTeX-ko]
 \fi
 
 % do not veticalize headline/footline
@@ -63,29 +63,35 @@
   \let\xk@horiz@precjkopenparen \precjkopenparen
   \let\xk@horiz@precjkcloseparen\precjkcloseparen
   \let\xk@horiz@precjkfullstop  \precjkfullstop
-  \def\precjkopenparen {\leavevmode
-    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox
-    \ifx\XKdisablecjksymbolspacing\empty
-      \bgroup
-    \else
-      to\XK@vert@half@em \bgroup \hss
-    \fi
-  }%
-  \def\precjkcloseparen{\leavevmode
-    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox
-    \ifx\XKdisablecjksymbolspacing\empty\else
-      to\XK@vert@half@em
-    \fi
-    \bgroup}%
-  \def\precjkfullstop  {\leavevmode
-    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox
-    \ifx\XKdisablecjksymbolspacing\empty\else
-      to\XK@vert@half@em
-    \fi
-    \bgroup}%
+  \ifx\precjkopenparen\relax\else
+    \def\precjkopenparen {\leavevmode
+      \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+      \hbox
+      \ifx\XKdisablecjksymbolspacing\empty
+        \bgroup
+      \else
+        to\XK@vert@half@em \bgroup \hss
+      \fi
+    }%
+  \fi
+  \ifx\precjkcloseparen\relax\else
+    \def\precjkcloseparen{\leavevmode
+      \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+      \hbox
+      \ifx\XKdisablecjksymbolspacing\empty\else
+        to\XK@vert@half@em
+      \fi
+      \bgroup}%
+  \fi
+  \ifx\precjkfullstop\relax\else
+    \def\precjkfullstop  {\leavevmode
+      \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
+      \hbox
+      \ifx\XKdisablecjksymbolspacing\empty\else
+        to\XK@vert@half@em
+      \fi
+      \bgroup}%
+  \fi
   \spaceskip\XK@vert@half@em plus\XK@vert@half@em\relax
   \parindent\XK@vert@half@em \parindent2\parindent
 }

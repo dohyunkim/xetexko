@@ -59,7 +59,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.17\quad 2017/09/29}
+\date{Version 2.18\quad 2018/02/01}
 \maketitle
 
 \begin{quote}\small
@@ -90,7 +90,7 @@
     \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
     \item[v2.7]---
     \item \hyperref[sec:fontcmds]
-      {main/sans hangul/hanja 글꼴에는 디폴트 옵션으로
+      {main/sans hangul/hanja 글꼴에는 디폴트 옵션
       \texttt{Ligatures=TeX}이 주어진다.}
     \item \hyperref[sec:fontopts]
       {\cs{defaulthangulfontfeatures}와 \cs{defaulthanjafontfeatures}
@@ -279,7 +279,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \begin{description}\itemsep0pt
 \item[hu, InterLatinCJK]
   영문자와 한글 사이 간격을 지시한다.
-  영문 괄호와 한글 사이 간격은 그 두 배이다. 기본값 0.06em.
+  영문 괄호와 한글 사이 간격은 그 두 배이다. 기본값 0.05em.
 \item[interhchar, InterHangul]
   {\addhangulfontfeature{interhchar=0.3em} 한글 자간을} 지시한다.%
   \footnote{한자 자간 옵션은 제공하지 않는다.
@@ -328,7 +328,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \begin{plaintex}
 플레인텍에서는 다음과 같은 방법으로 제어할 수 있다. 기본값은 \LaTeX에서와 같다.
 \begin{verbatim}
-  \def\xetexkohu{0.06em }
+  \def\xetexkohu{0.05em }
   \def\xetexkointerhchar{-0.04em }
   \def\xetexkocharraise{-0.1ex }
   \def\xetexkolowerperiod{0.15ex }

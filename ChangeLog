@@ -1,3 +1,14 @@
+2018-02-01      Dohyun Kim <nomos at ktug org>
+
+	Version 2.18
+
+	* step copyright year
+	* xetexko-space.sty: synchronize \XKskipstetchshrink with luatexko;
+	suppress glue stretching/shrinking under \disablehangulspacing;
+	\xetexkohu is now 0.05em by default
+	* xetexko-font.sty: use glueexpr
+	* xetexko-vertical.sty: minor bug fix
+
 2017-09-29      Dohyun Kim <nomos at ktug org>
 
 	Version 2.17
