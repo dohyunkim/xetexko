@@ -1,3 +1,10 @@
+2018-04-19      Dohyun Kim <nomos at ktug org>
+
+	Version 2.19
+
+	* xetexko-space.sty: address a conflict with ulem package:
+	see http://www.ktug.org/xe/index.php?document_srl=229398
+
 2018-04-06      Dohyun Kim <nomos at ktug org>
 
 	Version 2.18

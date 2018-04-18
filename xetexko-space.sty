@@ -13,7 +13,7 @@
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
   \ProvidesPackage{xetexko-space}
-    [2018/04/06 v2.18 Spacings and fonts for XeTeX-ko]
+    [2018/04/19 v2.19 Spacings and fonts for XeTeX-ko]
 \fi
 
 %%% we need XeTeX > 0.997
@@ -1413,10 +1413,12 @@
   \fi
 }
 
+\newtoks\XK@toks@
+
 \def\XKcjklastchar#1{%
   \let\@let@token#1\XK@save@last@char
   % and supress char orphan
-  \toks@{\XK@every@hangul{#1}}% everyhangul 가
+  \XK@toks@{\XK@every@hangul{#1}}% everyhangul 가
   \ifnum\lastpenalty=\z@ % bypass 가\\나 case
     \expandafter\XK@futurelet@let@token
   \else
@@ -1427,16 +1429,16 @@
   \ifx\par\@let@token
     \let\next\XK@nobreak@the@toks@
   \else\ifx\@sptoken\@let@token
-    \toks@\expandafter{\the\toks@\@sptoken}%
+    \XK@toks@\expandafter{\the\XK@toks@\@sptoken}%
     \let\next\XK@afterassign@let@token
   \else\ifx.\@let@token
-    \toks@\expandafter{\the\toks@ .}%
+    \XK@toks@\expandafter{\the\XK@toks@ .}%
     \let\next\XK@afterassign@let@token
   \else\ifx^^^^3002\@let@token
-    \toks@\expandafter{\the\toks@^^^^3002}%
+    \XK@toks@\expandafter{\the\XK@toks@^^^^3002}%
     \let\next\XK@afterassign@let@token
   \else\ifx^^^^ff0e\@let@token
-    \toks@\expandafter{\the\toks@^^^^ff0e}%
+    \XK@toks@\expandafter{\the\XK@toks@^^^^ff0e}%
     \let\next\XK@afterassign@let@token
   \else
     \let\next\XK@normal@the@toks@
@@ -1445,8 +1447,8 @@
 }
 \def\XK@afterassign@let@token{\afterassignment\XK@futurelet@let@token\let\@let@token= }
 \def\XK@futurelet@let@token{\futurelet\@let@token\XK@check@next@char}
-\def\XK@normal@the@toks@{\the\toks@}
-\def\XK@nobreak@the@toks@{\XK@nobreak\the\toks@}
+\def\XK@normal@the@toks@{\the\XK@toks@}
+\def\XK@nobreak@the@toks@{\XK@nobreak\the\XK@toks@}
 \def\XK@nobreak{\skip@\lastskip\unskip\unpenalty\nobreak\hskip\skip@}
 
 \def\XKbeginboundary{% empty interchartoks crashes xetex!!!
@@ -1596,6 +1598,7 @@
 %% for ulem
 \def\xetexkoulemsupport{%
   \UL@hook\expandafter{\the\UL@hook
+    \let\XK@nobreak\relax
     \ifdefined\XK@UL@@@hangulfont\else
       \let\XK@UL@@@hangulfont\XKhangulfont
       \let\XK@UL@@@hanjafont \XKhanjafont
