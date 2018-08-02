@@ -59,7 +59,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.19\quad 2018/04/19}
+\date{Version 2.20\quad 2018/08/02}
 \maketitle
 
 \begin{quote}\small
@@ -187,7 +187,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
 \end{plaintex}
 
 \cs{fallbackhanjafont}를 정의해두면 \hemph{한자 글꼴에도 없는 한자}를
-이 글꼴에서 찾아 식자한다. \verb|\newfontfamily| 명령으로 정의한다.
+이 글꼴에서 찾아 식자한다. \verb|\newfontfamily| 명령 등으로 정의한다.
 
 \section{글꼴 명령 (계속)}
 \begin{verbatim}
@@ -203,7 +203,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
   \newhangulfontface  \myhangul{NanumGothic Bold}[Ligatures=TeX]
   \newhanjafontface   \myhanja {UnDotumBold}[Ligatures=TeX]
 \end{verbatim}
-fontspec 패키지의 \verb+\newfontfamily+ \verb+\newfontface+ 명령에 해당한다.
+fontspec 패키지의 \verb+\setfontfamily+ \verb+\newfontface+ 명령에 해당한다.
 
 \begin{verbatim}
   \addhangulfontfeature{Color=FF0000,InterHangul=-.1em}

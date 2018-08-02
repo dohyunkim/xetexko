@@ -1,3 +1,9 @@
+2018-08-02      Dohyun Kim <nomos at ktug org>
+
+	Version 2.20
+
+	* xetexko-font.sty: adapt to the fontspec v2.6h
+
 2018-04-19      Dohyun Kim <nomos at ktug org>
 
 	Version 2.19

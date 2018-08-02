@@ -10,10 +10,10 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2018/04/06 v2.18 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2018/08/02 v2.20 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
-\RequirePackage{fontspec}[2014/05/25]
+\RequirePackage{fontspec}[2018/07/30]
 \let\f@size\xetexko@f@size
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,7 +137,7 @@
 \DeclareDocumentCommand \setmainhangulfont { O{} m O{} }
   {
     \__xtxko_hangul_assign_font_opts:n {#1,#3}
-    \newfontfamily \kormainfont [\l_xtxko_rem_tl] {#2}
+    \setfontfamily \kormainfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \kormainfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhangulfont \rmdefault \kormainfont
     \ignorespaces
@@ -145,21 +145,21 @@
 \DeclareDocumentCommand \setsanshangulfont { O{} m O{} }
   {
     \__xtxko_hangul_assign_font_opts:n {#1,#3}
-    \newfontfamily \korsansfont [\l_xtxko_rem_tl] {#2}
+    \setfontfamily \korsansfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \korsansfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhangulfont \sfdefault \korsansfont
     \ignorespaces
   }
 \DeclareDocumentCommand \setmonohangulfont { O{} m O{} }
   {
-    \newfontfamily \kormonofont [#1,#3] {#2}
+    \setfontfamily \kormonofont [#1,#3] {#2}
     \__xtxko_def_XKhan__fonts:nnn \XKhangulfont \ttdefault \kormonofont
     \ignorespaces
   }
 \DeclareDocumentCommand \setmainhanjafont { O{} m O{} }
   {
     \__xtxko_hanja_assign_font_opts:n {#1,#3}
-    \newfontfamily \hnjmainfont [\l_xtxko_rem_tl] {#2}
+    \setfontfamily \hnjmainfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \hnjmainfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhanjafont \rmdefault \hnjmainfont
     \ignorespaces
@@ -167,14 +167,14 @@
 \DeclareDocumentCommand \setsanshanjafont { O{} m O{} }
   {
     \__xtxko_hanja_assign_font_opts:n {#1,#3}
-    \newfontfamily \hnjsansfont [\l_xtxko_rem_tl] {#2}
+    \setfontfamily \hnjsansfont [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \hnjsansfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhanjafont \sfdefault \hnjsansfont
     \ignorespaces
   }
 \DeclareDocumentCommand \setmonohanjafont { O{} m O{} }
   {
-    \newfontfamily \hnjmonofont [#1,#3] {#2}
+    \setfontfamily \hnjmonofont [#1,#3] {#2}
     \__xtxko_def_XKhan__fonts:nnn \XKhanjafont \ttdefault \hnjmonofont
     \ignorespaces
   }
@@ -182,7 +182,7 @@
 \DeclareDocumentCommand \adhochangulfont { O{} m O{} }
   {
     \__xtxko_hangul_assign_font_opts:n {#1,#3}
-    \newfontfamily \XK@adhoc@hangul@font [\l_xtxko_rem_tl] {#2}
+    \setfontfamily \XK@adhoc@hangul@font [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \XK@adhoc@hangul@font \l_xtxko_font_opts_tl
     \tl_set:Nn \XKhangulfont
       {
@@ -197,7 +197,7 @@
 \DeclareDocumentCommand \adhochanjafont { O{} m O{} }
   {
     \__xtxko_hanja_assign_font_opts:n {#1,#3}
-    \newfontfamily \XK@adhoc@hanja@font [\l_xtxko_rem_tl] {#2}
+    \setfontfamily \XK@adhoc@hanja@font [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \XK@adhoc@hanja@font \l_xtxko_font_opts_tl
     \tl_set:Nn \XKhanjafont
       {
@@ -213,7 +213,7 @@
 \DeclareDocumentCommand \newhangulfontfamily { m O{} m O{} }
   {
     \__xtxko_hangul_assign_font_opts:n {#2,#4}
-    \exp_args:Nc \newfontfamily { XK@newfont@family \token_to_str:N #1 }
+    \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 }
       [\l_xtxko_rem_tl] {#3}
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
       \l_xtxko_font_opts_tl
@@ -231,7 +231,7 @@
 \DeclareDocumentCommand \newhanjafontfamily { m O{} m O{} }
   {
     \__xtxko_hanja_assign_font_opts:n {#2,#4}
-    \exp_args:Nc \newfontfamily { XK@newfont@family \token_to_str:N #1 }
+    \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 }
       [\l_xtxko_rem_tl] {#3}
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
       \l_xtxko_font_opts_tl
@@ -378,58 +378,26 @@
     \use:c { #2marks }
     \keys_set:nn { xtxko-char } { #1,#3 }
   }
-% fontspec 2017
+%% fontspec 2018
 \RenewDocumentCommand \setmainfont { O{} m O{} }
- {
-  \fontspec_set_family:Nnn \g__fontspec_rmfamily_family {#1,#3} {#2}
-  \tl_set_eq:NN \rmdefault \g__fontspec_rmfamily_family
-  \use:x { \exp_not:n { \DeclareRobustCommand \rmfamily }
-   {
-    \exp_not:N \fontencoding { \l__fontspec_nfss_enc_tl }
-    \exp_not:N \fontfamily { \g__fontspec_rmfamily_family }
-    \exp_not:N \selectfont
-		\exp_not:N \XK@rm@korean@font
-   }
+  {
+    \__fontspec_main_setmainfont:nn {#1,#3} {#2}
+    \edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
+    \ignorespaces
   }
-  \str_if_eq_x:nnT {\familydefault} {\rmdefault}
-    { \tl_set_eq:NN \encodingdefault \l__fontspec_nfss_enc_tl }
-  \normalfont
-  \ignorespaces
- }
 \RenewDocumentCommand \setsansfont { O{} m O{} }
- {
-  \fontspec_set_family:Nnn \g__fontspec_sffamily_family {#1,#3} {#2}
-  \tl_set_eq:NN \sfdefault \g__fontspec_sffamily_family
-  \use:x { \exp_not:n { \DeclareRobustCommand \sffamily }
-   {
-    \exp_not:N \fontencoding { \l__fontspec_nfss_enc_tl }
-    \exp_not:N \fontfamily { \g__fontspec_sffamily_family }
-    \exp_not:N \selectfont
-		\exp_not:N \XK@sf@korean@font
-   }
+  {
+    \__fontspec_main_setsansfont:nn {#1,#3} {#2}
+    \edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
+    \ignorespaces
   }
-  \str_if_eq_x:nnT {\familydefault} {\sfdefault}
-    { \tl_set_eq:NN \encodingdefault \l__fontspec_nfss_enc_tl }
-  \normalfont
-  \ignorespaces
- }
 \RenewDocumentCommand \setmonofont { O{} m O{} }
- {
-  \fontspec_set_family:Nnn \g__fontspec_ttfamily_family {#1,#3} {#2}
-  \tl_set_eq:NN \ttdefault \g__fontspec_ttfamily_family
-  \use:x { \exp_not:n { \DeclareRobustCommand \ttfamily }
-   {
-    \exp_not:N \fontencoding { \l__fontspec_nfss_enc_tl }
-    \exp_not:N \fontfamily { \g__fontspec_ttfamily_family }
-    \exp_not:N \selectfont
-		\exp_not:N \XK@tt@korean@font \exp_not:N \disablehangulspacing
-   }
+  {
+    \__fontspec_main_setmonofont:nn {#1,#3} {#2}
+    \edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font
+      \disablehangulspacing}}
+    \ignorespaces
   }
-  \str_if_eq_x:nnT {\familydefault} {\ttdefault}
-    { \tl_set_eq:NN \encodingdefault \l__fontspec_nfss_enc_tl }
-  \normalfont
-  \ignorespaces
- }
 \cs_set_eq:NN \setromanfont \setmainfont
 \ExplSyntaxOff
 
