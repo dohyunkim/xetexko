@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\ProvidesPackage{xetexko-font}[2018/08/02 v2.20 LaTeX Font commands for XeTeX-ko]
+\ProvidesPackage{xetexko-font}[2018/08/08 v2.21 LaTeX Font commands for XeTeX-ko]
 
 \let\xetexko@f@size\f@size
 \RequirePackage{fontspec}[2018/07/30]
@@ -382,19 +382,19 @@
 \RenewDocumentCommand \setmainfont { O{} m O{} }
   {
     \__fontspec_main_setmainfont:nn {#1,#3} {#2}
-    \edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
+    \protected\edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
     \ignorespaces
   }
 \RenewDocumentCommand \setsansfont { O{} m O{} }
   {
     \__fontspec_main_setsansfont:nn {#1,#3} {#2}
-    \edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
+    \protected\edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
     \ignorespaces
   }
 \RenewDocumentCommand \setmonofont { O{} m O{} }
   {
     \__fontspec_main_setmonofont:nn {#1,#3} {#2}
-    \edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font
+    \protected\edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font
       \disablehangulspacing}}
     \ignorespaces
   }
@@ -470,9 +470,9 @@
   \fi
 }
 
-\edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
-\edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
-\edef\ttfamily{\unexpanded\expandafter{\ttfamily
+\protected\edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
+\protected\edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
+\protected\edef\ttfamily{\unexpanded\expandafter{\ttfamily
   \XK@tt@korean@font\disablehangulspacing
 }}
 \edef\verbatim@font{\unexpanded\expandafter{\verbatim@font

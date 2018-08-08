@@ -1,3 +1,9 @@
+2018-08-08      Dohyun Kim <nomos at ktug org>
+
+	Version 2.21
+
+	* xetexko-font.sty: protect \{rm,sf,tt}family
+
 2018-08-02      Dohyun Kim <nomos at ktug org>
 
 	Version 2.20
