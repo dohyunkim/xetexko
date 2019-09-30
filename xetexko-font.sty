@@ -25,6 +25,8 @@
 % hangul font options
 \tl_new:N \l_xtxko_font_opts_tl
 \tl_new:N \l_xtxko_font_opts_init_tl
+\int_const:Nn \c__xtxko_one_int { 1 }
+\int_const:Nn \c__xtxko_two_int { 2 }
 \tl_set:Nn \l_xtxko_font_opts_init_tl
   {
     \tl_clear:N \xetexkointerhchar
@@ -117,7 +119,7 @@
                 \tl_set:Nn #1
                   {
                     \XK@storeltnfont
-                    \chardef\XKcurrentfont \c_one #3
+                    \chardef\XKcurrentfont \c__xtxko_one_int #3
                     \XK@storecjkfont
                   }
               }
@@ -125,7 +127,7 @@
                 \tl_set:Nn #1
                   {
                     \XK@storeltnfont
-                    \chardef\XKcurrentfont \c_two #3
+                    \chardef\XKcurrentfont \c__xtxko_two_int #3
                     \XK@storecjkfont
                   }
               }
@@ -187,7 +189,7 @@
     \tl_set:Nn \XKhangulfont
       {
         \XK@storeltnfont
-        \tl_set_eq:NN \XKcurrentfont \c_one
+        \tl_set_eq:NN \XKcurrentfont \c__xtxko_one_int
         \XK@adhoc@hangul@font
         \XK@storecjkfont
       }
@@ -202,7 +204,7 @@
     \tl_set:Nn \XKhanjafont
       {
         \XK@storeltnfont
-        \tl_set_eq:NN \XKcurrentfont \c_two
+        \tl_set_eq:NN \XKcurrentfont \c__xtxko_two_int
         \XK@adhoc@hanja@font
         \XK@storecjkfont
       }
@@ -222,7 +224,7 @@
         \tl_set:Nn \XKhangulfont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c_one
+            \tl_set_eq:NN \XKcurrentfont \c__xtxko_one_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -240,7 +242,7 @@
         \tl_set:Nn \XKhanjafont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c_two
+            \tl_set_eq:NN \XKcurrentfont \c__xtxko_two_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -258,7 +260,7 @@
         \tl_set:Nn \XKhangulfont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c_one
+            \tl_set_eq:NN \XKcurrentfont \c__xtxko_one_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -276,7 +278,7 @@
         \tl_set:Nn \XKhanjafont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c_two
+            \tl_set_eq:NN \XKcurrentfont \c__xtxko_two_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
