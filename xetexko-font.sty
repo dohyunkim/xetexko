@@ -25,32 +25,35 @@
 % hangul font options
 \tl_new:N \l_xtxko_font_opts_tl
 \tl_new:N \l_xtxko_font_opts_init_tl
+\tl_new:N \l_xtxko_hangul_font_opts_init_tl
+\tl_new:N \l_xtxko_hanja_font_opts_init_tl
+\tl_new:N \l_xtxko_rem_tl
 \int_const:Nn \c__xtxko_one_int { 1 }
 \int_const:Nn \c__xtxko_two_int { 2 }
 \tl_set:Nn \l_xtxko_font_opts_init_tl
   {
-    \tl_clear:N \xetexkointerhchar
-    \tl_clear:N \xetexkolowerexclamation
-    \tl_clear:N \xetexkolowerperiod
-    \tl_clear:N \xetexkolowercomma
-    \tl_clear:N \xetexkolowerquestion
-    \tl_clear:N \xetexkopostexclamationkern
-    \tl_clear:N \xetexkopostperiodkern
-    \tl_clear:N \xetexkopostcommakern
-    \tl_clear:N \xetexkopostquestionkern
-    \tl_clear:N \xetexkopreexclamationkern
-    \tl_clear:N \xetexkopreperiodkern
-    \tl_clear:N \xetexkoprecommakern
-    \tl_clear:N \xetexkoprequestionkern
-    \tl_clear:N \xetexkoquoteraise
-    \tl_clear:N \xetexkoquotewidth
-    \tl_clear:N \xetexkocharraise
-    \tl_set:Nn  \xetexkohu            {0.05em}
-    \tl_set:Nn  \xetexkopostmathskip  {\dim_eval:n {\xetexkohu*2}}
+    \cs_set_eq:NN \xetexkointerhchar          \c_empty_tl
+    \cs_set_eq:NN \xetexkolowerexclamation    \c_empty_tl
+    \cs_set_eq:NN \xetexkolowerperiod         \c_empty_tl
+    \cs_set_eq:NN \xetexkolowercomma          \c_empty_tl
+    \cs_set_eq:NN \xetexkolowerquestion       \c_empty_tl
+    \cs_set_eq:NN \xetexkopostexclamationkern \c_empty_tl
+    \cs_set_eq:NN \xetexkopostperiodkern      \c_empty_tl
+    \cs_set_eq:NN \xetexkopostcommakern       \c_empty_tl
+    \cs_set_eq:NN \xetexkopostquestionkern    \c_empty_tl
+    \cs_set_eq:NN \xetexkopreexclamationkern  \c_empty_tl
+    \cs_set_eq:NN \xetexkopreperiodkern       \c_empty_tl
+    \cs_set_eq:NN \xetexkoprecommakern        \c_empty_tl
+    \cs_set_eq:NN \xetexkoprequestionkern     \c_empty_tl
+    \cs_set_eq:NN \xetexkoquoteraise          \c_empty_tl
+    \cs_set_eq:NN \xetexkoquotewidth          \c_empty_tl
+    \cs_set_eq:NN \xetexkocharraise           \c_empty_tl
+    \cs_set_nopar:Npn \xetexkohu              {0.05em}
+    \cs_set_nopar:Npn \xetexkopostmathskip    {\dim_eval:n {\xetexkohu*2}}
   }
 \cs_new:Nn \__xtxko_add_font_opt:Nn
   {
-    \tl_put_right:Nn \l_xtxko_font_opts_tl { \tl_set:Nn #1 {#2} }
+    \tl_put_right:Nn \l_xtxko_font_opts_tl { \cs_set_nopar:Npn #1 {#2} }
   }
 \keys_define:nn { xtxko-font }
   {
@@ -95,7 +98,6 @@
     PunctRaise    .meta:n = { lowerperiod = { \dim_eval:n {-#1} } } ,
     CharRaise     .meta:n = { charraise   = {#1} } ,
   }
-\tl_new:N \l_xtxko_rem_tl
 \tl_set_eq:NN \l_xtxko_hangul_font_opts_init_tl \l_xtxko_font_opts_init_tl
 \cs_new:Nn \__xtxko_hangul_assign_font_opts:n
   {
@@ -116,7 +118,7 @@
           {
             \tl_if_eq:NNTF \XKhangulfont #1
               {
-                \tl_set:Nn #1
+                \cs_set_nopar:Npn #1
                   {
                     \XK@storeltnfont
                     \chardef\XKcurrentfont \c__xtxko_one_int #3
@@ -124,7 +126,7 @@
                   }
               }
               {
-                \tl_set:Nn #1
+                \cs_set_nopar:Npn #1
                   {
                     \XK@storeltnfont
                     \chardef\XKcurrentfont \c__xtxko_two_int #3
@@ -186,10 +188,10 @@
     \__xtxko_hangul_assign_font_opts:n {#1,#3}
     \setfontfamily \XK@adhoc@hangul@font [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \XK@adhoc@hangul@font \l_xtxko_font_opts_tl
-    \tl_set:Nn \XKhangulfont
+    \cs_set_nopar:Npn \XKhangulfont
       {
         \XK@storeltnfont
-        \tl_set_eq:NN \XKcurrentfont \c__xtxko_one_int
+        \cs_set_eq:NN \XKcurrentfont \c__xtxko_one_int
         \XK@adhoc@hangul@font
         \XK@storecjkfont
       }
@@ -201,10 +203,10 @@
     \__xtxko_hanja_assign_font_opts:n {#1,#3}
     \setfontfamily \XK@adhoc@hanja@font [\l_xtxko_rem_tl] {#2}
     \tl_put_right:NV \XK@adhoc@hanja@font \l_xtxko_font_opts_tl
-    \tl_set:Nn \XKhanjafont
+    \cs_set_nopar:Npn \XKhanjafont
       {
         \XK@storeltnfont
-        \tl_set_eq:NN \XKcurrentfont \c__xtxko_two_int
+        \cs_set_eq:NN \XKcurrentfont \c__xtxko_two_int
         \XK@adhoc@hanja@font
         \XK@storecjkfont
       }
@@ -215,16 +217,14 @@
 \DeclareDocumentCommand \newhangulfontfamily { m O{} m O{} }
   {
     \__xtxko_hangul_assign_font_opts:n {#2,#4}
-    \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 }
-      [\l_xtxko_rem_tl] {#3}
-    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
-      \l_xtxko_font_opts_tl
+    \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 } [\l_xtxko_rem_tl] {#3}
+    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 } \l_xtxko_font_opts_tl
     \DeclareRobustCommand #1
       {
-        \tl_set:Nn \XKhangulfont
+        \cs_set_nopar:Npn \XKhangulfont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c__xtxko_one_int
+            \cs_set_eq:NN \XKcurrentfont \c__xtxko_one_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -233,16 +233,14 @@
 \DeclareDocumentCommand \newhanjafontfamily { m O{} m O{} }
   {
     \__xtxko_hanja_assign_font_opts:n {#2,#4}
-    \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 }
-      [\l_xtxko_rem_tl] {#3}
-    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
-      \l_xtxko_font_opts_tl
+    \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 } [\l_xtxko_rem_tl] {#3}
+    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 } \l_xtxko_font_opts_tl
     \DeclareRobustCommand #1
       {
-        \tl_set:Nn \XKhanjafont
+        \cs_set_nopar:Npn \XKhanjafont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c__xtxko_two_int
+            \cs_set_eq:NN \XKcurrentfont \c__xtxko_two_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -251,16 +249,14 @@
 \DeclareDocumentCommand \newhangulfontface { m O{} m O{} }
   {
     \__xtxko_hangul_assign_font_opts:n {#2,#4}
-    \exp_args:Nc \newfontface { XK@newfont@family \token_to_str:N #1 }
-      [\l_xtxko_rem_tl] {#3}
-    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
-      \l_xtxko_font_opts_tl
+    \exp_args:Nc \newfontface { XK@newfont@family \token_to_str:N #1 } [\l_xtxko_rem_tl] {#3}
+    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 } \l_xtxko_font_opts_tl
     \DeclareRobustCommand #1
       {
-        \tl_set:Nn \XKhangulfont
+        \cs_set_nopar:Npn \XKhangulfont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c__xtxko_one_int
+            \cs_set_eq:NN \XKcurrentfont \c__xtxko_one_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -269,16 +265,14 @@
 \DeclareDocumentCommand \newhanjafontface { m O{} m O{} }
   {
     \__xtxko_hanja_assign_font_opts:n {#2,#4}
-    \exp_args:Nc \newfontface { XK@newfont@family \token_to_str:N #1 }
-      [\l_xtxko_rem_tl] {#3}
-    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 }
-      \l_xtxko_font_opts_tl
+    \exp_args:Nc \newfontface { XK@newfont@family \token_to_str:N #1 } [\l_xtxko_rem_tl] {#3}
+    \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 } \l_xtxko_font_opts_tl
     \DeclareRobustCommand #1
       {
-        \tl_set:Nn \XKhanjafont
+        \cs_set_nopar:Npn \XKhanjafont
           {
             \XK@storeltnfont
-            \tl_set_eq:NN \XKcurrentfont \c__xtxko_two_int
+            \cs_set_eq:NN \XKcurrentfont \c__xtxko_two_int
             \use:c { XK@newfont@family \token_to_str:N #1 }
             \XK@storecjkfont
           }
@@ -295,7 +289,7 @@
     \use:x
       {
         \group_end:
-        \exp_not:N \tl_set:Nn \exp_not:N \XKhangulfont
+        \exp_not:N \cs_set_nopar:Npn \exp_not:N \XKhangulfont
           {
             \exp_not:V \XKhangulfont
             \exp_not:N \fontfamily { \f@family } \exp_not:N \selectfont
@@ -316,7 +310,7 @@
     \use:x
       {
         \group_end:
-        \exp_not:N \tl_set:Nn \exp_not:N \XKhanjafont
+        \exp_not:N \cs_set_nopar:Npn \exp_not:N \XKhanjafont
           {
             \exp_not:V \XKhanjafont
             \exp_not:N \fontfamily { \f@family } \exp_not:N \selectfont
@@ -396,8 +390,7 @@
 \RenewDocumentCommand \setmonofont { O{} m O{} }
   {
     \__fontspec_main_setmonofont:nn {#1,#3} {#2}
-    \protected\edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font
-      \disablehangulspacing}}
+    \protected\edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font \disablehangulspacing}}
     \ignorespaces
   }
 \cs_set_eq:NN \setromanfont \setmainfont
