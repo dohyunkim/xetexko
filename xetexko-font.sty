@@ -112,11 +112,11 @@
   }
 \cs_new:Nn \__xtxko_def_XKhan__fonts:nnn
   {
-    \tl_if_eq:NNF #1 \relax
+    \cs_if_eq:NNF #1 \relax
       {
-        \tl_if_eq:ccT \familydefault #2
+        \str_if_eq:eeT \familydefault #2
           {
-            \tl_if_eq:NNTF \XKhangulfont #1
+            \cs_if_eq:NNTF \XKhangulfont #1
               {
                 \cs_set_nopar:Npn #1
                   {
@@ -378,19 +378,32 @@
 \RenewDocumentCommand \setmainfont { O{} m O{} }
   {
     \__fontspec_main_setmainfont:nn {#1,#3} {#2}
-    \protected\edef\rmfamily{\unexpanded\expandafter{\rmfamily\XK@rm@korean@font}}
+    \cs_set_protected_nopar:Npx \rmfamily
+      {
+        \exp_not:V \rmfamily
+        \exp_not:N \XK@rm@korean@font
+      }
     \ignorespaces
   }
 \RenewDocumentCommand \setsansfont { O{} m O{} }
   {
     \__fontspec_main_setsansfont:nn {#1,#3} {#2}
-    \protected\edef\sffamily{\unexpanded\expandafter{\sffamily\XK@sf@korean@font}}
+    \cs_set_protected_nopar:Npx \sffamily
+      {
+        \exp_not:V \sffamily
+        \exp_not:N \XK@sf@korean@font
+      }
     \ignorespaces
   }
 \RenewDocumentCommand \setmonofont { O{} m O{} }
   {
     \__fontspec_main_setmonofont:nn {#1,#3} {#2}
-    \protected\edef\ttfamily{\unexpanded\expandafter{\ttfamily\XK@tt@korean@font \disablehangulspacing}}
+    \cs_set_protected_nopar:Npx \ttfamily
+      {
+        \exp_not:V \ttfamily
+        \exp_not:N \XK@tt@korean@font
+        \exp_not:N \disablehangulspacing
+      }
     \ignorespaces
   }
 \cs_set_eq:NN \setromanfont \setmainfont
