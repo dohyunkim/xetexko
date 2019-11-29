@@ -1,3 +1,9 @@
+2019-12-01      Dohyun Kim <nomos at ktug org>
+
+	Version 2.22
+
+	* xetexko-font.sty: expl3 deprecation removals
+
 2018-08-08      Dohyun Kim <nomos at ktug org>
 
 	Version 2.21

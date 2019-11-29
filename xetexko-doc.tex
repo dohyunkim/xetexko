@@ -7,14 +7,19 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
+\defaultfontfeatures+{Script=Hangul, Language=Korean}
 \setmainhangulfont{Noto Serif CJK KR}[
-  Script=Hangul, Language=Korean,
-  UprightFont=* Light,
-  BoldFont=* Bold,
+  UprightFont=* Light, BoldFont=* Bold,
 ]
 \setsanshangulfont{Noto Sans CJK KR}[
-  Script=Hangul, Language=Korean,
   UprightFont=* DemiLight,
+]
+\setmathhangulfont{Noto Sans CJK KR}[
+  SizeFeatures={
+    {Size=-6,  Font=* Medium},
+    {Size=6-9, Font=*},
+    {Size=9-,  Font=* DemiLight},
+  },
 ]
 \usepackage{xetexko-hanging, hologo, xcolor, ulem}
 \usepackage[bookmarksnumbered,hidelinks]{hyperref}
@@ -54,12 +59,13 @@
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
 \def\hparens#1{\leavevmode\unskip---{\small #1}---\ignorespaces}
+\def\keyword#1{\leavevmode\marginpar{\hfuzz\maxdimen\footnotesize\cs{#1}}}
 
 \begin{document}
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 2.21\quad 2018/08/08}
+\date{Version 2.22\quad 2019/12/01}
 \maketitle
 
 \begin{quote}\small
@@ -186,6 +192,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
 \end{verbatim}
 \end{plaintex}
 
+\keyword{fallbackhanjafont}%
 \cs{fallbackhanjafont}를 정의해두면 \hemph{한자 글꼴에도 없는 한자}를
 이 글꼴에서 찾아 식자한다. \verb|\newfontfamily| 명령 등으로 정의한다.
 
@@ -214,6 +221,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 
 참고로, 한자와 한글을 같은 글꼴로 식자하고 싶을 때 글꼴 설정을
 번거롭게 두 번 할 필요 없이 한글 글꼴만 설정한 뒤 간단히
+\keyword{hanjabyhangulfont}%
 \cs{hanjabyhangulfont}를 선언하면 된다.%
 \footnote{앞 절의 main/sans 글꼴 명령들과 달리 한글 폰트가 자동으로
   한자에도 적용되지 않는다는 말이다. 어쨌든 이미 한자 폰트가 지정돼 있는
@@ -442,24 +450,25 @@ Noto Sans CJK, 나눔명조옛한글, 나눔바른고딕옛한글 등이 있다.
 \section{세로쓰기}\label{sec:verttype}
 
 세로쓰기를 위한 글꼴 지정은 다음과 같다.
-역시 고급 오픈타입 기능을 이용하는 것이므로
-폰트가 이를 지원해야 한다.%
-\footnote{만일 폰트의 세로쓰기 글자폭이 가로쓰기와 다르다면
+역시 고급 오픈타입 기능을 이용하는 것이므로 폰트가 이를 지원해야 한다.%
+\footnote{폰트의 세로쓰기 글자폭이 가로쓰기와 다르다면
   \cs{verticalem=1.05em} 같은 선언을 미리 해두는 게 좋다.}
 \begin{verbatim}
-  \setmainhangulfont{Adobe Myungjo Std}[ Vertical=RotatedGlyphs ]
+  \setmainhangulfont{Noto Sans CJK KR}[
+    Vertical=Alternates, RawFeature=vertical ]
 \end{verbatim}
+\keyword{verticaltypesetting}%
 문서 전체를 세로쓰기할 때 \cs{verticaltypesetting}을 선언하면
-면주는 그대로 두고 본문만 세로쓰기한다.\footnote{당연히 면주의 글꼴에는
+면주는 그대로 두고 본문만 세로쓰기한다.\footnote{면주의 글꼴에는
   \texttt{Vertical} 옵션이 없어야 할 것이다.
   면주 글꼴을 따로 지정하는 것은 사용자의 몫이다. }
-문서의 일부를 세로쓰기 하려면 vertical 환경을 이용한다.
+문서의 일부를 세로쓰기 하려면 \verb|vertical| 환경을 이용한다.
 vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 보통 그 뒤에  세로쓰기에 사용할 글꼴 명령이 온다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{16em}
-  \sffamily\addhangulfontfeatures{Vertical=RotatedGlyphs,CharRaise=.5ex,
+  \sffamily\addhangulfontfeatures{Vertical=Alternates,CharRaise=.5ex,
   RawFeature=vertical}
   \hanjabyhangulfont \parindent-1em\leftskip1em
   \noindent 님의 침묵 (The Silent Beloved)
@@ -480,7 +489,8 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 
 \begin{verbatim}
   \begin{vertical}{12em}
-    \hangulfontspec{Adobe Myungjo Std}[ Vertical=RotatedGlyphs ]
+    \hangulfontspec{Noto Sans CJK KR}[
+      Vertical=Alternates, RawFeature=vertical ]
     세로쓰기로 식자할 부분
   \end{vertical}
 \end{verbatim}
@@ -493,24 +503,25 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \begin{plaintex}
 플레인텍이라면,
 \begin{verbatim}
-  \vertical{16em}\hangulfont="Adobe Myungjo Std:vertical"
+  \vertical{16em}\hangulfont="Noto Sans CJK KR:vertical;+vert"
     세로쓰기로 식자할 부분
   \endvertical
 \end{verbatim}
 \end{plaintex}
-세로쓰기 도중에 문서의 일부를 가로쓰기하려면 horizontal 환경을 이용하라.
+세로쓰기 도중에 문서의 일부를 가로쓰기로 삽입하려면
+\verb|horizontal| 환경을 이용한다.
 horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한다.
 가로쓰기 영역의 폰트 설정은 사용자의 몫이다.
 
 \section{고문헌·일본어·중국어}
 
 띄어쓰기가 없는 옛문헌이나 일본어 단락 따위를 삽입할 때
-japanese 혹은 chinese 환경을 선언하는 것이 좋다.
+\verb|japanese| 혹은 \verb|chinese| 환경을 선언하는 것이 좋다.
 들여쓰기\footnote {들여쓰기 기본값은 japanese는 1em 이고 chinese는 2em 이다.}
 및 자간 조절이 자동으로 이루어지며
 사용자가 입력한 불필요한 공백도 없애준다.
-Schinese 환경은 chinese의 다른 이름이다.
-Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환경을 이용하라.
+\verb|Schinese| 환경은 chinese의 다른 이름이다.
+\verb|Tchinese|도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환경을 이용하라.
 일반적으로 우리 고문헌 조판에는 japanese 환경이 더 적합하다.
 
 \begin{figure}
@@ -526,9 +537,9 @@ Tchinese도 제공하는데 중국어 번체 글꼴을 사용한다면 이 환�
 \caption{고문헌 조판 보기. japanese 환경을 이용했다.}\label{fig:ancientdoc}
 \end{figure}
 
+\keyword{inhibitglue}%
 \cs{inhibitglue} 명령은 일본어 등 환경에서 가끔 유용한데,
-해당 지점에 자동 삽입되는 공백을 영(zero)으로
-만들어준다.
+해당 지점에 자동 삽입되는 공백을 영(zero)으로 만들어준다.
 
 \section{매달린 구두점}
 마침표, 쉼표, 인용부호를 판면 바깥에 식자하여 행 끝에 매달리게 만든다.
@@ -565,7 +576,11 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 수식 한글은 따로 설정하지 않으면 문서의 기본 글꼴을 따라가지만
 굳이 설정하려면 다음과 같이 한다. 이 명령은 플레인텍에서도 쓸 수 있다.
 \begin{verbatim}
-  \setmathhangulfont{NanumGothic}
+  \setmathhangulfont{Noto Sans CJK KR}[
+    SizeFeatures={ {Size=-6,  Font=* Medium},
+                   {Size=6-9, Font=*},
+                   {Size=9-,  Font=* DemiLight} }
+  ]
 \end{verbatim}
 현재 한글만 쓸 수 있게 설정되어 있다.
 한자도 수식에 직접 입력하려면 사용자는
@@ -588,6 +603,7 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 \end{verbatim}
 
 \section{드러냄표}
+\keyword{dotemph}%
 \dotemph{드러냄표} 강조도 \kotex 과 대동소이하다.
 기본은 글자 위에 점을 찍는 형태이나 다음 명령을 이용해 개인적으로 선호하는
 기호를 드러냄표로 쓸 수 있다.
@@ -620,7 +636,8 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 플레인텍에서는 패키지 로드 후 사용자가 \cs{xetexkoulemsupport}
 명령을 내려주어야 한다.
 \end{plaintex}
-%\hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
+
+\hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
 
 
 \end{document}
