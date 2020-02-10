@@ -318,27 +318,31 @@
       }
   }
 %% add{hangul,hanja}fontfeature[s]
-\def\xetexkopacifybfseries{%
-  \ifcsname \f@encoding/\f@family/bx/\shapedefault\endcsname \else
-    \global \expandafter\let
-      \csname \f@encoding/\f@family/bx/\shapedefault \expandafter\endcsname
-      \csname \f@encoding/\f@family/\bfdefault/\shapedefault\endcsname
-  \fi
-  \ifcsname \f@encoding/\f@family/bx/\itdefault\endcsname \else
-    \global \expandafter\let
-      \csname \f@encoding/\f@family/bx/\itdefault \expandafter\endcsname
-      \csname \f@encoding/\f@family/\bfdefault/\itdefault\endcsname
-  \fi
-  \ifcsname \f@encoding/\f@family/bx/\sldefault\endcsname \else
-    \global \expandafter\let
-      \csname \f@encoding/\f@family/bx/\sldefault \expandafter\endcsname
-      \csname \f@encoding/\f@family/\bfdefault/\sldefault\endcsname
-  \fi
-  \ifcsname \f@encoding/\f@family/\mddefault/\updefault\endcsname \else
-    \global \expandafter\let
-      \csname \f@encoding/\f@family/\mddefault/\updefault \expandafter\endcsname
-      \csname \f@encoding/\f@family/\mddefault/\shapedefault\endcsname
-  \fi
+\cs_set_nopar:Npn \xetexkopacifybfseries {
+  \cs_if_exist:cF { \f@encoding/\f@family/bx/\shapedefault }
+    {
+      \cs_gset_eq:cc
+        { \f@encoding/\f@family/bx/\shapedefault }
+        { \f@encoding/\f@family/\bfdefault/\shapedefault }
+    }
+  \cs_if_exist:cF { \f@encoding/\f@family/bx/\itdefault }
+    {
+      \cs_gset_eq:cc
+        { \f@encoding/\f@family/bx/\itdefault }
+        { \f@encoding/\f@family/\bfdefault/\itdefault }
+    }
+  \cs_if_exist:cF { \f@encoding/\f@family/bx/\sldefault }
+    {
+      \cs_gset_eq:cc
+        { \f@encoding/\f@family/bx/\sldefault }
+        { \f@encoding/\f@family/\bfdefault/\sldefault }
+    }
+  \cs_if_exist:cF { \f@encoding/\f@family/\mddefault/\updefault }
+    {
+      \cs_gset_eq:cc
+        { \f@encoding/\f@family/\mddefault/\updefault }
+        { \f@encoding/\f@family/\mddefault/\shapedefault }
+    }
 }
 \DeclareDocumentCommand \addhangulfontfeature { m }
   {
