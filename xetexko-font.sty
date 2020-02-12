@@ -131,6 +131,19 @@
                     \XK@storecjkfont
                   }
               }
+            \cs_if_eq:NNTF \rmdefault #2
+              {
+                \cs_set_eq:NN \XK@default@korean@font \XK@rm@korean@font
+              }
+              {
+                \cs_if_eq:NNTF \sfdefault #2
+                  {
+                    \cs_set_eq:NN \XK@default@korean@font \XK@sf@korean@font
+                  }
+                  {
+                    \cs_set_eq:NN \XK@default@korean@font \XK@tt@korean@font
+                  }
+              }
           }
       }
   }
@@ -511,15 +524,25 @@
       \XK@storecjkfont
     }%
   \fi
+  \disablehangulspacing
 }
 
 % using latex 2020's font family hooks
-\edef\@rmfamilyhook{\unexpanded\expandafter{\@rmfamilyhook
-  \XK@rm@korean@font}}
-\edef\@sffamilyhook{\unexpanded\expandafter{\@sffamilyhook
-  \XK@sf@korean@font}}
-\edef\@ttfamilyhook{\unexpanded\expandafter{\@ttfamilyhook
-  \XK@tt@korean@font\disablehangulspacing }}
+\edef\@rmfamilyhook{\unexpanded\expandafter{\@rmfamilyhook \XK@rm@korean@font}}
+\edef\@sffamilyhook{\unexpanded\expandafter{\@sffamilyhook \XK@sf@korean@font}}
+\edef\@ttfamilyhook{\unexpanded\expandafter{\@ttfamilyhook \XK@tt@korean@font}}
+%%%%% temporary >>
+\ifdefined\@defaultfamilyhook\else
+  \expandafter\edef\csname normalfont \endcsname{%
+    \expandafter\unexpanded
+    \expandafter\expandafter\expandafter{\csname normalfont \endcsname
+      \@defaultfamilyhook }}
+  \let\@defaultfamilyhook\@empty
+\fi
+%%%%% << temporary
+\edef\@defaultfamilyhook{\unexpanded\expandafter{\@defaultfamilyhook
+  \XK@default@korean@font }}
+\let\XK@default@korean@font\@empty
 
 \edef\verbatim@font{\unexpanded\expandafter{\verbatim@font
     \disablehangulspacingandlinebreak
@@ -595,22 +618,16 @@
   \fi
   \ifdefined\kormonofont\else \let\kormonofont\korsansfont \fi
   \ifdefined\hnjmonofont\else \let\hnjmonofont\kormonofont \fi
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% reset hangul font and normalfont
-\expandafter\ifx\familydefault\rmdefault
-  \XK@rm@korean@font
-  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
-    \XK@rm@korean@font}}
-\else \expandafter\ifx\familydefault\sfdefault
-  \XK@sf@korean@font
-  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
-    \XK@sf@korean@font}}
-\else
-  \XK@tt@korean@font
-  \protected\edef\normalfont{\unexpanded\expandafter{\normalfont
-    \XK@tt@korean@font}}
-\fi\fi
-\let\reset@font\normalfont
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % reset hangul font and normalfont
+  \expandafter\ifx\familydefault\sfdefault
+    \let\XK@default@korean@font\XK@sf@korean@font
+  \else \expandafter\ifx\familydefault\ttdefault
+    \let\XK@default@korean@font\XK@tt@korean@font
+  \else
+    \let\XK@default@korean@font\XK@rm@korean@font
+  \fi\fi
+  \XK@default@korean@font
   %%%%%%%%%%%%%%%%%%%%%
   % hangul in math mode
   \begingroup
