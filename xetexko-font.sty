@@ -344,7 +344,7 @@
 \DeclareDocumentCommand \addhangulfontfeature { m }
   {
     \group_begin:
-    \XKhangulfont
+    \fontseries\mddefault\fontshape\shapedefault \XKhangulfont
     \tl_clear:N \l_xtxko_font_opts_tl
     \keys_set_known:nxN { xtxko-font } {#1} \l_xtxko_rem_tl
     \addfontfeature {\l_xtxko_rem_tl}
@@ -366,7 +366,7 @@
 \DeclareDocumentCommand \addhanjafontfeature { m }
   {
     \group_begin:
-    \XKhanjafont
+    \fontseries\mddefault\fontshape\shapedefault \XKhanjafont
     \tl_clear:N \l_xtxko_font_opts_tl
     \keys_set_known:nxN { xtxko-font } {#1} \l_xtxko_rem_tl
     \addfontfeature {\l_xtxko_rem_tl}
