@@ -143,7 +143,7 @@ EUC-KR이나 CP949 입력도 지원하는데, 다음과 같은 선언이 있으�
 
 \section{\xetexko\ 부르기}\label{sec:loading}
 \xetexko\ 로드하기: \cs{usepackage\{xetexko\}} 혹은 \cs{usepackage\{kotex\}}.
-이 명령으로 fontspec 및 xunicode 패키지도 함께 불러들인다.
+이 명령으로 fontspec 패키지도 함께 불러들인다.
 fontspec에 옵션을 주려면 \xetexko를 부르기 전에 fontspec을 따로 로드하면 된다.
 
 \begin{plaintex}
@@ -152,10 +152,10 @@ fontspec에 옵션을 주려면 \xetexko를 부르기 전에 fontspec을 따로 
 
 패키지 옵션:
 \begin{description}\hangulquotes
-\item[ hangul ] `제1장' `표' `차례' 등 한글 표제를 이용한다.
+\item[ hangul ] `제~1~장' `표' `차례' 등 한글 표제를 이용한다.
   절 제목 이하에는 한글 표제가 붙지 않고 숫자로만 표현된다.
   한글이 주된 언어라고 인식하여 줄간격 조정도 수행한다.
-\item[ hanja ]  `第1章' `表' `目次' 등 한자 표제를 이용한다.
+\item[ hanja ]  `第~1~章' `表' `目次' 등 한자 표제를 이용한다.
   절 제목 이하에는 한자 표제가 붙지 않고 숫자로만 표현된다.
   한글이 주된 언어라고 인식하여 줄간격 조정도 수행한다.
 \end{description}

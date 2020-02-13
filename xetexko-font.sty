@@ -149,34 +149,24 @@
   }
 % suppress bx font warnings
 \cs_new_nopar:Npn \l_xetexko_pacify_bfseries {
-  \cs_if_exist:cF
-    { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/\shapedefault }
+  \tl_map_inline:nn { \mddefault \bfdefault }
+  {
+    \cs_if_exist:cF { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\updefault }
     {
       \cs_set_eq:cc
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/\shapedefault }
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\bfdefault/\shapedefault }
+      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\updefault }
+      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\shapedefault }
     }
-  \cs_if_exist:cF
-    { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/\itdefault }
+  }
+  \tl_map_inline:nn { \shapedefault \updefault \itdefault \sldefault }
+  {
+    \cs_if_exist:cF { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/##1 }
     {
       \cs_set_eq:cc
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/\itdefault }
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\bfdefault/\itdefault }
+      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/##1 }
+      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\bfdefault/##1 }
     }
-  \cs_if_exist:cF
-    { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/\sldefault }
-    {
-      \cs_set_eq:cc
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/\sldefault }
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\bfdefault/\sldefault }
-    }
-  \cs_if_exist:cF
-    { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\mddefault/\updefault }
-    {
-      \cs_set_eq:cc
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\mddefault/\updefault }
-        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\mddefault/\shapedefault }
-    }
+  }
 }
 %%%%%%%%%%%%%%%%%%%%
 % user font commands
@@ -332,30 +322,24 @@
   }
 %% add{hangul,hanja}fontfeature[s]
 \cs_set_nopar:Npn \xetexkopacifybfseries {
-  \cs_if_exist:cF { \f@encoding/\f@family/bx/\shapedefault }
+  \tl_map_inline:nn { \mddefault \bfdefault }
+  {
+    \cs_if_exist:cF { \f@encoding/\f@family/##1/\updefault }
     {
       \cs_gset_eq:cc
-        { \f@encoding/\f@family/bx/\shapedefault }
-        { \f@encoding/\f@family/\bfdefault/\shapedefault }
+      { \f@encoding/\f@family/##1/\updefault }
+      { \f@encoding/\f@family/##1/\shapedefault }
     }
-  \cs_if_exist:cF { \f@encoding/\f@family/bx/\itdefault }
+  }
+  \tl_map_inline:nn { \shapedefault \updefault \itdefault \sldefault }
+  {
+    \cs_if_exist:cF { \f@encoding/\f@family/bx/##1 }
     {
       \cs_gset_eq:cc
-        { \f@encoding/\f@family/bx/\itdefault }
-        { \f@encoding/\f@family/\bfdefault/\itdefault }
+      { \f@encoding/\f@family/bx/##1 }
+      { \f@encoding/\f@family/\bfdefault/##1 }
     }
-  \cs_if_exist:cF { \f@encoding/\f@family/bx/\sldefault }
-    {
-      \cs_gset_eq:cc
-        { \f@encoding/\f@family/bx/\sldefault }
-        { \f@encoding/\f@family/\bfdefault/\sldefault }
-    }
-  \cs_if_exist:cF { \f@encoding/\f@family/\mddefault/\updefault }
-    {
-      \cs_gset_eq:cc
-        { \f@encoding/\f@family/\mddefault/\updefault }
-        { \f@encoding/\f@family/\mddefault/\shapedefault }
-    }
+  }
 }
 \DeclareDocumentCommand \addhangulfontfeature { m }
   {
