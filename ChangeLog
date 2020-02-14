@@ -2,9 +2,9 @@
 
 	Version 2.23
 
-	* xetexko-font.sty: unfont as the last fallback font;
+	* xetexko-font.sty: unfont as default fallback font;
 	suppress bfseries font warnings;
-	use latex's \@{rm,sf,tt}familyhook
+	use latex's \@{rm,sf,tt,default}familyhook
 
 2019-12-01      Dohyun Kim <nomos at ktug org>
 

@@ -75,7 +75,7 @@ spacing.
 Load Hanja captions. Also adjusts spacing as [hangul] option does.
 
 Note that [unfonts] option is removed starting with v2.10, and so
-Nanum TrueType will be used when no Hangul/Hanja font is declared.
+Un TrueType will be used when no Hangul/Hanja font is declared.
 
 
 Hangul Font Commands
