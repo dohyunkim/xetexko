@@ -511,18 +511,9 @@
 \edef\@rmfamilyhook{\unexpanded\expandafter{\@rmfamilyhook \XK@rm@korean@font}}
 \edef\@sffamilyhook{\unexpanded\expandafter{\@sffamilyhook \XK@sf@korean@font}}
 \edef\@ttfamilyhook{\unexpanded\expandafter{\@ttfamilyhook \XK@tt@korean@font}}
-%%%%% temporary >>
-\ifdefined\@defaultfamilyhook\else
-  \expandafter\edef\csname normalfont \endcsname{%
-    \expandafter\unexpanded
-    \expandafter\expandafter\expandafter{\csname normalfont \endcsname
-      \@defaultfamilyhook }}
-  \let\@defaultfamilyhook\@empty
-\fi
-%%%%% << temporary
 \edef\@defaultfamilyhook{\unexpanded\expandafter{\@defaultfamilyhook
   \XK@default@korean@font }}
-\let\XK@default@korean@font\@empty
+\let\XK@default@korean@font\relax
 
 \edef\verbatim@font{\unexpanded\expandafter{\verbatim@font
     \disablehangulspacingandlinebreak

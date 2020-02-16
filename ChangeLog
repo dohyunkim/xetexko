@@ -2,9 +2,9 @@
 
 	Version 2.23
 
-	* xetexko-font.sty: unfont as default fallback font;
-	suppress bfseries font warnings;
-	use latex's \@{rm,sf,tt,default}familyhook
+	* xetexko-font.sty: unbatang/undotum as default hangul fonts;
+	suppress bx font warnings and make \bfseries work again;
+	use latex's newly introduced \@{rm,sf,tt,default}familyhook
 
 2019-12-01      Dohyun Kim <nomos at ktug org>
 
