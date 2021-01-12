@@ -33,3 +33,7 @@ install: $(RUNFILES) $(DOCFILES)
 	@mkdir -p $(RUNDIR) && cp $(RUNFILES) $(RUNDIR)
 	@mkdir -p $(DOCDIR) && cp $(DOCFILES) $(DOCDIR)
 
+uninstall:
+	@echo Uninstalling from: $(TEXMFDIR)
+	@$(RM) -r $(RUNDIR) $(DOCDIR)
+

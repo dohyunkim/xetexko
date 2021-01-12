@@ -10,7 +10,7 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\NeedsTeXFormat{LaTeX2e}[2020/02/02]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 \ProvidesPackage{xetexko-font}[2020/02/17 v2.23 LaTeX Font commands for XeTeX-ko]
 
 \RequirePackage{fontspec}[2020/02/03]
@@ -508,11 +508,10 @@
 }
 
 % using latex 2020's font family hooks
-\edef\@rmfamilyhook{\unexpanded\expandafter{\@rmfamilyhook \XK@rm@korean@font}}
-\edef\@sffamilyhook{\unexpanded\expandafter{\@sffamilyhook \XK@sf@korean@font}}
-\edef\@ttfamilyhook{\unexpanded\expandafter{\@ttfamilyhook \XK@tt@korean@font}}
-\edef\@defaultfamilyhook{\unexpanded\expandafter{\@defaultfamilyhook
-  \XK@default@korean@font }}
+\AddToHook{rmfamily}{\XK@rm@korean@font}
+\AddToHook{sffamily}{\XK@sf@korean@font}
+\AddToHook{ttfamily}{\XK@tt@korean@font}
+\AddToHook{normalfont}{\XK@default@korean@font}
 \let\XK@default@korean@font\relax
 
 \edef\verbatim@font{\unexpanded\expandafter{\verbatim@font
