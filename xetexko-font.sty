@@ -148,24 +148,18 @@
           }
       }
   }
-% suppress bx font warnings
-\cs_new_nopar:Npn \l_xetexko_pacify_bfseries {
+% suppress upshape font warnings
+\cs_new_nopar:Npn \l_xetexko_pacify_upshape {
   \tl_map_inline:nn { \mddefault \bfdefault }
   {
     \cs_if_exist:cF { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\updefault }
     {
-      \cs_set_eq:cc
-      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\updefault }
-      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\shapedefault }
-    }
-  }
-  \tl_map_inline:nn { \shapedefault \updefault \itdefault \sldefault }
-  {
-    \cs_if_exist:cF { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/##1 }
-    {
-      \cs_set_eq:cc
-      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/bx/##1 }
-      { \g_fontspec_encoding_tl/\l_fontspec_family_tl/\bfdefault/##1 }
+      \cs_if_exist:cT { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\shapedefault }
+      {
+        \cs_set_eq:cc
+        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\updefault }
+        { \g_fontspec_encoding_tl/\l_fontspec_family_tl/##1/\shapedefault }
+      }
     }
   }
 }
@@ -175,7 +169,7 @@
   {
     \__xtxko_hangul_assign_font_opts:n {Ligatures=TeX,#1,#3}
     \setfontfamily \kormainfont {#2} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:NV \kormainfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhangulfont \rmdefault \kormainfont
     \ignorespaces
@@ -184,7 +178,7 @@
   {
     \__xtxko_hangul_assign_font_opts:n {Ligatures=TeX,#1,#3}
     \setfontfamily \korsansfont {#2} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:NV \korsansfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhangulfont \sfdefault \korsansfont
     \ignorespaces
@@ -192,7 +186,7 @@
 \DeclareDocumentCommand \setmonohangulfont { O{} m O{} }
   {
     \setfontfamily \kormonofont {#2} [#1,#3]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \__xtxko_def_XKhan__fonts:nnn \XKhangulfont \ttdefault \kormonofont
     \ignorespaces
   }
@@ -200,7 +194,7 @@
   {
     \__xtxko_hanja_assign_font_opts:n {Ligatures=TeX,#1,#3}
     \setfontfamily \hnjmainfont {#2} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:NV \hnjmainfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhanjafont \rmdefault \hnjmainfont
     \ignorespaces
@@ -209,7 +203,7 @@
   {
     \__xtxko_hanja_assign_font_opts:n {Ligatures=TeX,#1,#3}
     \setfontfamily \hnjsansfont {#2} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:NV \hnjsansfont \l_xtxko_font_opts_tl
     \__xtxko_def_XKhan__fonts:nnn \XKhanjafont \sfdefault \hnjsansfont
     \ignorespaces
@@ -217,7 +211,7 @@
 \DeclareDocumentCommand \setmonohanjafont { O{} m O{} }
   {
     \setfontfamily \hnjmonofont {#2} [#1,#3]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \__xtxko_def_XKhan__fonts:nnn \XKhanjafont \ttdefault \hnjmonofont
     \ignorespaces
   }
@@ -226,7 +220,7 @@
   {
     \__xtxko_hangul_assign_font_opts:n {#1,#3}
     \setfontfamily \XK@adhoc@hangul@font {#2} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:NV \XK@adhoc@hangul@font \l_xtxko_font_opts_tl
     \cs_set_nopar:Npn \XKhangulfont
       {
@@ -242,7 +236,7 @@
   {
     \__xtxko_hanja_assign_font_opts:n {#1,#3}
     \setfontfamily \XK@adhoc@hanja@font {#2} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:NV \XK@adhoc@hanja@font \l_xtxko_font_opts_tl
     \cs_set_nopar:Npn \XKhanjafont
       {
@@ -259,7 +253,7 @@
   {
     \__xtxko_hangul_assign_font_opts:n {#2,#4}
     \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 } {#3} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 } \l_xtxko_font_opts_tl
     \DeclareRobustCommand #1
       {
@@ -276,7 +270,7 @@
   {
     \__xtxko_hanja_assign_font_opts:n {#2,#4}
     \exp_args:Nc \setfontfamily { XK@newfont@family \token_to_str:N #1 } {#3} [\l_xtxko_rem_tl]
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
     \tl_put_right:cV { XK@newfont@family \token_to_str:N #1 } \l_xtxko_font_opts_tl
     \DeclareRobustCommand #1
       {
@@ -322,23 +316,17 @@
       }
   }
 %% add{hangul,hanja}fontfeature[s]
-\cs_set_nopar:Npn \xetexkopacifybfseries {
+\cs_set_nopar:Npn \xetexkopacifyupshape {
   \tl_map_inline:nn { \mddefault \bfdefault }
   {
     \cs_if_exist:cF { \f@encoding/\f@family/##1/\updefault }
     {
-      \cs_gset_eq:cc
-      { \f@encoding/\f@family/##1/\updefault }
-      { \f@encoding/\f@family/##1/\shapedefault }
-    }
-  }
-  \tl_map_inline:nn { \shapedefault \updefault \itdefault \sldefault }
-  {
-    \cs_if_exist:cF { \f@encoding/\f@family/bx/##1 }
-    {
-      \cs_gset_eq:cc
-      { \f@encoding/\f@family/bx/##1 }
-      { \f@encoding/\f@family/\bfdefault/##1 }
+      \cs_if_exist:cT { \f@encoding/\f@family/##1/\shapedefault }
+      {
+        \cs_gset_eq:cc
+        { \f@encoding/\f@family/##1/\updefault }
+        { \f@encoding/\f@family/##1/\shapedefault }
+      }
     }
   }
 }
@@ -349,7 +337,7 @@
     \tl_clear:N \l_xtxko_font_opts_tl
     \keys_set_known:nxN { xtxko-font } {#1} \l_xtxko_rem_tl
     \addfontfeature {\l_xtxko_rem_tl}
-    \xetexkopacifybfseries
+    \xetexkopacifyupshape
     \use:x
       {
         \group_end:
@@ -371,7 +359,7 @@
     \tl_clear:N \l_xtxko_font_opts_tl
     \keys_set_known:nxN { xtxko-font } {#1} \l_xtxko_rem_tl
     \addfontfeature {\l_xtxko_rem_tl}
-    \xetexkopacifybfseries
+    \xetexkopacifyupshape
     \use:x
       {
         \group_end:
@@ -415,7 +403,7 @@
 \DeclareDocumentCommand \setmathhangulfont { O{} m O{} }
   {
     \fontspec_set_family:Nnn \xetexko@math@hangul@family {#1,#3} {#2}
-    \l_xetexko_pacify_bfseries
+    \l_xetexko_pacify_upshape
   }
 %%%%%%%%%%%%%%%%%%%%
 %% xetexkofontregime
