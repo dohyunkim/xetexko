@@ -537,7 +537,23 @@
   \fi
   \ifdefined\hnjsansfont\else \let\hnjsansfont\korsansfont \fi
 
-  \ifdefined\kormonofont\else \let\kormonofont\korsansfont \fi
+  % default mono hangul: undotum
+  \ifdefined\kormonofont\else
+    \XKiffontfamilyhasunichar{\ttdefault}{AC00}
+      {\let\kormonofont\relax}
+      {\IfFontExistsTF{UnDotum.ttf}
+        {\setmonohangulfont{UnDotum.ttf}[
+          BoldFont=UnDotumBold.ttf,
+          UprightFeatures={SizeFeatures={
+            {Size={-8.5},   FakeStretch=1.062},
+            {Size={8.5-11}, FakeStretch=1.05 },
+            {Size={11-},    FakeStretch=1.03 }}},
+          BoldFeatures={SizeFeatures={
+            {Size={-},      FakeStretch=1.05 }}},
+          WordSpace={1.66667,0,0}]}
+        {\let\kormonofont\relax}%
+      }%
+  \fi
   \ifdefined\hnjmonofont\else \let\hnjmonofont\kormonofont \fi
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % reset hangul font and normalfont
