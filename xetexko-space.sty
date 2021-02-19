@@ -1527,8 +1527,9 @@
   \let\XKcommaboxstart        \relax    \let\XKcommaboxstop       \relax
   \let\XKwaslatinchar         \relax    \let\XKwascjkchar         \relax
   \let\XKcjkcharboxstart      \relax    \let\XKcjkcharboxstop     \relax
-  \let\XKinterhangulbreak     \XKzeroskip
-  \let\XKinterhanjabreak      \XKzeroskip
+  %%% for ttfamily interhangul penalty
+  \let\XKinterhangulbreak\XKinterhanjabreak
+  % \let\XKinterhanjabreak      \XKzeroskip
   \let\XKcjklatinbreak        \XKzeroskip
   \let\XKcjklatinsmallbreak   \XKzeroskip
   \let\XKhalfsmallbreak       \XKzeroskip
@@ -1547,6 +1548,8 @@
   \let\XKafterboundaryskip\relax
   \def\XKcjklastchar##1{\let\@let@token##1\XK@save@last@char\XK@every@hangul{##1}}%
   \disablehangulspacing
+  \let\XKinterhangulbreak \relax
+  \let\XKinterhanjabreak  \relax
 }
 
 % still remaining: XKhanjalastchar XKbeginboundary XKendboundary XKignorespaces XKundoignorespaces
