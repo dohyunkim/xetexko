@@ -22,6 +22,7 @@
     {Size=6-9, Font=*},
     {Size=9-,  Font=* DemiLight},
   },
+  Script=Hangul, Language=Korean
 ]
 \usepackage{xetexko-hanging, hologo, xcolor, ulem}
 \usepackage[bookmarksnumbered,hidelinks]{hyperref}
@@ -60,7 +61,7 @@
 \def\cs#1{\texttt{\textbackslash #1}}
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
-\def\hparens#1{\leavevmode\unskip---{\small #1}---\ignorespaces}
+\let\hparens\hparen
 \def\keyword#1{\leavevmode\marginpar{\hfuzz\maxdimen\footnotesize\cs{#1}}}
 
 \begin{document}
@@ -73,50 +74,7 @@
 \begin{quote}\small
   For a summary introduction in English,
   please see \verb+README+ file in this package.
-
-  \begin{itemize}\itemsep=0pt\linespread{1.2}\selectfont
-    \item[v2.0]---
-    \item \hyperref[sec:loading]
-      {플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.}
-    \item \hyperref[sec:symbolfont]
-      {CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
-      기본값이 되었다.}
-    \item \hyperref[sec:fontopts]
-      {\texttt{interpunctskern} 글꼴 옵션을 없애고 \texttt{quoteraise}를
-      추가했다.}
-    \item[v2.2]---
-    \item \hyperref[sec:fontopts]
-      {글꼴 옵션 \texttt{CharRaise}를 추가했다.}
-    \item \hyperref[sec:fontcmds]
-      {\cs{fallbackhanjafont} 명령을 인식한다.}
-    \item \hyperref[sec:etccmds]
-      {\cs{everyhangul}, \cs{everyhanja} 명령이 추가되었다.}
-    \item \hyperref[sec:symbolfont]
-      {하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
-      것이 기본값이 되었다.}
-    \item[v2.4]---
-    \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
-    \item[v2.7]---
-    \item \hyperref[sec:fontcmds]
-      {main/sans hangul/hanja 글꼴에는 디폴트 옵션
-      \texttt{Ligatures=TeX}이 주어진다.}
-    \item \hyperref[sec:fontopts]
-      {\cs{defaulthangulfontfeatures}와 \cs{defaulthanjafontfeatures}
-      명령이 생겼다.}
-    \item[v2.10]---
-    \item 패키지 옵션 \texttt{[unfonts]}를 더는 지원하지 않는다. 이 옵션을
-      사용한 기존 문서는 기본 글꼴인 은글꼴 트루타입으로 식자될 것이다.
-    \item[v2.13]---
-    \item \hyperref[sec:verttype]
-      {\texttt{horizontal} 환경이 추가되었다.}
-    \item[v2.23]---
-    \item \hyperref[sec:fontcmds]
-      {디폴트 한글 폰트가 나눔글꼴에서 은글꼴로 변경되었다.}
-
-  \end{itemize}
 \end{quote}
-
-\smallskip
 
 \section{입력 인코딩}
 입력은 원칙적으로 UTF-8으로 한다.
@@ -211,7 +169,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
   \newhangulfontface  \myhangul{NanumGothic Bold}[Ligatures=TeX]
   \newhanjafontface   \myhanja {UnDotumBold}[Ligatures=TeX]
 \end{verbatim}
-fontspec 패키지의 \verb+\setfontfamily+ \verb+\newfontface+ 명령에 해당한다.
+fontspec 패키지의 \verb+\setfontfamily+ \verb+\setfontface+ 명령에 해당한다.
 
 \begin{verbatim}
   \addhangulfontfeature{Color=FF0000,InterHangul=-.1em}
@@ -643,5 +601,69 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 
 \hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
 
+\bigskip
+
+\section*{주요 변경 이력}
+
+\begin{small}\linespread{1.2}\selectfont
+  \begin{description}\itemsep=0pt
+    \item[v2.24] 2021-03-01
+      \begin{itemize}
+        \item 디폴트 고정폭 한글 폰트의 메트릭을 Latin Modern Mono에
+          맞추어 조정하였다.
+      \end{itemize}
+    \item[v2.23] 2020-02-17
+      \begin{itemize}
+        \item \hyperref[sec:fontcmds]
+          {디폴트 한글 폰트가 나눔글꼴에서 은글꼴로 변경되었다.}
+      \end{itemize}
+    \item[v2.13] 2015-06-16
+      \begin{itemize}
+        \item \hyperref[sec:verttype]
+          {\texttt{horizontal} 환경이 추가되었다.}
+      \end{itemize}
+    \item[v2.10] 2015-01-16
+      \begin{itemize}
+        \item 패키지 옵션 \texttt{[unfonts]}를 더는 지원하지 않는다. 이 옵션을
+          사용한 기존 문서는 기본 글꼴인 은글꼴 트루타입으로 식자될 것이다.
+      \end{itemize}
+    \item[v2.7] 2014-06-17
+      \begin{itemize}
+        \item \hyperref[sec:fontcmds]
+          {main/sans hangul/hanja 글꼴에는 디폴트 옵션
+          \texttt{Ligatures=TeX}이 주어진다.}
+        \item \hyperref[sec:fontopts]
+          {\cs{defaulthangulfontfeatures}와 \cs{defaulthanjafontfeatures}
+          명령이 생겼다.}
+      \end{itemize}
+    \item[v2.4] 2014-02-02
+      \begin{itemize}
+        \item Variation Selector를 이용한 한자 변형 글리프 접근을 허용한다.
+      \end{itemize}
+    \item[v2.2] 2013-12-06
+      \begin{itemize}
+        \item \hyperref[sec:fontopts]
+          {글꼴 옵션 \texttt{CharRaise}를 추가했다.}
+        \item \hyperref[sec:fontcmds]
+          {\cs{fallbackhanjafont} 명령을 인식한다.}
+        \item \hyperref[sec:etccmds]
+          {\cs{everyhangul}, \cs{everyhanja} 명령이 추가되었다.}
+        \item \hyperref[sec:symbolfont]
+          {하이픈 문자를 \hparen{직전 글꼴이 아니라} 라틴 글꼴에서 찾는
+          것이 기본값이 되었다.}
+      \end{itemize}
+    \item[v2.0] 2013-03-27
+      \begin{itemize}
+        \item \hyperref[sec:loading]
+          {플레인텍에서 xetexko.tex이 아니라 xetexko.sty를 불러야 한다.}
+        \item \hyperref[sec:symbolfont]
+          {CJK 기호문자를 \hparen{한자가 아니라} 한글 글꼴에서 찾는 것이
+          기본값이 되었다.}
+        \item \hyperref[sec:fontopts]
+          {\texttt{interpunctskern} 글꼴 옵션을 없애고 \texttt{quoteraise}를
+          추가했다.}
+      \end{itemize}
+  \end{description}
+\end{small}
 
 \end{document}
