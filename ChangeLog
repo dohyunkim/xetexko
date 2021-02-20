@@ -1,3 +1,12 @@
+2021-03-01      Dohyun Kim <nomos at ktug org>
+
+	Version 2.24
+
+	* xetexko-font.sty: when lmtt is ttdefault, the metrics of
+	default Hangul monospaced fonts are matched with those of lmtt.
+	* xetexko-space.sty: \disablehangulspacing will not remove
+	\penalty50 between Hangul characters.
+
 2020-02-17      Dohyun Kim <nomos at ktug org>
 
 	Version 2.23
