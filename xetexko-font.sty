@@ -20,6 +20,14 @@
 \newfontfeature{YetHangul}{script=hang}
 
 \ExplSyntaxOn
+%%% latex 2021-05-01 ltpara issue
+%%% TODO: restructuring xetexko-space from the bottom
+\IfFormatAtLeastTF{2021/05/01}
+{\edef\par{\relax \unexpanded\expandafter{\par}}
+  \let\endgraf\par
+  \let\@@par  \par
+  \cs_set_eq:NN \para_end: \par
+}{}
 %%%%%%%%%%%%%%%%%%%%%
 % hangul font options
 \tl_new:N \l_xtxko_font_opts_tl
