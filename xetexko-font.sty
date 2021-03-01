@@ -22,7 +22,7 @@
 \ExplSyntaxOn
 %%% latex 2021-05-01 ltpara issue
 %%% TODO: restructuring xetexko-space from the bottom
-\IfFormatAtLeastTF{2021/05/01}
+\IfHookExistsTF{para/end}
 {\edef\par{\relax \unexpanded\expandafter{\par}}
   \let\endgraf\par
   \let\@@par  \par
