@@ -10,124 +10,13 @@
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2006/05/20 or later.
 
-\begingroup\expandafter\expandafter\expandafter\endgroup
-\expandafter\ifx\csname ProvidesPackage\endcsname\relax\else
-  \ProvidesPackage{xetexko-hanging}
-    [2021/03/01 v2.24 Hanging punctuations for XeTeX-ko]
+\ifdefined\ProvidesPackage
+  \ProvidesPackage{xetexko-hanging} [2021/03/20 v3.0 A depricated addendum to XeTeX-ko]
+  \RequirePackage{xetexko}[2021/03/20]
+\else
+  \input xetexko.sty
 \fi
 
-\chardef\catcodeofATcharacter\catcode`@
-\catcode`\@ = 11
-
-\let\XK@orig@periodboxstop    \XKperiodboxstop
-\let\XK@orig@commaboxstop     \XKcommaboxstop
-\let\XK@orig@closingquotestop \XKclosingquotestop
-\let\XK@orig@openingquotestart\XKopeningquotestart
-\let\XK@orig@postcjkfullstop  \postcjkfullstop
-\let\XK@orig@postcjkcloseparen\postcjkcloseparen
-\let\XK@orig@precjkopenparen@ \precjkopenparen@
-
-\def\disablehangingpunctuation{%
-  \let\XKperiodboxstop    \XK@orig@periodboxstop
-  \let\XKcommaboxstop     \XK@orig@commaboxstop
-  \let\XKclosingquotestop \XK@orig@closingquotestop
-  \let\XKopeningquotestart\XK@orig@openingquotestart
-  \let\postcjkfullstop    \XK@orig@postcjkfullstop
-  \let\postcjkcloseparen  \XK@orig@postcjkcloseparen
-  \let\precjkopenparen@   \XK@orig@precjkopenparen@
-}
-\let\disablehangingpunctuations\disablehangingpunctuation
-
-\ifdefined\strip@pt\else
-  \begingroup
-    \catcode`P=12
-    \catcode`T=12
-    \lowercase{\def\x{\def\rem@pt##1.##2PT{##1\ifnum##2>\z@.##2\fi}}}
-    \expandafter\endgroup\x
-  \def\strip@pt{\expandafter\rem@pt\the}
-\fi
-
-\ifcsname AtBeginDocument\endcsname\else \def\AtBeginDocument#1{#1} \fi
-
-\AtBeginDocument{
-  \begingroup
-    \setbox\z@\hbox{가.}\setbox\tw@\hbox{가}%
-    \xdef\temp@a
-      {\strip@pt\dimexpr(\wd\z@-\wd\tw@)*65536/\number\dimexpr 1em\relax\relax}%
-    \setbox\z@\hbox{가'}%
-    \xdef\temp@b
-      {\strip@pt\dimexpr(\wd\z@-\wd\tw@)*65536/\number\dimexpr 1em\relax\relax}%
-  \endgroup
-  \edef\xetexko@periodwidth{\temp@a em}%
-  \edef\xetexko@quotewidth {\temp@b em}%
-  \def\XKperiodboxstop{%
-    \XK@orig@periodboxstop
-    %\ifnum\XKcurrentfont>\z@
-      \count@\spacefactor
-      \XKH@post@hang\xetexko@periodwidth
-      \spacefactor\count@
-    %\fi
-  }%
-  \def\XKcommaboxstop{%
-    \XK@orig@commaboxstop
-    %\ifnum\XKcurrentfont>\z@
-      \count@\spacefactor
-      \XKH@post@hang\xetexko@periodwidth
-      \spacefactor\count@
-    %\fi
-  }%
-  \def\XKclosingquotestop{%
-    \XK@orig@closingquotestop \XKH@post@hang\xetexko@quotewidth
-  }%
-  \def\XKopeningquotestart{%
-    \XKH@pre@hang\xetexko@quotewidth \XK@orig@openingquotestart
-  }%
-  \def\precjkopenparen@{%
-    \@josa@char@to@number\@let@token\count@
-    \XK@side@bearing\count@\@ne
-    \ifx^^^^201c\@let@token
-      \dimen@ii\dimen@ \advance\dimen@ii-.125em
-      \XKH@pre@hang\dimen@ii
-    \else\ifx^^^^2018\@let@token \XKH@pre@hang\dimen@
-    \fi\fi
-    \leavevmode
-    \ifx\empty\xetexkocharraise\else\raise\xetexkocharraise\fi
-    \hbox
-    \ifx\XKdisablecjksymbolspacing\empty
-      \bgroup
-    \else
-      to\dimen@\bgroup\hss
-    \fi
-    \XeTeXinterchartoks\XKboundary\XKcjkopening = {\empty}%
-  }%
-  \def\postcjkcloseparen{%
-    \XK@orig@postcjkcloseparen
-    \ifx^^^^3001\@let@token \XKH@post@hang\dimen@
-    \else\ifx^^^^ff0c\@let@token \XKH@post@hang\dimen@
-    \else\ifx^^^^201d\@let@token
-      \dimen@ii\dimen@ \advance\dimen@ii-.125em
-      \XKH@post@hang\dimen@ii
-    \else\ifx^^^^2019\@let@token \XKH@post@hang\dimen@
-    \fi\fi\fi\fi
-  }%
-  \def\postcjkfullstop{%
-    \XK@orig@postcjkfullstop \XKH@post@hang\dimen@
-  }%
-}
-\def\XKH@post@hang#1{%
-  \nobreak\hskip\z@\relax
-  \vrule width-#1 height\z@ depth\z@
-  \kern#1\relax
-}
-\def\XKH@pre@hang#1{%
-  \kern#1\relax
-  \vrule width-#1 height\z@ depth\z@
-  \nobreak\hskip\z@\relax
-}
-
-\let\hangingpunctuation\relax
-\let\hangingpunctuations\relax
-
-\catcode`\@\catcodeofATcharacter
+\hangingpunctuations
 
 \endinput

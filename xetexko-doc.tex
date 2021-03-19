@@ -7,10 +7,10 @@
 \documentclass[a4paper]{article}
 \usepackage[hmargin=3.8cm]{geometry}
 \usepackage[hangul]{xetexko}
-\defaultfontfeatures+{}
 \setmainhangulfont{Noto Serif CJK KR}[
   UprightFont=* Light, BoldFont=* Bold,
-  Script=Hangul, Language=Korean
+  Script=Hangul, Language=Korean,
+  AutoFakeSlant,
 ]
 \setsanshangulfont{Noto Sans CJK KR}[
   UprightFont=* DemiLight,
@@ -430,9 +430,11 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{16em}
+  \spaceskip=.5em plus .08em minus .04em
   \sffamily\addhangulfontfeatures{Vertical=Alternates,CharRaise=.5ex,
   RawFeature=vertical}
   \hanjabyhangulfont \parindent-1em\leftskip1em
+  \typesetclassic \latinparens
   \noindent 님의 침묵 (The Silent Beloved)
 \smallbreak
 \hfil\hfil 한 용 운\hfil
@@ -487,8 +489,10 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
 일반적으로 우리 고문헌 조판에는 japanese 환경이 더 적합하다.
 
 \def\analect{%
+  \removeclassicspaces
   子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？」\par
-  有子曰：「其爲人也孝弟，而好犯上者，鮮矣！不好犯上，而好作亂者，未之有也！君子務本，本立而道生；孝弟也者，其爲仁之本與？」\par
+  有子曰：「其爲人也 孝弟，而好犯上者，鮮矣！不好犯上，而好作亂者，未之有也！
+  君子務本，本立而道生；孝弟也者，其爲仁之本與？」\par
   子曰：「巧言令色，鮮矣仁！」\par
   曾子曰：「吾日三省吾身：爲人謀，而不忠乎？與朋友交，而不信乎？傳，不習乎？」\par
   子曰：「道千乘之國，敬事而信，節用而愛人，使民以時。」\par
