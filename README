@@ -1,4 +1,4 @@
-XeTeX-ko Package version 2.24 (2021/03/01)
+XeTeX-ko Package version 3.0 (2021/03/20)
 =========================================
 
 XeTeX-ko is a macro package for Xe(La)TeX which supports typesetting
@@ -111,10 +111,8 @@ Set spacing between Hangul/Hanja and Latin characters.
     [InterHangul=<dimen>]
 Set spacing between Hangul characters.
 
-    [PunctRaise=<dimen>]
-Raise Latin fullstop after Hangul character.
-
-See xetexko-doc.pdf for more options.
+    [CharRaise=<dimen>]
+Raise the baseline of Hangul/Hanja characters.
 
 
 Other User Commands

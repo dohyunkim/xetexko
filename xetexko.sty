@@ -254,6 +254,15 @@
   \XeKo@stretchshrink
   }
 
+% 고아글자 억제. verbatim 에서는 이 명령을 꺼야 한다
+\def\XeKo@suppress@char@orphan{%
+  \XeKo@skip@=\lastskip \unskip
+  \XeKo@count@=\lastpenalty \unpenalty
+  \ifnum\XeKo@count@<5000 \XeKo@count@=5000 \fi
+  \penalty\XeKo@count@
+  \hskip\XeKo@skip@
+  }
+
 \protected\def\inhibitglue{\hskip\z@\XeKo@stretchshrink}
 
 % typesetting modes
@@ -451,7 +460,19 @@
 \protected\def\latinpuncts {\let\XeKo@fontAP\XeKo@font@Latin}
 \protected\def\latincolons {\let\XeKo@fontAM\XeKo@font@Latin}
 \protected\def\latinhyphens{\let\XeKo@fontAH\XeKo@font@Latin}
-\protected\def\latinmarks  {\latinalphs\latinparens\latinpuncts\latincolons\latinhyphens}
+\protected\def\latincjksymbols{%
+  \let\XeKo@fontSY\XeKo@font@Latin
+  \let\XeKo@fontOP\XeKo@font@Latin
+  \let\XeKo@fontCL\XeKo@font@Latin
+  \let\XeKo@fontMD\XeKo@font@Latin
+  \let\XeKo@fontFS\XeKo@font@Latin
+  \let\XeKo@fontEX\XeKo@font@Latin
+  \let\XeKo@fontLD\XeKo@font@Latin
+  \let\XeKo@fontVC\XeKo@font@Latin
+  }
+\protected\def\latinmarks{%
+  \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens\latincjksymbols
+  }
 \let\latinnums\latinalphs
 \let\latinquotes\latinparens
 
@@ -460,7 +481,19 @@
 \protected\def\hangulpuncts {\let\XeKo@fontAP\XeKo@font@Hangul}
 \protected\def\hangulcolons {\let\XeKo@fontAM\XeKo@font@Hangul}
 \protected\def\hangulhyphens{\let\XeKo@fontAH\XeKo@font@Hangul}
-\protected\def\hangulmarks  {\hangulalphs\hangulparens\hangulpuncts\hangulcolons\hangulhyphens}
+\protected\def\hangulcjksymbols{%
+  \let\XeKo@fontSY\XeKo@font@Hangul
+  \let\XeKo@fontOP\XeKo@font@Hangul
+  \let\XeKo@fontCL\XeKo@font@Hangul
+  \let\XeKo@fontMD\XeKo@font@Hangul
+  \let\XeKo@fontFS\XeKo@font@Hangul
+  \let\XeKo@fontEX\XeKo@font@Hangul
+  \let\XeKo@fontLD\XeKo@font@Hangul
+  \let\XeKo@fontVC\XeKo@font@Hangul
+  }
+\protected\def\hangulmarks{%
+  \hangulalphs\hangulparens\hangulpuncts\hangulcolons\hangulhyphens\hangulcjksymbols
+  }
 \let\hangulnums\hangulalphs
 \let\hangulquotes\hangulparens
 
@@ -469,7 +502,19 @@
 \protected\def\hanjapuncts {\let\XeKo@fontAP\XeKo@font@CJK}
 \protected\def\hanjacolons {\let\XeKo@fontAM\XeKo@font@CJK}
 \protected\def\hanjahyphens{\let\XeKo@fontAH\XeKo@font@CJK}
-\protected\def\hanjamarks  {\hanjaalphs\hanjaparens\hanjapuncts\hanjacolons\hanjahyphens}
+\protected\def\hanjacjksymbols{%
+  \let\XeKo@fontSY\XeKo@font@Hanja
+  \let\XeKo@fontOP\XeKo@font@Hanja
+  \let\XeKo@fontCL\XeKo@font@Hanja
+  \let\XeKo@fontMD\XeKo@font@Hanja
+  \let\XeKo@fontFS\XeKo@font@Hanja
+  \let\XeKo@fontEX\XeKo@font@Hanja
+  \let\XeKo@fontLD\XeKo@font@Hanja
+  \let\XeKo@fontVC\XeKo@font@Hanja
+  }
+\protected\def\hanjamarks{%
+  \hanjaalphs\hanjaparens\hanjapuncts\hanjacolons\hanjahyphens\hanjacjksymbols
+  }
 \let\hanjanums\hanjaalphs
 \let\hanjaquotes\hanjaparens
 
@@ -478,7 +523,19 @@
 \protected\def\prevfontpuncts {\let\XeKo@fontAP\relax}
 \protected\def\prevfontcolons {\let\XeKo@fontAM\relax}
 \protected\def\prevfonthyphens{\let\XeKo@fontAH\relax}
-\protected\def\prevfontmarks  {\prevfontalphs\prevfontparens\prevfontpuncts\prevfontcolons\prevfonthyphens}
+\protected\def\prevfontcjksymbols{%
+  \let\XeKo@fontSY\relax
+  \let\XeKo@fontOP\relax
+  \let\XeKo@fontCL\relax
+  \let\XeKo@fontMD\relax
+  \let\XeKo@fontFS\relax
+  \let\XeKo@fontEX\relax
+  \let\XeKo@fontLD\relax
+  \let\XeKo@fontVC\relax
+  }
+\protected\def\prevfontmarks{%
+  \prevfontalphs\prevfontparens\prevfontpuncts\prevfontcolons\prevfonthyphens\prevfontcjksymbols
+  }
 \let\prevfontnums\prevfontalphs
 \let\prevfontquotes\prevfontparens
 
@@ -562,11 +619,7 @@
   }
 \def\XeKo@char@orphan{%
   \ifx\XeKo@let@token\par
-    \XeKo@skip@=\lastskip \unskip
-    \XeKo@count@=\lastpenalty \unpenalty
-    \ifnum\XeKo@count@<5000 \XeKo@count@=5000 \fi
-    \penalty\XeKo@count@
-    \hskip\XeKo@skip@
+    \XeKo@suppress@char@orphan
     \let\XeKo@next\XeKo@flush@char@orphan
   \else \ifx\@sptoken\XeKo@let@token
     \XeKo@toks@ii\expandafter{\the\XeKo@toks@ii \@sptoken}%
@@ -689,11 +742,10 @@
 \let\hangingpunctuations\hangingpunctuation
 
 % compress CJK punctuations to .5em
-\chardef\XeKo@compresspuncts\@ne
-\protected\def\nocompresspunctuations{\chardef\XeKo@compresspuncts\z@ }
 \protected\def\compresspunctuations{\chardef\XeKo@compresspuncts\@ne }
+\protected\def\nocompresspunctuations{\chardef\XeKo@compresspuncts\z@ }
+\compresspunctuations
 
-\newbox\XeKo@box@
 %% everyhangul/hanja
 \def\everyhangul#1{\def\XeKo@everyhangul##1{#1}}
 \def\everyhanja #1{\def\XeKo@everyhanja ##1{#1}}
@@ -1540,20 +1592,37 @@
   \let\XeKo@fontVC\relax
   }
 \protected\def\disablehangulspacing{%
-  \let\XeKo@halfzero\inhibitglue
-  \let\XeKo@halfhalf\inhibitglue
-  \let\XeKo@halfquarter
-  \let\XeKo@quarterquarter
-  \let\XeKo@iiiquarterquarter
-  \let\XKinterhangulbreak\XKinterhanjabreak
-  \let\XeKo@latincjk@classic\inhibitglue
-  \let\XeKo@latincjk@modern\inhibitglue
-  \let\XeKo@postmath@modern\inhibitglue
-  \let\XeKo@latincjk\inhibitglue
-  \let\XeKo@postmath\inhibitglue
+  \let\XeKo@halfzero          \inhibitglue
+  \let\XeKo@halfhalf          \inhibitglue
+  \let\XeKo@halfquarter       \inhibitglue
+  \let\XeKo@quarterquarter    \inhibitglue
+  \let\XeKo@iiiquarterquarter \inhibitglue
+  \let\XeKo@latincjk          \inhibitglue
+  \let\XeKo@postmath          \inhibitglue
+  \let\XKinterhangulbreak     \XKinterhanjabreak
+  \let\XeKo@latincjk@classic  \inhibitglue
+  \let\XeKo@latincjk@modern   \inhibitglue
+  \let\XeKo@postmath@modern   \inhibitglue
+  \let\XeKo@suppress@char@orphan  \relax
+  \chardef\XeKo@hangingpuncts     \z@
+  \chardef\XeKo@cjk@ignorespaces  \z@
   }
 \protected\def\disablehangulspacingandlinebreak{%
-  \XeTeXinterchartokenstate\z@
+  \let\XeKo@halfzero          \relax
+  \let\XeKo@halfhalf          \relax
+  \let\XeKo@halfquarter       \relax
+  \let\XeKo@quarterquarter    \relax
+  \let\XeKo@iiiquarterquarter \relax
+  \let\XeKo@latincjk          \relax
+  \let\XeKo@postmath          \relax
+  \let\XKinterhangulbreak     \relax
+  \let\XKinterhanjabreak      \relax
+  \let\XeKo@latincjk@classic  \relax
+  \let\XeKo@latincjk@modern   \relax
+  \let\XeKo@postmath@modern   \relax
+  \let\XeKo@suppress@char@orphan  \relax
+  \chardef\XeKo@hangingpuncts     \z@
+  \chardef\XeKo@cjk@ignorespaces  \z@
   \XeTeXlinebreaklocale""
   }
 \protected\def\enablehangulspacingandlinebreak{%
@@ -1561,9 +1630,11 @@
   \XeTeXlinebreaklocale"ko"
   }
 \enablehangulspacingandlinebreak
-% no longer support these three \disable...
+% no longer support these two \disable...
 \let\disableautojosa\relax
 \let\disablejamoautojosa\relax
+% no need xetexkoulemsupport any more
+\let\xetexkoulemsupport\relax
 
 % math hangul
 \def\setmathhangulblock#1#2{%
@@ -1657,7 +1728,15 @@
   \let \xetexkohanguloption \xetexkomonohanguloption
   \let \xetexkohanjafont    \xetexkomonohanjafont
   \let \xetexkohanjaoption  \xetexkomonohanjaoption
+  \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens
+  \disablehangulspacing
   }
+\edef\verbatim@font{%
+  \unexpanded\expandafter{%
+    \verbatim@font
+    \disablehangulspacingandlinebreak
+    \aftergroup\enablehangulspacingandlinebreak
+    }}
 \AddToHook{normalfont}{%
   \let \xetexkohangulfont   \xetexkodefaulthangulfont
   \let \xetexkohanguloption \xetexkodefaulthanguloption
@@ -1666,14 +1745,14 @@
   }
 \IfHookExistsTF{selectfont}{
   \AddToHook{selectfont}{%
-    \XeKo@hangul@selectfont
     \XeKo@hanja@selectfont
+    \XeKo@hangul@selectfont
     }
 }{
   \RequirePackage{everysel}
   \EverySelectfont{%
-    \XeKo@hangul@selectfont
     \XeKo@hanja@selectfont
+    \XeKo@hangul@selectfont
     }
 }
 
@@ -1685,7 +1764,9 @@
       \xetexkohangulfont
       \edef\x{\endgroup
         \def\noexpand\XeKo@hangul@font{\the\font
-          \unexpanded\expandafter{\xetexkohanguloption}}}\x
+          \unexpanded\expandafter{\xetexkohanguloption}}%
+          \noexpand\xetexkohanguloption % for 영문자-한글 interlatincjk
+          }\x
     \else
       \let\XeKo@hangul@font\XeKo@undefined
     \fi
@@ -1699,7 +1780,9 @@
       \xetexkohanjafont
       \edef\x{\endgroup
         \def\noexpand\XeKo@hanja@font{\the\font
-          \unexpanded\expandafter{\xetexkohanjaoption}}}\x
+          \unexpanded\expandafter{\xetexkohanjaoption}}%
+          \noexpand\xetexkohanjaoption
+          }\x
     \else
       \let\XeKo@hanja@font\XeKo@undefined
     \fi
@@ -2155,6 +2238,8 @@
     \let\hangingpunctuation\relax
     \let\hangingpunctuations\relax
     \let\removeclassicspaces\relax
+    \let\nocompresspunctuations\relax
+    \let\compresspunctuations\relax
     \let\disablekoreanfonts\relax
     \let\disablehangulspacing\relax
     \let\disablehangulspacingandlinebreak\relax

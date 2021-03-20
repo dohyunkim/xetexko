@@ -1,11 +1,31 @@
-2021-03-01      Dohyun Kim <nomos at ktug org>
+2021-03-20      Dohyun Kim <nomos at ktug org>
 
-	Version 2.24
+	Version 3.0
 
-	* xetexko-font.sty: when lmtt is ttdefault, the metrics of
-	default Hangul monospaced fonts are matched with those of lmtt.
-	* xetexko-space.sty: \disablehangulspacing will not remove
-	\penalty50 between Hangul characters.
+	* Everything is integrated into xetexko.sty. So
+	  xetexko-font.sty, xetexko-space.sty, xetexko-vertical.sty,
+	  xetexko-hanging.sty are now almost empty and provided for
+	  backward compatibility only.
+	* New evironemt 'typesetclassic' is provided for typesetting
+	  classical texts, but almost identical to 'japanese' or
+	  'chinese' environments of previous version. These latters
+	  are kept for backward compatibility.
+	* New command \removeclassicspaces is provided.
+	* Following Hangul font options do not work any longer, but
+	  no error will be raised though :
+	  lowerexclamation, lowerperiod, lowercomma, lowerquestion,
+	  postexclamationkern, postmathskip, postperiodkern,
+	  postcommakern, postquestionkern, preexclamationkern,
+	  preperiodkern, precommakern, prequestionkern, quoteraise,
+	  quotewidth, PunctRaise.
+	* \latinnums and \latinquotes have the same effects as
+	  \latinalphs and \latinparens, repectively.
+	* \defaulthangulfontfeatures is deprecated.
+	* \disableautojosa and \disablejamoautojosa are deprecated.
+	* When lmtt is ttdefault, the metrics of default Hangul
+	  monospaced font are matched with those of lmtt.
+	* \disablehangulspacing will not remove \penalty50 between
+	  Hangul characters.
 
 2020-02-17      Dohyun Kim <nomos at ktug org>
 
