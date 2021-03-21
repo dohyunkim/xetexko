@@ -202,10 +202,10 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 
 옵션 키의 종류와 의미는 다음과 같으며 각 키 값은 인자의 경우와 같다.
 \begin{description}\itemsep0pt\hangulparens
-\item[alphs] 라틴 알파벳 및 아래에 해당하지 않는 모든 라틴 문자
-\item[parens] 라틴 괄호, 중괄호, 대괄호, 꺽쇠
-\item[colons] 라틴 콜론, 세미콜론, endash, emdash
-\item[hyphens] 하이픈, 하이픈으로 이루어지는 리거쳐, 슬래시
+\item[alphs] 라틴 알파벳, 숫자, 아래에 해당않는 모든 non-CJK 문자
+\item[parens] 라틴 괄호, 중괄호, 대괄호, 꺽쇠, 인용부호 및 그 리거쳐
+\item[colons] 라틴 콜론, 세미콜론
+\item[hyphens] 하이픈 및 그  리거쳐, 슬래시, en dash, em dash
 \item[puncts] 마침표, 물음표, 느낌표, 쉼표
 \item[cjksymbols] CJK 구두점, 괄호 및 상징기호
 \end{description}
@@ -215,6 +215,8 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 라틴 인용부호에 적용되던 \verb|quotes| 옵션이
 3.0버전부터는
 각각 \verb|alphs| 옵션과 \verb|parens| 옵션에 통합되었음에 유의하라.
+또한\vernote{3.0} en dash, em dash가 종래 \verb|colons|에 속하던 것이 이제
+\verb|hyphens|에 속하게 되었음도 주의하라.
 
 기본값은 다음 명령을 준 것과 동일하다.
 \begin{verbatim}
@@ -667,11 +669,12 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
           맞추어 조정하였다.
         \item 글꼴옵션이 \verb|InterLatinCJK|, \verb|InterHangul|, \verb|CharRaise|
           외에는 모두 무력화되었다.
-        \item \cs{xetexkoregime}의 키값 \verb|nums|와 \verb|quotes|가
+        \item \cs{xetexkofontregime}의 키값 \verb|nums|와 \verb|quotes|가
           각각 \verb|alphs|와 \verb|parens|에 통합되었다.
         \item \cs{xetexkoulemsupport} 명령이 무력화되었다.
         \item \cs{disableautojosa}, \cs{disablejamoautojosa} 명령이 무력화되었다.
-        \item \cs{defaulthanjafontfeatures} 등의 명령이 무력화되었다.
+        \item \cs{defaulthangulfontfeatures} \cs{defaulthanjafontfeatures}
+          명령이 무력화되었다.
         \item 수식한글을 자동으로 잡아주지 않는다.
       \end{itemize}
     \item[v2.23] 2020-02-17
