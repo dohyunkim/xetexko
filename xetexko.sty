@@ -35,7 +35,7 @@
 \newXeTeXintercharclass\XeTeXcharclassEX
 \let\XeTeXcharclassIS\XeTeXcharclassID
 \let\XeTeXcharclassNS\XeTeXcharclassID
-\let\XeTeXcharclassCM\XeTeXcharclassIgnore
+\newXeTeXintercharclass\XeTeXcharclassCM
 \input load-unicode-xetex-classes %
 
 \newXeTeXintercharclass\XeTeXcharclassHG
@@ -54,10 +54,10 @@
 
 % more CM
 \count@"FE00 \loop
-  \XeTeXcharclass\count@=\XeTeXcharclassIgnore
+  \XeTeXcharclass\count@=\XeTeXcharclassCM
   \ifnum\count@<"FE0F \advance\count@\@ne \repeat
 \count@"E0100 \loop
-  \XeTeXcharclass\count@=\XeTeXcharclassIgnore
+  \XeTeXcharclass\count@=\XeTeXcharclassCM
   \ifnum\count@<"E01EF \advance\count@\@ne \repeat
 
 % hangul
@@ -402,6 +402,8 @@
 \def\XeKo@font@Hangul{%
   \ifdefined\XeKo@hangul@font
     \edef\XeKo@curr{\the\font\the\XeKo@font@options}%
+    \show\XeKo@curr
+    \show\XeKo@hangul@font
     \ifx\XeKo@curr\XeKo@hangul@font\else
       \ifx\XeKo@curr\XeKo@hanja@font\else
         \edef\XeKo@curr@latin{\the\font}%
@@ -583,17 +585,17 @@
   \fi
   }
 \def\XeKo@check@next@tok@cjk{%
-  \ifnum 0\ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassJJ     1\else
-          \ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassIgnore 1\fi\fi >\z@
+  \ifnum 0\ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassJJ 1\else
+          \ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassCM 1\fi\fi >\z@
     \expandafter\XeKo@addto@toks
   \else
     \expandafter\XeKo@flush@toks
   \fi
   }
 \def\XeKo@check@next@tok@latin{%
-  \ifnum 0%
-      \ifnum\XeTeXcharclass\XeKo@charslot=\csname XeKo@\XeKo@currclass @class\endcsname 1\else
-      \ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassIgnore 1\fi\fi >\z@
+  % load-unicode-xetex-classes가 설정하는 모든 CM은 한글, 한자, 가나 뒤에 온다.
+  % 따라서 영문자는 CM을 고려할 필요가 없다.
+  \ifnum\XeTeXcharclass\XeKo@charslot=\csname XeKo@\XeKo@currclass @class\endcsname
     \expandafter\XeKo@addto@toks
   \else
     \expandafter\XeKo@flush@toks
@@ -637,7 +639,7 @@
     \XeKo@toks@ii\expandafter{\the\XeKo@toks@ii ^^^^3002}%
     \let\XeKo@next\XeKo@char@orphan@
   \else \ifx ^^^^ff0e\XeKo@let@token % ．
-    \XeKo@toks@ii\expandafter{\the\XeKo@toks@ii ^^^^3002}%
+    \XeKo@toks@ii\expandafter{\the\XeKo@toks@ii ^^^^ff0e}%
     \let\XeKo@next\XeKo@char@orphan@
   \else
     \let\XeKo@next\XeKo@flush@char@orphan
@@ -691,9 +693,6 @@
       \XeKo@post@hang % hanging punctuations
     \fi
   \endgroup
-  \XeKo@maybe@kern
-  }
-\def\XeKo@maybe@kern{%
   \ifnum\XeKo@currclass<\thr@@ % \the\XeKo@toks@ii
     \expandafter\expandafter\expandafter\XeKo@maybe@kern@i
   \else
@@ -1366,6 +1365,55 @@
   \XeKo@fontVC\XeKo@startVC
   }
 
+\newbox\XeKo@box@
+
+% \char"1112\char"119E\char"11AB etc.
+% !!!!! 이 경우 \everyhangul 등이 제대로 작동 않는다 !!!!!
+\XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassJJ{%
+  \ifnum\lastnodetype=12 %
+    \ifnum\lastkern=\@ne
+      \unkern\unkern
+      \expandafter\expandafter\expandafter\XeKo@startJJ
+    \fi
+  \fi
+  }
+\def\XeKo@startJJ#1{%
+  \global\let\XeKo@josatoken=#1\relax
+  \begingroup
+  \XeTeXinterchartokenstate\z@
+  \ifnum\lastnodetype=\@ne % hbox (charraise box)
+    \setbox\XeKo@box@=\lastbox
+    \XeKo@char@raise@start \unhbox\XeKo@box@ #1\XeKo@char@raise@stop
+  \else
+    #1\relax
+  \fi
+  \endgroup
+  \XeKo@insert@kerns
+  }
+% \char"9AA8\char"E0102 etc.
+\XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCM{%
+  \ifnum\lastnodetype=12 %
+    \ifcase\lastkern
+    \or % HG
+      \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM
+    \or % ID
+      \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM
+    \fi
+  \fi
+  }
+\def\XeKo@startCM#1{%
+  \begingroup
+  \XeTeXinterchartokenstate\z@
+  \ifnum\lastnodetype=\@ne % hbox (charraise box)
+    \setbox\XeKo@box@=\lastbox
+    \XeKo@char@raise@start \unhbox\XeKo@box@ #1\XeKo@char@raise@stop
+  \else
+    #1\relax
+  \fi
+  \endgroup
+  \XeKo@insert@kerns
+  }
+
 %%% josa selection
 \begingroup
 \catcode`A=11\relax \global\let\XeKo@catcode@letter=A
@@ -1655,7 +1703,7 @@
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
-      }
+      }%
     \edef\x{%
       \endgroup
       \def\noexpand\XeKo@hangul@font{\the\font
@@ -1669,7 +1717,7 @@
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
-      }
+      }%
     \edef\x{\endgroup
       \def\noexpand\XeKo@hanja@font{\the\font
         \unexpanded\expandafter{\xetexkohanjaoption}}}\x
