@@ -40,7 +40,8 @@
 \newenvironment{plaintex}
   {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax
     \hrule width0pt\kern5pt\par\small
-  \noindent}
+  \parindent0pt }
+%  \noindent}
   {\par \vskip-\lastskip\kern5pt\hrule width0pt\egroup \par\medskip\par
     \dimen0=\dimexpr\pagegoal-\pagetotal\relax
     \ifdim\dimen0<2\baselineskip\relax \dimen0\maxdimen \fi
@@ -70,7 +71,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 3.0\quad 2021/03/20}
+\date{Version 3.1\quad 2021/03/22}
 \maketitle
 
 \begin{quote}\small
@@ -144,6 +145,9 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
 지시하지 않았다면 \hemph{은바탕/은돋움 트루타입}을 한글·한자 글꼴의 기본값으로
 사용한다.
 
+\bigskip
+
+※ 버전 3.1부터 플레인텍에 주요 변경사항이 있다:\vernote{3.1}%
 \begin{plaintex}
 플레인텍에서도 기본값으로 은바탕을 한글에 사용한다. 한글폰트를 지시하는 방법은 다음과 같다.
 \begin{verbatim}
@@ -151,6 +155,18 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
     \hangulfont="[UnBatang]:mapping=tex-text" at 10pt
     \hanjafont ="Naver Dictionary:mapping=tex-text" at 10pt
 \end{verbatim}
+  그런데 3.1 버전부터는 이렇게 하면 문서 중간에 영문글꼴을 바꾸더라도
+  \cs{hangulfont} 선언시의 영문글꼴이 계속 적용되도록 바뀌었다.
+  그래서 다음과 같은 새로운 명령을 제공한다.
+\begin{verbatim}
+    \tt
+    \sethangulfont\untaza ="[UnTaza.ttf]"  at 10pt
+    \sethanjafont \undotum="[UnDotum.ttf]" at 10pt
+    \def\tt{\untaza\undotum}
+\end{verbatim}
+  이 경우 \cs{untaza}, \cs{undotum} 명령에 \cs{set...font} 실행시의 현재폰트 명령이
+  자동으로 포함된다. 뒤에서 설명할 글꼴옵션이 포함되는 것과 같은 개념이다.
+  그리하여 예의 \cs{tt} 명령으로 이제 한글, 한자, 영문 글꼴을 동시에 바꿀 수 있게 된다.
 \end{plaintex}
 
 \keyword{fallbackhanjafont}%
@@ -294,7 +310,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
   \def\xetexkointerhchar{-0.04em }
   \def\xetexkocharraise{-0.1ex }
 \end{verbatim}
-  이것들을 선언해두고나서 \cs{hangulfont} 명령으로 글꼴을
+  이것들을 선언해두고나서 \cs{hangulfont} 명령 등으로 글꼴을
   지정하면 기 정의된 옵션들이 한글폰트 명령에 자동 포함된다.
   한자폰트의 경우도 같다. 따라서 한글폰트 옵션과
   한자폰트 옵션을 서로 달리 지시할 수 있다.
@@ -584,7 +600,7 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
   ]
 \end{verbatim}
 \begin{plaintex}
-  플레인텍에서는 \cs{mathhangulfont=UnBatang}과 같이 설정한다.
+  플레인텍에서는 \cs{mathhangulfont="[UnBatang.ttf]"}와 같이 설정한다.
 
   또는 좀 더 그럴듯하게 하려면:\par
   \leftskip=3em\noindent
@@ -659,6 +675,10 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 
 \begin{small}\linespread{1.2}\selectfont
 \begin{description}\itemsep=0pt
+    \item[v3.1] 2021-03-22
+      \begin{itemize}
+        \item 플레인텍 명령 \cs{sethangulfont}, \cs{sethanjafont} 추가
+      \end{itemize}
     \item[v3.0] 2021-03-20
       \begin{itemize}
         \item \verb|typesetclassic|, \verb|typesetmodern| 환경이 추가되었다.

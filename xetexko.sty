@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-  \ProvidesPackage{xetexko}[2021/03/20 v3.0 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2021/03/22 v3.1 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@gobble\else \def\@gobble#1{} \fi
@@ -390,9 +390,6 @@
 \protected\def\vertlatin#1{\leavevmode\lower.5ex\hbox{\latinmarks #1}} % compat
 
 % fonts
-\newtoks\XeKo@font@options
-\XeKo@font@options{}
-
 \def\XeKo@reset@options{%
   \let\xetexkohu        \XeKo@undefined
   \let\xetexkocharraise \XeKo@undefined
@@ -401,42 +398,22 @@
 
 \def\XeKo@font@Hangul{%
   \ifdefined\XeKo@hangul@font
-    \edef\XeKo@curr{\the\font\the\XeKo@font@options}%
-    \show\XeKo@curr
-    \show\XeKo@hangul@font
-    \ifx\XeKo@curr\XeKo@hangul@font\else
-      \ifx\XeKo@curr\XeKo@hanja@font\else
-        \edef\XeKo@curr@latin{\the\font}%
-      \fi
-      \XeKo@reset@options
-      \XeKo@hangul@font
-      \XeKo@font@options\expandafter{\xetexkohanguloption}%
-    \fi
+    \XeKo@reset@options
+    \XeKo@hangul@font
+    \let\XeKo@curr@font\XeKo@hangul@font
   \fi
   }
 \def\XeKo@font@CJK{%
   \ifdefined\XeKo@hanja@font
-    \edef\XeKo@curr{\the\font\the\XeKo@font@options}%
-    \ifx\XeKo@curr\XeKo@hanja@font\else
-      \ifx\XeKo@curr\XeKo@hangul@font\else
-        \edef\XeKo@curr@latin{\the\font}%
-      \fi
-      \XeKo@reset@options
-      \XeKo@hanja@font
-      \XeKo@font@options\expandafter{\xetexkohanjaoption}%
-    \fi
+    \XeKo@reset@options
+    \XeKo@hanja@font
+    \let\XeKo@curr@font\XeKo@hanja@font
   \fi
   }
 \def\XeKo@font@Latin{%
-  \ifdefined\XeKo@curr@latin
-    \edef\XeKo@curr{\the\font\the\XeKo@font@options}%
-    \ifx\XeKo@curr\XeKo@hangul@font
-      \XeKo@curr@latin
-    \else
-      \ifx\XeKo@curr\XeKo@hanja@font
-        \XeKo@curr@latin
-      \fi
-    \fi
+  \ifdefined\XeKo@latin@font
+    \XeKo@latin@font
+    \let\XeKo@curr@font\XeKo@latin@font
   \fi
   }
 \let\XeKo@fontHG\XeKo@font@Hangul
@@ -651,24 +628,15 @@
 \def\XeKo@flush@char@orphan{\XeKo@do@flush@toks \the\XeKo@toks@ii }
 \def\XeKo@char@raise@start{%
   \ifdefined\xetexkocharraise
-    \edef\XeKo@curr{\the\font\the\XeKo@font@options}%
-    \ifx\XeKo@curr\XeKo@hangul@font
+    \ifx\XeKo@curr@font\XeKo@latin@font\else
       \raise\xetexkocharraise\hbox\bgroup
-    \else
-      \ifx\XeKo@curr\XeKo@hanja@font
-        \raise\xetexkocharraise\hbox\bgroup
-      \fi
     \fi
   \fi
   }
 \def\XeKo@char@raise@stop{%
   \ifdefined\xetexkocharraise
-    \ifx\XeKo@curr\XeKo@hangul@font
+    \ifx\XeKo@curr@font\XeKo@latin@font\else
       \egroup
-    \else
-      \ifx\XeKo@curr\XeKo@hanja@font
-        \egroup
-      \fi
     \fi
   \fi
   }
@@ -1617,7 +1585,7 @@
   \endgroup
   }
 
-%
+% other commands
 \let\enablecjksymbolspacing\compresspunctuations
 \let\disablecjksymbolspacing\nocompresspunctuations
 \protected\def\disablekoreanfonts{%
@@ -1695,37 +1663,65 @@
 
 %%% plain
 \ifcsname ver@xetexko.sty\endcsname \else
-  \protected\def\hangulfont{\afterassignment\XeKo@hangul@font@setup\font\XeKo@hangul@font}
-  \def\XeKo@hangul@font@setup{%
-    \begingroup
-    \XeKo@hangul@font
-    \xdef\xetexkohanguloption{%
+  \protected\def\hangulfont{%
+    \afterassignment\XeKo@hangulfont@setup\font\XeKo@hangul@font
+    }
+  \def\XeKo@hangulfont@setup{%
+    \expandafter\let\expandafter\XeKo@latin@font\the\font
+    \edef\XeKo@hangul@font{%
+      \the\XeKo@hangul@font
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
       }%
-    \edef\x{%
-      \endgroup
-      \def\noexpand\XeKo@hangul@font{\the\font
-        \unexpanded\expandafter{\xetexkohanguloption}}}\x
     }
-  \protected\def\hanjafont{\afterassignment\XeKo@hanja@font@setup\font\XeKo@hanja@font}
-  \def\XeKo@hanja@font@setup{%
-    \begingroup
-    \XeKo@hanja@font
-    \xdef\xetexkohanjaoption{%
+  \protected\def\sethangulfont#1{%
+    \def\@tempa{#1}%
+    \edef\@tempb{\string#1}%
+    \expandafter\afterassignment\expandafter\XeKo@sethangulfont@setup
+      \expandafter\font\csname XeKo@hangul@font@\@tempb\endcsname
+    }
+  \def\XeKo@sethangulfont@setup{%
+    \expandafter\edef\@tempa{%
+      \let\noexpand\XeKo@latin@font=\the\font
+      \def\noexpand\XeKo@hangul@font{%
+        \csname XeKo@hangul@font@\@tempb\endcsname
+        \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
+        \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
+        \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
+        }%
+      }%
+    }
+  \protected\def\hanjafont{%
+    \afterassignment\XeKo@hanjafont@setup\font\XeKo@hanja@font
+    }
+  \def\XeKo@hanjafont@setup{%
+    \expandafter\let\expandafter\XeKo@latin@font\the\font
+    \edef\XeKo@hanja@font{%
+      \the\XeKo@hanja@font
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
       }%
-    \edef\x{\endgroup
-      \def\noexpand\XeKo@hanja@font{\the\font
-        \unexpanded\expandafter{\xetexkohanjaoption}}}\x
     }
-  \protected\def\hanjabyhangulfont{%
-    \let\XeKo@hanja@font\XeKo@hangul@font
-    \let\xetexkohanjaoption\xetexkohanguloption
+  \protected\def\sethanjafont#1{%
+    \def\@tempa{#1}%
+    \edef\@tempb{\string#1}%
+    \expandafter\afterassignment\expandafter\XeKo@sethanjafont@setup
+      \expandafter\font\csname XeKo@hanja@font@\@tempb\endcsname
     }
+  \def\XeKo@sethanjafont@setup{%
+    \expandafter\edef\@tempa{%
+      \let\noexpand\XeKo@latin@font=\the\font
+      \def\noexpand\XeKo@hanja@font{%
+        \csname XeKo@hanja@font@\@tempb\endcsname
+        \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
+        \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
+        \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
+        }%
+      }%
+    }
+  \protected\def\hanjabyhangulfont{\let\XeKo@hanja@font\XeKo@hangul@font }
   % math hangul
   \newfam\symmathhangul
   \protected\def\setmathhangulfonts#1#2#3{% font identifiers
@@ -1793,17 +1789,18 @@
   }
 \IfHookExistsTF{selectfont}{
   \AddToHook{selectfont}{%
+    \let\XeKo@latin@font\font@name
     \XeKo@hanja@selectfont
     \XeKo@hangul@selectfont
     }
 }{
   \RequirePackage{everysel}
   \EverySelectfont{%
+    \let\XeKo@latin@font\font@name
     \XeKo@hanja@selectfont
     \XeKo@hangul@selectfont
     }
 }
-
 \def\XeKo@hangul@selectfont{%
   \ifdefined\XeKo@in@selectfont\else
     \ifdefined\xetexkohangulfont
@@ -1813,8 +1810,8 @@
       \edef\x{\endgroup
         \def\noexpand\XeKo@hangul@font{\the\font
           \unexpanded\expandafter{\xetexkohanguloption}}%
-          \noexpand\xetexkohanguloption % for 영문자-한글 interlatincjk
-          }\x
+        }\x
+        \xetexkohanguloption % for 영문자-한글 interlatincjk
     \else
       \let\XeKo@hangul@font\XeKo@undefined
     \fi
@@ -1829,8 +1826,8 @@
       \edef\x{\endgroup
         \def\noexpand\XeKo@hanja@font{\the\font
           \unexpanded\expandafter{\xetexkohanjaoption}}%
-          \noexpand\xetexkohanjaoption
-          }\x
+        }\x
+      \xetexkohanjaoption
     \else
       \let\XeKo@hanja@font\XeKo@undefined
     \fi
