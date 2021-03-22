@@ -1789,14 +1789,14 @@
   }
 \IfHookExistsTF{selectfont}{
   \AddToHook{selectfont}{%
-    \let\XeKo@latin@font\font@name
+    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
     \XeKo@hangul@selectfont
     }
 }{
   \RequirePackage{everysel}
   \EverySelectfont{%
-    \let\XeKo@latin@font\font@name
+    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
     \XeKo@hangul@selectfont
     }
@@ -1811,7 +1811,7 @@
         \def\noexpand\XeKo@hangul@font{\the\font
           \unexpanded\expandafter{\xetexkohanguloption}}%
         }\x
-        \xetexkohanguloption % for 영문자-한글 interlatincjk
+      \xetexkohanguloption % for 영문자-한글 interlatincjk
     \else
       \let\XeKo@hangul@font\XeKo@undefined
     \fi
@@ -1832,6 +1832,16 @@
       \let\XeKo@hanja@font\XeKo@undefined
     \fi
   \fi }
+\def\XeKo@latin@selectfont{%
+  \ifdefined\XeKo@in@selectfont\else
+    \begingroup
+    \let\XeKo@in@selectfont\empty
+    \selectfont
+    \edef\x{\endgroup
+      \def\noexpand\XeKo@latin@font{\the\font}%
+      }\x
+  \fi
+  }
 
 \ExplSyntaxOn
 \tl_new:N \l_xtxko_font_opts_tl
@@ -1900,6 +1910,7 @@
     \cs_set_eq:NN \xetexkohanguloption \xetexkomainhanguloption
     \cs_set_eq:NN \xetexkodefaulthangulfont \xetexkomainhangulfont
     \cs_set_eq:NN \xetexkodefaulthanguloption \xetexkomainhanguloption
+    \XeKo@latin@selectfont
     \XeKo@hangul@selectfont
   }
   \ignorespaces
@@ -1919,6 +1930,7 @@
     \cs_set_eq:NN \xetexkohanguloption \xetexkosanshanguloption
     \cs_set_eq:NN \xetexkodefaulthangulfont \xetexkosanshangulfont
     \cs_set_eq:NN \xetexkodefaulthanguloption \xetexkosanshanguloption
+    \XeKo@latin@selectfont
     \XeKo@hangul@selectfont
   }
   \ignorespaces
@@ -1938,6 +1950,7 @@
     \cs_set_eq:NN \xetexkohanguloption \xetexkomonohanguloption
     \cs_set_eq:NN \xetexkodefaulthangulfont \xetexkomonohangulfont
     \cs_set_eq:NN \xetexkodefaulthanguloption \xetexkomonohanguloption
+    \XeKo@latin@selectfont
     \XeKo@hangul@selectfont
   }
   \ignorespaces
@@ -2024,6 +2037,7 @@
     \cs_set_eq:NN \xetexkohanjaoption \xetexkomainhanjaoption
     \cs_set_eq:NN \xetexkodefaulthanjafont \xetexkomainhanjafont
     \cs_set_eq:NN \xetexkodefaulthanjaoption \xetexkomainhanjaoption
+    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
   }
   \ignorespaces
@@ -2043,6 +2057,7 @@
     \cs_set_eq:NN \xetexkohanjaoption \xetexkosanshanjaoption
     \cs_set_eq:NN \xetexkodefaulthanjafont \xetexkosanshanjafont
     \cs_set_eq:NN \xetexkodefaulthanjaoption \xetexkosanshanjaoption
+    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
   }
   \ignorespaces
@@ -2062,10 +2077,12 @@
     \cs_set_eq:NN \xetexkohanjaoption \xetexkomonohanjaoption
     \cs_set_eq:NN \xetexkodefaulthanjafont \xetexkomonohanjafont
     \cs_set_eq:NN \xetexkodefaulthanjaoption \xetexkomonohanjaoption
+    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
   }
   \ignorespaces
 }
+    \XeKo@latin@selectfont
 \DeclareDocumentCommand \newhanjafontfamily { m O{} m O{} }
 {
   \__xtxko_assign_font_opts:n { #2, #4 }
