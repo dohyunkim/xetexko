@@ -762,30 +762,12 @@
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{5}%
   \XeKo@toks@{#1}%
-  \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum`#1="60 % `
-      \XeKo@dimen@=\fontcharwd\font"60 %
-      \edef\XeKo@pre@hang{%
-        \kern\the\XeKo@dimen@
-        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
-        }%
-    \fi
-  \fi
   \XeKo@check@next@tok
   }
 \def\XeKo@startAC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{6}%
   \XeKo@toks@{#1}%
-  \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum`#1="27 % '
-      \XeKo@dimen@=\fontcharwd\font"27 %
-      \edef\XeKo@post@hang{%
-        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
-        \kern\the\XeKo@dimen@
-        }%
-    \fi
-  \fi
   \XeKo@check@next@tok
   }
 \def\XeKo@startAP#1{%
@@ -794,8 +776,10 @@
   \XeKo@toks@{#1}%
   \ifnum\XeKo@hangingpuncts=\@ne
     \ifnum 0\ifnum`#1="2E 1\else % . ,
-            \ifnum`#1="2C 1\fi\fi >\z@
-      \XeKo@dimen@=\fontcharwd\font`#1 %
+            \ifnum`#1="2C 1\fi\fi
+            >\z@
+      \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+      \XeKo@dimen@=\wd\XeKo@box@
       \edef\XeKo@post@hang{%
         \noexpand\XeKo@count@\noexpand\spacefactor
         \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
@@ -826,23 +810,6 @@
   \else
     \XeKo@toks@{#1}%
   \fi
-  \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum0\ifnum`#1="2018 1\else % ‘ “
-           \ifnum`#1="201C 1\fi\fi >\z@
-      \ifnum\XeKo@compresspuncts=\@ne
-        \XeKo@dimen@=.5em
-      \else
-        \XeKo@dimen@=\fontcharwd\font`#1 %
-      \fi
-      \ifnum`#1="201C %
-        \XeKo@dimen@=.5\XeKo@dimen@
-      \fi
-      \edef\XeKo@pre@hang{%
-        \kern\the\XeKo@dimen@
-        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
-        }%
-    \fi
-  \fi
   \XeKo@do@flush@toks
   }
 \def\XeKo@startCL#1{%
@@ -854,17 +821,14 @@
     \XeKo@toks@{#1}%
   \fi
   \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum 0\ifnum`#1="2019 1\else % ’ ” 、 ，
-            \ifnum`#1="201D 1\else
-            \ifnum`#1="3001 1\else
-            \ifnum`#1="FF0C 1\fi\fi\fi\fi >\z@
+    \ifnum 0\ifnum`#1="3001 1\else % 、 ，
+            \ifnum`#1="FF0C 1\fi\fi
+            >\z@
       \ifnum\XeKo@compresspuncts=\@ne
         \XeKo@dimen@=.5em
       \else
-        \XeKo@dimen@=\fontcharwd\font`#1 %
-      \fi
-      \ifnum`#1="201D %
-        \XeKo@dimen@=.5\XeKo@dimen@
+        \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+        \XeKo@dimen@=\wd\XeKo@box@
       \fi
       \edef\XeKo@post@hang{%
         \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
@@ -894,11 +858,13 @@
   \fi
   \ifnum\XeKo@hangingpuncts=\@ne
     \ifnum 0\ifnum`#1="3002 1\else % 。 ．
-            \ifnum`#1="FF0E 1\fi\fi >\z@
+            \ifnum`#1="FF0E 1\fi\fi
+            >\z@
       \ifnum\XeKo@compresspuncts=\@ne
         \XeKo@dimen@=.5em
       \else
-        \XeKo@dimen@=\fontcharwd\font`#1 %
+        \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+        \XeKo@dimen@=\wd\XeKo@box@
       \fi
       \edef\XeKo@post@hang{%
         \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
@@ -983,7 +949,7 @@
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \unkern\unkern \XKinterhanjabreak   % HG CJ
-      \or \unkern\unkern \penalty5000\XKinterhanjabreak \XeKo@maybe@gobble % ID CJ
+      \or \unkern\unkern \XKinterhanjabreak\XeKo@suppress@char@orphan \XeKo@maybe@gobble % ID CJ
       \or \unkern\unkern                      % SY CJ
       \or \unkern\unkern \XeKo@latincjk       % AA CJ
       \or \unkern\unkern \XeKo@nobreak        % AO CJ
@@ -1622,23 +1588,12 @@
   \let\XeKo@suppress@char@orphan  \relax
   \chardef\XeKo@hangingpuncts     \z@
   \chardef\XeKo@cjk@ignorespaces  \z@
+  \chardef\XeKo@compresspuncts    \z@
   }
 \protected\def\disablehangulspacingandlinebreak{%
-  \let\XeKo@halfzero          \relax
-  \let\XeKo@halfhalf          \relax
-  \let\XeKo@halfquarter       \relax
-  \let\XeKo@quarterquarter    \relax
-  \let\XeKo@iiiquarterquarter \relax
-  \let\XeKo@latincjk          \relax
-  \let\XeKo@postmath          \relax
-  \let\XKinterhangulbreak     \relax
-  \let\XKinterhanjabreak      \relax
-  \let\XeKo@latincjk@classic  \relax
-  \let\XeKo@latincjk@modern   \relax
-  \let\XeKo@postmath@modern   \relax
-  \let\XeKo@suppress@char@orphan  \relax
-  \chardef\XeKo@hangingpuncts     \z@
-  \chardef\XeKo@cjk@ignorespaces  \z@
+  \let\inhibitglue      \relax
+  \let\XKinterhanjabreak\relax
+  \disablehangulspacing
   \XeTeXlinebreaklocale""
   }
 \protected\def\enablehangulspacingandlinebreak{%
@@ -2082,7 +2037,6 @@
   }
   \ignorespaces
 }
-    \XeKo@latin@selectfont
 \DeclareDocumentCommand \newhanjafontfamily { m O{} m O{} }
 {
   \__xtxko_assign_font_opts:n { #2, #4 }
