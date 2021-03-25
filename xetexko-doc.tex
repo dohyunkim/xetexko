@@ -427,12 +427,13 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
 \begin{figure}
 \begin{example}
 \hfil\begin{vertical}{18em}
-  \spaceskip=.5em plus .08em minus .04em
-  \sffamily\addhangulfontfeatures{Vertical=Alternates,CharRaise=.5ex,
-  RawFeature=vertical}
-  \hanjabyhangulfont \parindent-1em\leftskip1em
+  \linespread{1.5}\sffamily
+  \addhangulfontfeatures{Vertical=Alternates,CharRaise=.5ex,RawFeature=vertical}
+  \hanjabyhangulfont
   \typesetclassic \latinparens
-  \noindent 님의 침묵 (The Silent Beloved)
+  \parindent0pt \everypar{\hangindent1em \hangafter1 }
+  \spaceskip=.5em plus .25em minus .125em
+  \quad 님의 침묵 (The Silent Beloved)
 \smallbreak
 \hfil\hfil 한 용 운\hfil
 \bigbreak
@@ -449,7 +450,7 @@ vertical 환경의 인자는 세로쓰기 박스의 세로 길이이다.
     세로쓰기 보기.\quad
     \sffamily\small
   Noto Sans CJK KR 글꼴을 이용했다. 이 글꼴의 세로쓰기 어간이 1em으로
-  매우 커서 \cs{spaceskip=0.5em plus.08em minus.04em}을 강제했다.
+  매우 커서 \cs{spaceskip=0.5em plus.25em minus.125em}을 강제했다.
   \texttt{CharRaise=.5ex}도 글꼴 옵션에 추가했다.
   또한 \cs{latinparens}를 선언했는데
   제목 다음의 괄호가 CJK 괄호가 아니라 아스키 괄호이기 때문이다.
@@ -540,11 +541,10 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
 
 \begin{figure}
   \begin{example}\linespread{1.3}
-    \hfil\begin{vertical}{18em}
-      \sffamily\typesetclassic
-      \addhangulfontfeatures{Vertical=Alternates,CharRaise=.5ex,
-      RawFeature=vertical}
-      \hanjabyhangulfont \parindent-1em\leftskip1em
+    \hfil\begin{vertical}{19em}
+      \linespread{1.5}\sffamily\typesetclassic
+      \addhangulfontfeatures{Vertical=Alternates,CharRaise=.5ex,RawFeature=vertical}
+      \hanjabyhangulfont \parindent0pt \everypar{\hangindent1em \hangafter1 }
       \analect
     \end{vertical}\hfil
   \end{example}
