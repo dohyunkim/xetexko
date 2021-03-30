@@ -747,7 +747,8 @@
       \ifnum\XeKo@compresspuncts=\@ne
         \XeKo@dimen@=.5em
       \else
-        \XeKo@dimen@=\fontcharwd\font`#1 %
+        \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+        \XeKo@dimen@=\wd\XeKo@box@
       \fi
       \XeKo@dimen@=\csname XeKo@hanging@ratio@\number`#1\endcsname\XeKo@dimen@
       \edef\XeKo@pre@hang{%
