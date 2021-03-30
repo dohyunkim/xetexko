@@ -950,7 +950,7 @@
       \or \unkern\unkern \XeKo@latincjk       % AC HG
       \or \unkern\unkern \XeKo@latincjk       % AP HG
       \or \unkern\unkern \XeKo@latincjk       % AM HG
-      \or \unkern\unkern                      % AH HG
+      \or \unkern\unkern \XKinterhanjabreak   % AH HG
       \or \unkern\unkern                      % OP HG
       \or \unkern\unkern \XeKo@halfhalf       % CL HG
       \or \unkern\unkern \XeKo@quarterquarter % MD HG
@@ -975,7 +975,7 @@
       \or \unkern\unkern \XeKo@latincjk       % AC ID
       \or \unkern\unkern \XeKo@latincjk       % AP ID
       \or \unkern\unkern \XeKo@latincjk       % AM ID
-      \or \unkern\unkern                      % AH ID
+      \or \unkern\unkern \XKinterhanjabreak   % AH ID
       \or \unkern\unkern                      % OP ID
       \or \unkern\unkern \XeKo@halfhalf       % CL ID
       \or \unkern\unkern \XeKo@quarterquarter % MD ID
@@ -1000,7 +1000,7 @@
       \or \unkern\unkern \XeKo@latincjk       % AC CJ
       \or \unkern\unkern \XeKo@latincjk       % AP CJ
       \or \unkern\unkern \XeKo@latincjk       % AM CJ
-      \or \unkern\unkern                      % AH CJ
+      \or \unkern\unkern \XKinterhanjabreak   % AH CJ
       \or \unkern\unkern                      % OP CJ
       \or \unkern\unkern \XeKo@halfhalf       % CL CJ
       \or \unkern\unkern \XeKo@quarterquarter % MD CJ
@@ -1157,22 +1157,22 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAH{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
-      \or \unkern\unkern \XeKo@nobreak % HG AH
-      \or \unkern\unkern \XeKo@nobreak % ID AH
-      \or \unkern\unkern \XeKo@nobreak % SY AH
-      \or \unkern\unkern               % AA AH
-      \or \unkern\unkern               % AO AH
-      \or \unkern\unkern               % AC AH
-      \or \unkern\unkern               % AP AH
-      \or \unkern\unkern               % AM AH
+      \or \unkern\unkern \XeKo@nobreak\inhibitglue         % HG AH
+      \or \unkern\unkern \XeKo@nobreak\inhibitglue         % ID AH
+      \or \unkern\unkern \XeKo@nobreak                     % SY AH
+      \or \unkern\unkern                                   % AA AH
+      \or \unkern\unkern                                   % AO AH
+      \or \unkern\unkern                                   % AC AH
+      \or \unkern\unkern                                   % AP AH
+      \or \unkern\unkern                                   % AM AH
       \or \unkern\unkern \XeKo@maybe@gobble % AH AH
-      \or \unkern\unkern               % OP AH
-      \or \unkern\unkern \XeKo@nobreak % CL AH
-      \or \unkern\unkern \XeKo@nobreak % MD AH
-      \or \unkern\unkern \XeKo@nobreak % FS AH
-      \or \unkern\unkern \XeKo@nobreak % EX AH
-      \or \unkern\unkern \XeKo@nobreak % LD AH
-      \or \unkern\unkern \XeKo@nobreak % VC AH
+      \or \unkern\unkern                                   % OP AH
+      \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf       % CL AH
+      \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter % MD AH
+      \or \unkern\unkern \XeKo@nobreak\XeKo@halfzero       % FS AH
+      \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf       % EX AH
+      \or \unkern\unkern \XeKo@nobreak                     % LD AH
+      \or \unkern\unkern \XeKo@nobreak                     % VC AH
     \fi
   \fi
   \XeKo@fontAH\XeKo@startAH
@@ -1188,7 +1188,7 @@
       \or \unkern\unkern \XeKo@halfhalf              % AC OP
       \or \unkern\unkern \XeKo@halfhalf              % AP OP
       \or \unkern\unkern \XeKo@halfhalf              % AM OP
-      \or \unkern\unkern                             % AH OP
+      \or \unkern\unkern \XeKo@halfhalf              % AH OP
       \or \unkern\unkern \XeKo@maybe@gobble % OP OP
       \or \unkern\unkern \XeKo@halfhalf              % CL OP
       \or \unkern\unkern \XeKo@quarterquarter        % MD OP
@@ -1236,7 +1236,7 @@
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AC MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AP MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AM MD
-      \or \unkern\unkern                                      % AH MD
+      \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AH MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % OP MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % CL MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfquarter \XeKo@maybe@gobble % MD MD
@@ -1625,7 +1625,8 @@
   \let\XeKo@iiiquarterquarter \inhibitglue
   \let\XeKo@latincjk          \inhibitglue
   \let\XeKo@postmath          \inhibitglue
-  \let\XKinterhangulbreak     \XKinterhanjabreak
+  \let\XKinterhangulbreak     \inhibitglue
+  \let\XKinterhanjabreak      \inhibitglue
   \let\XeKo@latincjk@classic  \inhibitglue
   \let\XeKo@latincjk@modern   \inhibitglue
   \let\XeKo@postmath@modern   \inhibitglue
@@ -1636,7 +1637,6 @@
   }
 \protected\def\disablehangulspacingandlinebreak{%
   \let\inhibitglue      \relax
-  \let\XKinterhanjabreak\relax
   \disablehangulspacing
   \XeTeXlinebreaklocale""
   }
@@ -1937,7 +1937,7 @@
 \DeclareDocumentCommand \setmonohangulfont { O{} m O{} }
 {
   \__xtxko_assign_font_opts:n { #1, #3 }
-  \fontspec_set_family:Nnn \XeKo@monohangulfamily { Ligatures=TeX, \l_xtxko_rest_opts_tl } { #2 }
+  \fontspec_set_family:Nnn \XeKo@monohangulfamily { \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkomonohangulfont
   {
     \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@monohangulfamily \selectfont
@@ -2064,7 +2064,7 @@
 \DeclareDocumentCommand \setmonohanjafont { O{} m O{} }
 {
   \__xtxko_assign_font_opts:n { #1, #3 }
-  \fontspec_set_family:Nnn \XeKo@monohanjafamily { Ligatures=TeX, \l_xtxko_rest_opts_tl } { #2 }
+  \fontspec_set_family:Nnn \XeKo@monohanjafamily { \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkomonohanjafont
   {
     \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@monohanjafamily \selectfont
