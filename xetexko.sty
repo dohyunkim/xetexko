@@ -708,6 +708,81 @@
 \protected\def\hangingpunctuation{\chardef\XeKo@hangingpuncts\@ne }
 \let\hangingpunctuations\hangingpunctuation
 
+\protected\def\sethangingratio#1=#2 {%
+  \expandafter\def\csname XeKo@hanging@ratio@\number#1\endcsname{#2}%
+  }
+\protected\def\unsethangingratio{\afterassignment\unsethangingratio@\count@= }
+\def\unsethangingratio@{%
+  \expandafter\let\csname XeKo@hanging@ratio@\number\count@\endcsname\XeKo@undefined
+  }
+\def\XeKo@def@ascii@pre@hang#1{%
+  \ifnum\XeKo@hangingpuncts=\@ne
+    \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
+      \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+      \XeKo@dimen@=\csname XeKo@hanging@ratio@\number`#1\endcsname\wd\XeKo@box@
+      \edef\XeKo@pre@hang{%
+        \kern\the\XeKo@dimen@
+        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
+        }%
+    \fi
+  \fi
+  }
+\def\XeKo@def@ascii@post@hang#1{%
+  \ifnum\XeKo@hangingpuncts=\@ne
+    \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
+      \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+      \XeKo@dimen@=\csname XeKo@hanging@ratio@\number`#1\endcsname\wd\XeKo@box@
+      \edef\XeKo@post@hang{%
+        \noexpand\XeKo@count@\noexpand\spacefactor
+        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
+        \kern\the\XeKo@dimen@
+        \noexpand\spacefactor\noexpand\XeKo@count@
+        }%
+    \fi
+  \fi
+  }
+\def\XeKo@def@cjk@pre@hang#1{%
+  \ifnum\XeKo@hangingpuncts=\@ne
+    \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
+      \ifnum\XeKo@compresspuncts=\@ne
+        \XeKo@dimen@=.5em
+      \else
+        \XeKo@dimen@=\fontcharwd\font`#1 %
+      \fi
+      \XeKo@dimen@=\csname XeKo@hanging@ratio@\number`#1\endcsname\XeKo@dimen@
+      \edef\XeKo@pre@hang{%
+        \kern\the\XeKo@dimen@
+        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
+        }%
+    \fi
+  \fi
+  }
+\def\XeKo@def@cjk@post@hang#1{%
+  \ifnum\XeKo@hangingpuncts=\@ne
+    \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
+      \ifnum 0\ifnum\XeKo@compresspuncts=\@ne
+              \ifnum\XeKo@currclass<14 % OP CL MD FS
+              1\fi\fi >\z@
+        \XeKo@dimen@=.5em
+      \else
+        \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
+        \XeKo@dimen@=\wd\XeKo@box@
+      \fi
+      \XeKo@dimen@=\csname XeKo@hanging@ratio@\number`#1\endcsname\XeKo@dimen@
+      \edef\XeKo@post@hang{%
+        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
+        \kern\the\XeKo@dimen@
+        }%
+    \fi
+  \fi
+  }
+\sethangingratio"2C=1 % , 반점
+\sethangingratio"2E=1 % . 온점
+\sethangingratio"3001=1 % 、 모점
+\sethangingratio"3002=1 % 。 고리점
+\sethangingratio"FF0C=1 % ， 전각반점
+\sethangingratio"FF0E=1 % ． 전각온점
+
 % compress CJK punctuations to .5em
 \protected\def\compresspunctuations{\chardef\XeKo@compresspuncts\@ne }
 \protected\def\nocompresspunctuations{\chardef\XeKo@compresspuncts\z@ }
@@ -762,44 +837,37 @@
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{5}%
   \XeKo@toks@{#1}%
+  \XeKo@def@ascii@pre@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{6}%
   \XeKo@toks@{#1}%
+  \XeKo@def@ascii@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAP#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{7}%
   \XeKo@toks@{#1}%
-  \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum 0\ifnum`#1="2E 1\else % . ,
-            \ifnum`#1="2C 1\fi\fi
-            >\z@
-      \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
-      \XeKo@dimen@=\wd\XeKo@box@
-      \edef\XeKo@post@hang{%
-        \noexpand\XeKo@count@\noexpand\spacefactor
-        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
-        \kern\the\XeKo@dimen@
-        \noexpand\spacefactor\noexpand\XeKo@count@
-        }%
-    \fi
-  \fi
+  \XeKo@def@ascii@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAM#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{8}%
   \XeKo@toks@{#1}%
+  \XeKo@def@ascii@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAH#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{9}%
   \XeKo@toks@{#1}%
+  \ifnum`#1=\hyphenchar\font \else % exclude hyphen char
+    \XeKo@def@ascii@post@hang{#1}%
+  \fi
   \XeKo@check@next@tok
   }
 \def\XeKo@startOP#1{%
@@ -810,6 +878,7 @@
   \else
     \XeKo@toks@{#1}%
   \fi
+  \XeKo@def@cjk@pre@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startCL#1{%
@@ -820,22 +889,7 @@
   \else
     \XeKo@toks@{#1}%
   \fi
-  \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum 0\ifnum`#1="3001 1\else % 、 ，
-            \ifnum`#1="FF0C 1\fi\fi
-            >\z@
-      \ifnum\XeKo@compresspuncts=\@ne
-        \XeKo@dimen@=.5em
-      \else
-        \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
-        \XeKo@dimen@=\wd\XeKo@box@
-      \fi
-      \edef\XeKo@post@hang{%
-        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
-        \kern\the\XeKo@dimen@
-        }%
-    \fi
-  \fi
+  \XeKo@def@cjk@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startMD#1{%
@@ -846,6 +900,7 @@
   \else
     \XeKo@toks@{#1}%
   \fi
+  \XeKo@def@cjk@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startFS#1{%
@@ -856,40 +911,28 @@
   \else
     \XeKo@toks@{#1}%
   \fi
-  \ifnum\XeKo@hangingpuncts=\@ne
-    \ifnum 0\ifnum`#1="3002 1\else % 。 ．
-            \ifnum`#1="FF0E 1\fi\fi
-            >\z@
-      \ifnum\XeKo@compresspuncts=\@ne
-        \XeKo@dimen@=.5em
-      \else
-        \setbox\XeKo@box@\hbox{\XeTeXinterchartokenstate\z@ #1}%
-        \XeKo@dimen@=\wd\XeKo@box@
-      \fi
-      \edef\XeKo@post@hang{%
-        \vrule width-\the\XeKo@dimen@ height\z@ depth\z@
-        \kern\the\XeKo@dimen@
-      }%
-    \fi
-  \fi
+  \XeKo@def@cjk@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startEX#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{14}%
   \XeKo@toks@{#1}%
+  \XeKo@def@cjk@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startLD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{15}%
   \XeKo@toks@{#1}%
+  \XeKo@def@cjk@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startVC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{16}%
   \XeKo@toks@{#1}%
+  \XeKo@def@cjk@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 

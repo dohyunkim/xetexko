@@ -2,7 +2,8 @@ XXXX-XX-XX      Dohyun Kim <nomos at ktug org>
 
 	Version 3.2
 
-	* hanging punctuation does not work with quotation marks.
+	* hanging punctuation does not work with quotes by default.
+	* new commands \sethangingratio, \unsethangingratio added.
 
 2021-03-22      Dohyun Kim <nomos at ktug org>
 

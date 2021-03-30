@@ -41,7 +41,6 @@
   {\setbox0=\vbox\bgroup\hsize=\dimexpr\textwidth-12pt\relax
     \hrule width0pt\kern5pt\par\small
   \parindent0pt }
-%  \noindent}
   {\par \vskip-\lastskip\kern5pt\hrule width0pt\egroup \par\medskip\par
     \dimen0=\dimexpr\pagegoal-\pagetotal\relax
     \ifdim\dimen0<2\baselineskip\relax \dimen0\maxdimen \fi
@@ -56,8 +55,8 @@
 \newenvironment{example}
   {\hbox\bgroup\grayvrule
     \vbox\bgroup\hsize\dimexpr\textwidth-4pt\relax
-    \grayhrule\kern1em\leftskip1em\rightskip1em
-  }{\par\kern1em\grayhrule\egroup\grayvrule\egroup}
+    \grayhrule\kern5pt\leftskip10pt\rightskip10pt
+  }{\par\kern5pt\grayhrule\egroup\grayvrule\egroup}
 \def\cs#1{\texttt{\textbackslash #1}}
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
@@ -217,7 +216,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 현재 폰트가 직전 문자의 폰트가 아닐 수 있음에 주의할 것.
 
 옵션 키의 종류와 의미는 다음과 같으며 각 키 값은 인자의 경우와 같다.
-\begin{description}\itemsep0pt\hangulparens
+\begin{description}\itemsep0pt
 \item[alphs] 라틴 알파벳, 숫자, 아래에 해당않는 모든 non-CJK 문자
 \item[parens] 라틴 괄호, 중괄호, 대괄호, 꺽쇠, 인용부호 및 그 리거쳐
 \item[colons] 라틴 콜론, 세미콜론
@@ -229,15 +228,17 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 종전에\vernote{3.0}
 라틴숫자에 적용되던 \verb|nums| 옵션과
 라틴 인용부호에 적용되던 \verb|quotes| 옵션이
-3.0버전부터는
+3.0 버전부터는
 각각 \verb|alphs| 옵션과 \verb|parens| 옵션에 통합되었음에 유의하라.
 또한\vernote{3.0} en dash, em dash가 종래 \verb|colons|에 속하던 것이 이제
-\verb|hyphens|에 속하게 되었음도 주의하라.
+\verb|hyphens|에 속하게 되었다.
 
 기본값은 다음 명령을 준 것과 동일하다.
+v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유의하라.
 \begin{verbatim}
   \xetexkofontregime {latin}%
-    [ puncts=prevfont, colons=prevfont, cjksymbols=hangul ]
+    [ puncts=prevfont, colons=prevfont,
+      parens=hangul, cjksymbols=hangul ]
 \end{verbatim}
 \begin{plaintex}
 플레인텍에서는 다음 명령을 사용한다. \LaTeX에서도 쓸 수 있다.
@@ -255,7 +256,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \end{verbatim}
 \end{plaintex}
 
-\section{간격 조정 옵션}\label{sec:fontopts}
+\section{글꼴 옵션}\label{sec:fontopts}
 \dotemph{고정폭 글꼴을 제외한} 한글·한자 글꼴 명령에 미세 간격 옵션을
 쓸 수 있다. 예컨대
 \begin{verbatim}
@@ -286,21 +287,14 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 3.0버전부터는\vernote{3.0} 다음 옵션들이 아무 효과도 가져오지 않게
 변경되었음을 주의하라.
 \begin{verbatim}
-    lowerperiod, PunctRaise
-    lowerquestion
-    lowerexclamation
-    lowercomma
-    preperiodkern
-    postperiodkern
-    prequestionkern
-    postquestionkern
-    preexclamationkern
-    postexclamationkern
-    precommakern
-    postcommakern
-    quoteraise
-    quotewidth
-    postmathskip
+    lowerperiod         lowerquestion
+    lowerexclamation    lowercomma
+    preperiodkern       postperiodkern
+    prequestionkern     postquestionkern
+    preexclamationkern  postexclamationkern
+    precommakern        postcommakern
+    quoteraise          quotewidth
+    postmathskip        PunctRaise
 \end{verbatim}
 
 \begin{plaintex}
@@ -376,8 +370,6 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 Source Han Serif (본명조), Noto Sans CJK, Noto Serif CJK,
 나눔명조옛한글, 나눔바른고딕옛한글, KoPubWorld 바탕, KoPubWorld 돋움 등이 있다.
 또한
-%%% BUG: \char를 이용하여 옛한글을 찍으면 자모가 분리된다.
-%%%      코드 수정 요망.
 \textsf{^^^^1112^^^^119e^^^^11ab글}에 번들된 함초롬 글꼴에도
 최근 옛한글 지원이 추가되었다.}
 
@@ -557,15 +549,35 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
 \end{figure}
 
 \section{매달린 구두점}
-마침표와 쉼표를 판면 바깥에 식자하여 행 끝에 매달리게 만든다.
+\hemph{하이픈을 제외한} 문장부호들를 판면 바깥에 식자하여 행 끝에 매달리게 만들 수 있다.
 
 3.0 버전부터는\vernote{3.0} \keyword{hangingpunctuations}%
 \cs{hangingpunctuations} 명령으로 활성화한다.
 \cs{hangingpunctuation}은 이 명령과 동의어이다.
 당분간 xetexko-hanging.sty 을 로드하는 것으로도 활성화되도록 해 두었다.
+이렇게 활성화되면 기본값으로 온점, 반점, 고리점, 모점에 대해서 전부 내밀기가 작동한다.
 
-글자 내밀기 기본값에 차이가 좀 있긴 하지만,
-microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 있다.
+3.2 버전부터는\vernote{3.2} 사용자가 원하는 문장부호를 원하는 만큼 판면 밖으로 내밀 수 있다.
+\begin{verbatim}
+    \sethangingratio"28=0.5 %
+    \sethangingratio"3002=1 %
+\end{verbatim}
+등호 앞의 숫자는 유니코드 코드포인트이고 뒤의 숫자는 글자폭에 대한 비율을 뜻한다.
+따라서 위 예는 여는 괄호(U+0028)를 절반만 내밀고 고리점(U+3002)은 완전히 밀어내라는 지시다.
+어느 방향으로 내밀지는 \xetexko 가 알아서 판단한다.
+이러한 지시를 취소하려면,
+\begin{verbatim}
+    \unsethangingratio"28
+    \unsethangingratio"3002
+\end{verbatim}
+
+microtype 패키지의 protrusion 기능%
+\footnote{%
+  원시명령 \cs{lpcode} \cs{rpcode} 등 엔진이 제공하는 기능을 말한다.
+  \XeTeX\ reference guide를 참고하라.
+  }%
+이 잘 작동하지 않는 경우가 있어서
+어쩔 수 없이 제공하게 되었으므로 예외적으로만 사용할 것을 권한다.
 
 %\begin{figure}
 %\Large
@@ -574,15 +586,11 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 %\vbox{\hfil\hbox{\vrule\vbox{\hsize\wd0
 %  줄 끝에 매달린 구두점.
 %  줄 끝에 매달린 구두점,
-%  ``줄 끝에 매달린 구두점''
-%  `줄 끝에 매달린 구두점'
-%  “줄 끝에 매달린 구두점”
-%  ‘줄 끝에 매달린 구두점’
 %  줄 끝에 매달린 구두점、
 %  줄 끝에 매달린 구두점。
 %  줄 끝에 매달린 구두점
 %  }\vrule}\hfil}
-%\caption{매달린 구두점 보기}\label{fig:hanging}
+%\caption{기본값이 적용된 매달린 구두점}\label{fig:hanging}
 %\end{figure}
 
 \section{수식 한글}
@@ -661,7 +669,7 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 따위를 사용한다.
 
 \section{밑줄긋기}
-\LaTeX에서는 \uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
+\uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
 
 3.0 버전부터는\vernote{3.0} \cs{xetexkoulemsupport} 선언이
 불필요하게 되었다. 이 명령은 호환성을 위해 남겨두었으나 아무 일도
@@ -677,7 +685,8 @@ microtype 패키지를 로드하는 것으로도 유사한 결과를 얻을 수 
 \begin{description}\itemsep=0pt
     \item[v3.2] XXXX-XX-XX
       \begin{itemize}
-        \item 매달린 구두점이 따옴표에는 작동하지 않고 마침표^^b7쉼표에만 작동한다.
+        \item 매달린 구두점이 기본값으로 따옴표에는 작동하지 않고 마침표^^b7쉼표에만 작동한다.
+        \item \cs{sethangingratio}, \cs{unsethangingratio} 명령 추가
       \end{itemize}
     \item[v3.1] 2021-03-22
       \begin{itemize}
