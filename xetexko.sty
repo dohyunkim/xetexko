@@ -1157,8 +1157,8 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAH{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
-      \or \unkern\unkern \XeKo@nobreak\inhibitglue         % HG AH
-      \or \unkern\unkern \XeKo@nobreak\inhibitglue         % ID AH
+      \or \unkern\unkern \XeKo@nobreak                     % HG AH
+      \or \unkern\unkern \XeKo@nobreak                     % ID AH
       \or \unkern\unkern \XeKo@nobreak                     % SY AH
       \or \unkern\unkern                                   % AA AH
       \or \unkern\unkern                                   % AO AH
@@ -1631,12 +1631,12 @@
   \let\XeKo@latincjk@modern   \inhibitglue
   \let\XeKo@postmath@modern   \inhibitglue
   \let\XeKo@suppress@char@orphan  \relax
-  \chardef\XeKo@hangingpuncts     \z@
   \chardef\XeKo@cjk@ignorespaces  \z@
   \chardef\XeKo@compresspuncts    \z@
   }
 \protected\def\disablehangulspacingandlinebreak{%
-  \let\inhibitglue      \relax
+  \let\inhibitglue            \relax
+  \chardef\XeKo@hangingpuncts \z@
   \disablehangulspacing
   \XeTeXlinebreaklocale""
   }
