@@ -524,20 +524,21 @@
 
 \expandafter\let\csname XeKo@1@class\endcsname =\XeTeXcharclassHG
 \expandafter\let\csname XeKo@2@class\endcsname =\XeTeXcharclassID
-\expandafter\let\csname XeKo@3@class\endcsname =\XeTeXcharclassSY
-\expandafter\let\csname XeKo@4@class\endcsname =\XeTeXcharclassAA
-\expandafter\let\csname XeKo@5@class\endcsname =\XeTeXcharclassAO
-\expandafter\let\csname XeKo@6@class\endcsname =\XeTeXcharclassAC
-\expandafter\let\csname XeKo@7@class\endcsname =\XeTeXcharclassAP
-\expandafter\let\csname XeKo@8@class\endcsname =\XeTeXcharclassAM
-\expandafter\let\csname XeKo@9@class\endcsname =\XeTeXcharclassAH
-\expandafter\let\csname XeKo@10@class\endcsname=\XeTeXcharclassOP
-\expandafter\let\csname XeKo@11@class\endcsname=\XeTeXcharclassCL
-\expandafter\let\csname XeKo@12@class\endcsname=\XeTeXcharclassMD
-\expandafter\let\csname XeKo@13@class\endcsname=\XeTeXcharclassFS
-\expandafter\let\csname XeKo@14@class\endcsname=\XeTeXcharclassEX
-\expandafter\let\csname XeKo@15@class\endcsname=\XeTeXcharclassLD
-\expandafter\let\csname XeKo@16@class\endcsname=\XeTeXcharclassVC
+% skip 3 which ulem uses
+\expandafter\let\csname XeKo@4@class\endcsname =\XeTeXcharclassSY
+\expandafter\let\csname XeKo@5@class\endcsname =\XeTeXcharclassAA
+\expandafter\let\csname XeKo@6@class\endcsname =\XeTeXcharclassAO
+\expandafter\let\csname XeKo@7@class\endcsname =\XeTeXcharclassAC
+\expandafter\let\csname XeKo@8@class\endcsname =\XeTeXcharclassAP
+\expandafter\let\csname XeKo@9@class\endcsname =\XeTeXcharclassAM
+\expandafter\let\csname XeKo@10@class\endcsname=\XeTeXcharclassAH
+\expandafter\let\csname XeKo@11@class\endcsname=\XeTeXcharclassOP
+\expandafter\let\csname XeKo@12@class\endcsname=\XeTeXcharclassCL
+\expandafter\let\csname XeKo@13@class\endcsname=\XeTeXcharclassMD
+\expandafter\let\csname XeKo@14@class\endcsname=\XeTeXcharclassFS
+\expandafter\let\csname XeKo@15@class\endcsname=\XeTeXcharclassEX
+\expandafter\let\csname XeKo@16@class\endcsname=\XeTeXcharclassLD
+\expandafter\let\csname XeKo@17@class\endcsname=\XeTeXcharclassVC
 
 \newtoks\XeKo@toks@
 \newtoks\XeKo@toks@ii
@@ -551,7 +552,8 @@
   \ifnum\XeKo@charslot="FFFF
     % 다음 한 줄이 없으면 한글과 한글 사이에 폰트가 변경되는 경우 글자 누락.
     % 폰트 변경은 kern 에 아무 영향을 주지 않기 때문.
-    \def\XeKo@maybe@gobble{\def\XeKo@maybe@gobble{\expandafter\expandafter\expandafter\@gobble}}%
+    \def\XeKo@maybe@gobble{\def\XeKo@maybe@gobble{%
+      \ifdefined\XeKo@curr@font\expandafter\XeKo@maybe@gobble@\fi }}%
     \expandafter\XeKo@flush@toks
   \else
     \ifnum\XeKo@currclass>\tw@
@@ -579,11 +581,11 @@
   \fi
   }
 \def\XeKo@addto@toks#1{%
-  \ifnum\XeKo@currclass=4 % AA
+  \ifnum\XeKo@currclass=5 % AA
     \global\let\XeKo@josatoken=#1\relax
   \else\ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassJJ
     \global\let\XeKo@josatoken=#1\relax
-  \else\ifnum\XeKo@currclass=\thr@@ % SY
+  \else\ifnum\XeKo@currclass=4 % SY
     \global\let\XeKo@josatoken=#1\relax
   \fi\fi\fi
   \XeKo@toks@\expandafter{\the\XeKo@toks@ #1}%
@@ -682,8 +684,8 @@
   }
 % remove space
 \def\XeKo@maybe@ignorespaces{%
-  \ifnum 0\ifnum\XeKo@currclass<4 1\else  % HG ID SY
-          \ifnum\XeKo@currclass>9 1\fi\fi % CJK punctuations
+  \ifnum 0\ifnum\XeKo@currclass<5  1\else  % HG ID SY
+          \ifnum\XeKo@currclass>10 1\fi\fi % CJK punctuations
           >\z@
     \expandafter\XeKo@ignorespaces@iv
   \fi
@@ -719,7 +721,7 @@
   \ifnum\XeKo@hangingpuncts=\@ne
     \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
       \ifnum 0\ifnum\XeKo@compresspuncts=\@ne
-              \ifnum\XeKo@currclass=10 % OP
+              \ifnum\XeKo@currclass=11 % OP
               1\fi\fi >\z@
         \XeKo@dimen@=.5em
       \else
@@ -738,8 +740,8 @@
   \ifnum\XeKo@hangingpuncts=\@ne
     \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
       \ifnum 0\ifnum\XeKo@compresspuncts=\@ne
-              \ifnum\XeKo@currclass>10 %
-              \ifnum\XeKo@currclass<14 % CL MD FS
+              \ifnum\XeKo@currclass>11 %
+              \ifnum\XeKo@currclass<15 % CL MD FS
               1\fi\fi\fi >\z@
         \XeKo@dimen@=.5em
       \else
@@ -802,48 +804,48 @@
 \def\XeKo@startSY#1{%
   \global\let\XeKo@josatoken=#1\relax
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{3}%
+  \def\XeKo@currclass{4}%
   \XeKo@toks@{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAA#1{%
   \global\let\XeKo@josatoken=#1\relax
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{4}%
+  \def\XeKo@currclass{5}%
   \XeKo@toks@{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAO#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{5}%
+  \def\XeKo@currclass{6}%
   \XeKo@toks@{#1}%
   \XeKo@def@pre@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{6}%
+  \def\XeKo@currclass{7}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAP#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{7}%
+  \def\XeKo@currclass{8}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAM#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{8}%
+  \def\XeKo@currclass{9}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAH#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{9}%
+  \def\XeKo@currclass{10}%
   \XeKo@toks@{#1}%
   \ifnum`#1=\hyphenchar\font \else % exclude hyphen char
     \XeKo@def@post@hang{#1}%
@@ -852,7 +854,7 @@
   }
 \def\XeKo@startOP#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{10}%
+  \def\XeKo@currclass{11}%
   \ifnum\XeKo@compresspuncts=\@ne
     \XeKo@toks@{\hbox to.5em\bgroup\hss #1\egroup}%
   \else
@@ -863,7 +865,7 @@
   }
 \def\XeKo@startCL#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{11}%
+  \def\XeKo@currclass{12}%
   \ifnum\XeKo@compresspuncts=\@ne
     \XeKo@toks@{\hbox to.5em\bgroup #1\hss\egroup}%
   \else
@@ -874,7 +876,7 @@
   }
 \def\XeKo@startMD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{12}%
+  \def\XeKo@currclass{13}%
   \ifnum\XeKo@compresspuncts=\@ne
     \XeKo@toks@{\hbox to.5em\bgroup\hss #1\hss\egroup}%
   \else
@@ -885,7 +887,7 @@
   }
 \def\XeKo@startFS#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{13}%
+  \def\XeKo@currclass{14}%
   \ifnum\XeKo@compresspuncts=\@ne
     \XeKo@toks@{\hbox to.5em\bgroup #1\hss\egroup}%
   \else
@@ -896,33 +898,39 @@
   }
 \def\XeKo@startEX#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{14}%
+  \def\XeKo@currclass{15}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startLD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{15}%
+  \def\XeKo@currclass{16}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 \def\XeKo@startVC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{16}%
+  \def\XeKo@currclass{17}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@do@flush@toks
   }
 
-\def\XeKo@maybe@gobble{\expandafter\expandafter\expandafter\@gobble}
+\def\XeKo@maybe@gobble{%
+  \ifdefined\XeKo@curr@font\expandafter\XeKo@maybe@gobble@\fi
+  }
+\def\XeKo@maybe@gobble@{%
+  \expandafter\expandafter\expandafter\@gobble
+  }
 
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassHG{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \unkern\unkern \XKinterhangulbreak \XeKo@maybe@gobble % HG HG
       \or \unkern\unkern \XKinterhanjabreak   % ID HG
+      \or
       \or \unkern\unkern                      % SY HG
       \or \unkern\unkern \XeKo@latincjk       % AA HG
       \or \unkern\unkern \XeKo@nobreak        % AO HG
@@ -948,6 +956,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XKinterhanjabreak   % HG ID
       \or \unkern\unkern \XKinterhanjabreak \XeKo@maybe@gobble % ID ID
+      \or
       \or \unkern\unkern                      % SY ID
       \or \unkern\unkern \XeKo@latincjk       % AA ID
       \or \unkern\unkern \XeKo@nobreak        % AO ID
@@ -973,6 +982,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XKinterhanjabreak   % HG CJ
       \or \unkern\unkern \XKinterhanjabreak\XeKo@suppress@char@orphan \XeKo@maybe@gobble % ID CJ
+      \or
       \or \unkern\unkern                      % SY CJ
       \or \unkern\unkern \XeKo@latincjk       % AA CJ
       \or \unkern\unkern \XeKo@nobreak        % AO CJ
@@ -998,6 +1008,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                      % HG SY
       \or \unkern\unkern                      % ID SY
+      \or
       \or \unkern\unkern \XeKo@maybe@gobble % SY SY
       \or \unkern\unkern                      % AA SY
       \or \unkern\unkern \XeKo@nobreak        % AO SY
@@ -1023,6 +1034,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XeKo@latincjk       % HG AA
       \or \unkern\unkern \XeKo@latincjk       % ID AA
+      \or
       \or \unkern\unkern                      % SY AA
       \or \unkern\unkern \XeKo@maybe@gobble % AA AA
       \or \unkern\unkern                      % AO AA
@@ -1046,6 +1058,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XeKo@latincjk       % HG AO
       \or \unkern\unkern \XeKo@latincjk       % ID AO
+      \or
       \or \unkern\unkern \XeKo@latincjk       % SY AO
       \or \unkern\unkern                      % AA AO
       \or \unkern\unkern \XeKo@maybe@gobble % AO AO
@@ -1069,6 +1082,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG AC
       \or \unkern\unkern                                   % ID AC
+      \or
       \or \unkern\unkern                                   % SY AC
       \or \unkern\unkern                                   % AA AC
       \or \unkern\unkern                                   % AO AC
@@ -1092,6 +1106,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG AP
       \or \unkern\unkern                                   % ID AP
+      \or
       \or \unkern\unkern                                   % SY AP
       \or \unkern\unkern                                   % AA AP
       \or \unkern\unkern                                   % AO AP
@@ -1115,6 +1130,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XeKo@nobreak\XeKo@latincjk       % HG AM
       \or \unkern\unkern \XeKo@nobreak\XeKo@latincjk       % ID AM
+      \or
       \or \unkern\unkern \XeKo@nobreak\XeKo@latincjk       % SY AM
       \or \unkern\unkern                                   % AA AM
       \or \unkern\unkern                                   % AO AM
@@ -1138,6 +1154,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XeKo@nobreak                     % HG AH
       \or \unkern\unkern \XeKo@nobreak                     % ID AH
+      \or
       \or \unkern\unkern \XeKo@nobreak                     % SY AH
       \or \unkern\unkern                                   % AA AH
       \or \unkern\unkern                                   % AO AH
@@ -1161,6 +1178,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XeKo@halfhalf              % HG OP
       \or \unkern\unkern \XeKo@halfhalf              % ID OP
+      \or
       \or \unkern\unkern \XeKo@halfhalf              % SY OP
       \or \unkern\unkern \XeKo@halfhalf              % AA OP
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf % AO OP
@@ -1186,6 +1204,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG CL
       \or \unkern\unkern                                   % ID CL
+      \or
       \or \unkern\unkern                                   % SY CL
       \or \unkern\unkern                                   % AA CL
       \or \unkern\unkern                                   % AO CL
@@ -1209,6 +1228,7 @@
     \ifcase\lastkern
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % HG MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % ID MD
+      \or
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % SY MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AA MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AO MD
@@ -1234,6 +1254,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG FS
       \or \unkern\unkern                                   % ID FS
+      \or
       \or \unkern\unkern                                   % SY FS
       \or \unkern\unkern                                   % AA FS
       \or \unkern\unkern                                   % AO FS
@@ -1257,6 +1278,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG EX
       \or \unkern\unkern                                   % ID EX
+      \or
       \or \unkern\unkern                                   % SY EX
       \or \unkern\unkern                                   % AA EX
       \or \unkern\unkern                                   % AO EX
@@ -1280,6 +1302,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG LD
       \or \unkern\unkern                                   % ID LD
+      \or
       \or \unkern\unkern                                   % SY LD
       \or \unkern\unkern                                   % AA LD
       \or \unkern\unkern                                   % AO LD
@@ -1303,6 +1326,7 @@
     \ifcase\lastkern
       \or \unkern\unkern                                   % HG VC
       \or \unkern\unkern                                   % ID VC
+      \or
       \or \unkern\unkern                                   % SY VC
       \or \unkern\unkern                                   % AA VC
       \or \unkern\unkern                                   % AO VC
