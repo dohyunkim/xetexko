@@ -70,7 +70,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 3.2\quad XXXX/XX/XX}
+\date{Version 3.2\quad 2021/04/08}
 \maketitle
 
 \begin{quote}\small
@@ -351,10 +351,12 @@ v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유�
     줄바꿈까지도 먹지 않게 한다.
     일부 고급 오픈타입 기능을 사용하기 위해서 이 명령이 필요할 때가 있다.
     이를테면, 폰트가 지원하는 한글 리거쳐가 동작하지 않을 때 이 명령을
-    선언하면 문제가 해결된다.
-
-    \cs{enablehangulspacingandlinebreak}는 이 명령의 효력을 원래대로
-    되돌리는 기능을 한다.
+    선언하면 문제가 해결된다.%
+    \footnote{%
+      이 명령은 그룹 안에서 실행해야 할 것이다. 그렇더라도
+      \cs{enablehangulspacingandlinebreak} 명령을 그룹을 닫고나서 선언해야
+      원래 기능이 완전히 복구된다.
+      }
 
 \end{description}
 3.0 버전부터는\vernote{3.0} 종전의
@@ -564,7 +566,7 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
     \sethangingratio"3002=1 %
 \end{verbatim}
 등호 앞의 숫자는 유니코드 코드포인트이고 뒤의 숫자는 글자폭에 대한 비율을 뜻한다.
-따라서 위 예는 여는 괄호(U+0028)를 절반만 내밀고 고리점(U+3002)은 완전히 밀어내라는 지시다.
+따라서 위 예는 여는괄호(U+0028)를 절반만 내밀고 고리점(U+3002)은 완전히 밀어내라는 지시다.
 어느 방향으로 내밀지는 \xetexko 가 알아서 판단한다.
 이러한 지시를 취소하려면,
 \begin{verbatim}
@@ -572,12 +574,13 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
     \unsethangingratio"3002
 \end{verbatim}
 
-microtype 패키지의 protrusion 기능%
+microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 있어,%
 \footnote{%
   원시명령 \cs{lpcode} \cs{rpcode} 등 엔진이 제공하는 기능을 말한다.
+  이들 원시명령에는 글리프 인덱스를 지시해야 하는데 어떤 글자의 글리프 인덱스를
+  알아내는 일은 간단치가 않다.
   \XeTeX\ reference guide를 참고하라.
-  }%
-이 잘 작동하지 않는 경우가 있어서
+  }
 어쩔 수 없이 제공하게 되었으므로 예외적으로만 사용할 것을 권한다.
 
 %\begin{figure}
@@ -684,7 +687,7 @@ microtype 패키지의 protrusion 기능%
 
 \begin{small}\linespread{1.2}\selectfont
 \begin{description}\itemsep=0pt
-    \item[v3.2] XXXX-XX-XX
+    \item[v3.2] 2021-04-08
       \begin{itemize}
         \item 매달린 구두점이 기본값으로 따옴표에는 작동하지 않고 마침표^^b7쉼표에만 작동한다.
         \item \cs{sethangingratio}, \cs{unsethangingratio} 명령 추가

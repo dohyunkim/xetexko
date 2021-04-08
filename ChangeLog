@@ -1,9 +1,12 @@
-XXXX-XX-XX      Dohyun Kim <nomos at ktug org>
+2021-04-08      Dohyun Kim <nomos at ktug org>
 
 	Version 3.2
 
-	* hanging punctuation does not work with quotes by default.
+	* fix ulem package support
+	* \hangingpunctuation does not work with quotes by default.
 	* new commands \sethangingratio, \unsethangingratio added.
+	* \disablehangulspacing will remove \penalty between Hangul
+	  characters.
 
 2021-03-22      Dohyun Kim <nomos at ktug org>
 
