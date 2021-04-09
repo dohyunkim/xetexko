@@ -552,11 +552,12 @@
   \ifnum\XeKo@charslot="FFFF
     % 다음 한 줄이 없으면 한글과 한글 사이에 폰트가 변경되는 경우 글자 누락.
     % 폰트 변경은 kern 에 아무 영향을 주지 않기 때문.
-    \def\XeKo@maybe@gobble{\def\XeKo@maybe@gobble{%
-      \ifdefined\XeKo@curr@font\expandafter\XeKo@maybe@gobble@\fi }}%
+    \let\XeKo@maybe@gobble\relax
     \expandafter\XeKo@flush@toks
   \else
-    \ifnum\XeKo@currclass>\tw@
+    \let\XeKo@maybe@gobble\XeKo@do@maybe@gobble
+    \ifnum 0\ifnum\XeKo@currclass>4 \ifnum\XeKo@currclass<11 % AA..AH
+           1\fi\fi >\z@
       \expandafter\expandafter\expandafter\XeKo@check@next@tok@latin
     \else % HG ID
       \expandafter\expandafter\expandafter\XeKo@check@next@tok@cjk
@@ -574,7 +575,10 @@
 \def\XeKo@check@next@tok@latin{%
   % load-unicode-xetex-classes가 설정하는 모든 CM은 한글, 한자, 가나 뒤에 온다.
   % 따라서 영문자는 CM을 고려할 필요가 없다.
-  \ifnum\XeTeXcharclass\XeKo@charslot=\csname XeKo@\XeKo@currclass @class\endcsname
+  % 아니다!!! 위에서 FE00-FE0F를 CM으로 지정했으므로 CJK에 한정되지 않는다.
+  \ifnum 0%
+      \ifnum\XeTeXcharclass\XeKo@charslot=\csname XeKo@\XeKo@currclass @class\endcsname 1\else
+      \ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassCM 1\fi\fi >\z@
     \expandafter\XeKo@addto@toks
   \else
     \expandafter\XeKo@flush@toks
@@ -655,7 +659,21 @@
       \ifnum\XeKo@currclass=\tw@
         \XeKo@everyhanja{\the\XeKo@toks@}% everyhanja
       \else
-        \the\XeKo@toks@
+        \ifnum\XeKo@compresspuncts=\@ne
+          \ifnum\XeKo@currclass=11      % OP
+            \hbox to.5em\bgroup\hss \the\XeKo@toks@ \egroup
+          \else\ifnum\XeKo@currclass=12 % CL
+            \hbox to.5em\bgroup \the\XeKo@toks@ \hss\egroup
+          \else\ifnum\XeKo@currclass=13 % MD
+            \hbox to.5em\bgroup\hss \the\XeKo@toks@ \hss\egroup
+          \else\ifnum\XeKo@currclass=14 % FS
+            \hbox to.5em\bgroup \the\XeKo@toks@ \hss\egroup
+          \else
+            \the\XeKo@toks@
+          \fi\fi\fi\fi
+        \else
+          \the\XeKo@toks@
+        \fi
       \fi
     \fi
     \XeKo@char@raise@stop % charraise
@@ -855,72 +873,57 @@
 \def\XeKo@startOP#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{11}%
-  \ifnum\XeKo@compresspuncts=\@ne
-    \XeKo@toks@{\hbox to.5em\bgroup\hss #1\egroup}%
-  \else
-    \XeKo@toks@{#1}%
-  \fi
+  \XeKo@toks@{#1}%
   \XeKo@def@pre@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 \def\XeKo@startCL#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{12}%
-  \ifnum\XeKo@compresspuncts=\@ne
-    \XeKo@toks@{\hbox to.5em\bgroup #1\hss\egroup}%
-  \else
-    \XeKo@toks@{#1}%
-  \fi
+  \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 \def\XeKo@startMD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{13}%
-  \ifnum\XeKo@compresspuncts=\@ne
-    \XeKo@toks@{\hbox to.5em\bgroup\hss #1\hss\egroup}%
-  \else
-    \XeKo@toks@{#1}%
-  \fi
+  \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 \def\XeKo@startFS#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{14}%
-  \ifnum\XeKo@compresspuncts=\@ne
-    \XeKo@toks@{\hbox to.5em\bgroup #1\hss\egroup}%
-  \else
-    \XeKo@toks@{#1}%
-  \fi
+  \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 \def\XeKo@startEX#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{15}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 \def\XeKo@startLD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{16}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 \def\XeKo@startVC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
   \def\XeKo@currclass{17}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
-  \XeKo@do@flush@toks
+  \XeKo@check@next@tok
   }
 
 \def\XeKo@maybe@gobble{%
   \ifdefined\XeKo@curr@font\expandafter\XeKo@maybe@gobble@\fi
   }
+\let\XeKo@do@maybe@gobble\XeKo@maybe@gobble
 \def\XeKo@maybe@gobble@{%
   \expandafter\expandafter\expandafter\@gobble
   }
@@ -1375,24 +1378,61 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCM{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
-    \or % HG
-      \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM
-    \or % ID
-      \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % HG
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % ID
+    \or
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % SY
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AA
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AO
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AC
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AP
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AM
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AH
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % OP
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % CL
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % MD
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % FS
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % EX
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % LD
+    \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % VC
     \fi
   \fi
   }
 \def\XeKo@startCM#1{%
   \begingroup
   \XeTeXinterchartokenstate\z@
-  \ifnum\lastnodetype=\@ne % hbox (charraise box)
-    \setbox\XeKo@box@=\lastbox
-    \XeKo@char@raise@start \unhbox\XeKo@box@ #1\XeKo@char@raise@stop
+  \ifnum\lastnodetype=\@ne % hbox
+    \ifdefined\xetexkocharraise
+      \setbox\XeKo@box@=\lastbox % charraise box
+      \XeKo@char@raise@start
+      \unhbox\XeKo@box@
+      \ifnum\lastnodetype=\@ne % hbox again
+        \XeKo@rebox@punctbox{#1}% compressed punctuation box
+      \else
+        #1\relax
+      \fi
+      \XeKo@char@raise@stop
+    \else
+      \XeKo@rebox@punctbox{#1}% compressed punctuation box
+    \fi
   \else
     #1\relax
   \fi
   \endgroup
   \XeKo@insert@kerns
+  }
+\def\XeKo@rebox@punctbox#1{%
+  \ifnum 0\ifnum\XeKo@currclass>10 \ifnum\XeKo@currclass<15
+         1\fi\fi >\z@
+    \setbox\XeKo@box@=\lastbox
+    \hbox to.5em\bgroup
+      \unhbox\XeKo@box@
+      \XeKo@skip@\lastskip \unskip
+      #1\hskip\XeKo@skip@
+    \egroup
+  \else
+    #1\relax
+  \fi
   }
 
 %%% josa selection
@@ -1652,6 +1692,7 @@
 \let\disableautojosa\relax
 \let\disablejamoautojosa\relax
 % no need xetexkoulemsupport any more
+% !!! uline 내부에서의 폰트변경이 효력이 없는 문제가 남아있음 !!!
 \let\xetexkoulemsupport\relax
 
 % math hangul
