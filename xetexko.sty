@@ -292,9 +292,7 @@
   \typesetclassic
   \chardef\XeKo@typesetSTchinese\tw@
   \XeKo@Tchinese@classes
-  \ifnum\XeKo@typesetvertical=\@ne \else
-    \parindent=2em
-  \fi
+  \parindent=2em
   }
 \protected\def\Schinese{%
   \typesetclassic
@@ -303,8 +301,8 @@
     \XeKo@Schinese@vertical
   \else
     \XeKo@Schinese@horizontal
-    \parindent=2em
   \fi
+  \parindent=2em
   }
 \let\chinese\Schinese
 \def\XeKo@Schinese@horizontal{% these glyphs in simplified chinese fonts are left-aligned.
@@ -320,10 +318,10 @@
   \XeTeXcharclass "FF1F = \XeTeXcharclassEX % ？
   }
 \def\XeKo@Tchinese@classes{% these glyphs in traditional chinese fonts are center-aligned
-  \XeTeXcharclass "3001 = \XeTeXcharclassMD % 、
-  \XeTeXcharclass "3002 = \XeTeXcharclassMD % 。
-  \XeTeXcharclass "FF0C = \XeTeXcharclassMD % ，
-  \XeTeXcharclass "FF0E = \XeTeXcharclassMD % ．
+  \XeTeXcharclass "3001 = \XeTeXcharclassLD % 、
+  \XeTeXcharclass "3002 = \XeTeXcharclassLD % 。
+  \XeTeXcharclass "FF0C = \XeTeXcharclassLD % ，
+  \XeTeXcharclass "FF0E = \XeTeXcharclassLD % ．
   }
 
 \chardef\XeKo@typesetvertical\z@
@@ -334,10 +332,10 @@
   \XeTeXcharclass "FF1A = \XeTeXcharclassVC % ：
   \XeTeXcharclass "FF1B = \XeTeXcharclassVC % ；
   \ifcase\XeKo@typesetSTchinese
+    \parindent=1em
   \or \XeKo@Schinese@vertical
   \or \XeKo@Tchinese@classes
   \fi
-  \parindent=1em
   }
 \protected\def\typesethorizontal{%
   \chardef\XeKo@typesetvertical\z@
