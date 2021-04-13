@@ -136,23 +136,42 @@
 % 결락기호
 \XeTeXcharclass "25A1=\XeTeXcharclassID % □
 % some KS symbols
+\XeTeXcharclass "00AE=\XeTeXcharclassSY % ®
+\XeTeXcharclass "00B0=\XeTeXcharclassSY % °
+\XeTeXcharclass "2030=\XeTeXcharclassSY % ‰
+\XeTeXcharclass "2032=\XeTeXcharclassSY % ′
+\XeTeXcharclass "2033=\XeTeXcharclassSY % ″
 \XeTeXcharclass "203B=\XeTeXcharclassSY % ※
 \XeTeXcharclass "2103=\XeTeXcharclassSY % ℃
 \XeTeXcharclass "2109=\XeTeXcharclassSY % ℉
-\XeTeXcharclass "2113=\XeTeXcharclassSY % ℓ
+\XeTeXcharclass "2116=\XeTeXcharclassSY % №
 \XeTeXcharclass "2121=\XeTeXcharclassSY % ℡
 \XeTeXcharclass "2122=\XeTeXcharclassSY % ™
-\XeTeXcharclass "212B=\XeTeXcharclassSY % Å
-\count@="2160 \loop % Ⅰ..Ⅻ
+\count@="2160 \loop % Ⅰ..Ⅹ
   \XeTeXcharclass\count@=\XeTeXcharclassSY
-  \ifnum\count@<"216B \advance\count@\@ne \repeat
-\count@="2170 \loop % ⅰ..ⅻ
+  \ifnum\count@<"2169 \advance\count@\@ne \repeat
+\count@="2170 \loop % ⅰ..ⅹ
   \XeTeXcharclass\count@=\XeTeXcharclassSY
-  \ifnum\count@<"217B \advance\count@\@ne \repeat
+  \ifnum\count@<"2179 \advance\count@\@ne \repeat
+\count@="2190 \loop % ←..↙
+  \XeTeXcharclass\count@=\XeTeXcharclassSY
+  \ifnum\count@<"2199 \advance\count@\@ne \repeat
+\XeTeXcharclass "21D2=\XeTeXcharclassSY % ⇒
+\XeTeXcharclass "21D4=\XeTeXcharclassSY % ⇔
+\XeTeXcharclass "2225=\XeTeXcharclassSY % ∥
 \XeTeXcharclass "223C=\XeTeXcharclassSY % ∼
-\count@="2460 \loop % ①..⓪
+\count@="2460 \loop % ①..⑮
   \XeTeXcharclass\count@=\XeTeXcharclassSY
-  \ifnum\count@<"24EA \advance\count@\@ne \repeat
+  \ifnum\count@<"246E \advance\count@\@ne \repeat
+\count@="2474 \loop % ⑴..⒂
+  \XeTeXcharclass\count@=\XeTeXcharclassSY
+  \ifnum\count@<"2482 \advance\count@\@ne \repeat
+\count@="249C \loop % ⒜..⒵
+  \XeTeXcharclass\count@=\XeTeXcharclassSY
+  \ifnum\count@<"24B5 \advance\count@\@ne \repeat
+\count@="24D0 \loop % ⓐ..ⓩ
+  \XeTeXcharclass\count@=\XeTeXcharclassSY
+  \ifnum\count@<"24E9 \advance\count@\@ne \repeat
 \XeTeXcharclass "2500 = \XeTeXcharclassSY % ─
 \XeTeXcharclass "2501 = \XeTeXcharclassSY % ━
 \XeTeXcharclass "2502 = \XeTeXcharclassSY % │
@@ -204,10 +223,20 @@
 \XeTeXcharclass "266A = \XeTeXcharclassSY % ♪
 \XeTeXcharclass "266C = \XeTeXcharclassSY % ♬
 \XeTeXcharclass "266D = \XeTeXcharclassSY % ♭
-\XeTeXcharclass "3012 = \XeTeXcharclassSY % 〒
-\XeTeXcharclass "301C = \XeTeXcharclassSY % 〜
+\XeTeXcharclass "3003 = \XeTeXcharclassSY % 〃
+\XeTeXcharclass "3013 = \XeTeXcharclassSY % 〓
+\count@="3200 \loop % ㈀..㈞
+  \XeTeXcharclass\count@=\XeTeXcharclassSY
+  \ifnum\count@<"321E \advance\count@\@ne \repeat
+\count@="3260 \loop % ㉠..㉿
+  \XeTeXcharclass\count@=\XeTeXcharclassSY
+  \ifnum\count@<"327F \advance\count@\@ne \repeat
+\XeTeXcharclass "33C2 = \XeTeXcharclassSY % ㏂
+\XeTeXcharclass "33C7 = \XeTeXcharclassSY % ㏇
+\XeTeXcharclass "33D8 = \XeTeXcharclassSY % ㏘
 \XeTeXcharclass "FF04 = \XeTeXcharclassSY % ＄
 \XeTeXcharclass "FF05 = \XeTeXcharclassSY % ％
+\XeTeXcharclass "FF3C = \XeTeXcharclassSY % ＼
 \XeTeXcharclass "FF5E = \XeTeXcharclassSY % ～
 \XeTeXcharclass "FFE0 = \XeTeXcharclassSY % ￠
 \XeTeXcharclass "FFE1 = \XeTeXcharclassSY % ￡
