@@ -33,8 +33,8 @@
 \newXeTeXintercharclass\XeTeXcharclassOP
 \newXeTeXintercharclass\XeTeXcharclassCL
 \newXeTeXintercharclass\XeTeXcharclassEX
-\let\XeTeXcharclassIS\XeTeXcharclassID
-\let\XeTeXcharclassNS\XeTeXcharclassID
+\let\XeTeXcharclassIS\XeTeXcharclassCJ
+\let\XeTeXcharclassNS\XeTeXcharclassCJ
 \newXeTeXintercharclass\XeTeXcharclassCM
 \input load-unicode-xetex-classes %
 
@@ -115,6 +115,10 @@
 %
 \XeTeXcharclass "2019=\XeTeXcharclassCL % ’ RIGHT SINGLE QUOTATION MARK
 \XeTeXcharclass "201D=\XeTeXcharclassCL % ” RIGHT DOUBLE QUOTATION MARK
+% IS : these are not expected to be input
+\XeTeXcharclass "FE10=\XeTeXcharclassCL % ︐ PRESENTATION FORM FOR VERTICAL COMMA
+\XeTeXcharclass "FE13=\XeTeXcharclassVC % ︓ PRESENTATION FORM FOR VERTICAL COLON
+\XeTeXcharclass "FE14=\XeTeXcharclassVC % ︔ PRESENTATION FORM FOR VERTICAL SEMICOLON
 % NS
 \XeTeXcharclass "00B7=\XeTeXcharclassMD % · MIDDLE DOT
 \XeTeXcharclass "30FB=\XeTeXcharclassMD % ・ KATAKANA MIDDLE DOT
