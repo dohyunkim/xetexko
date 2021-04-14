@@ -679,7 +679,7 @@
   }
 \def\XeKo@char@orphan@{\afterassignment\XeKo@char@orphan@@\let\XeKo@let@token= }
 \def\XeKo@char@orphan@@{\futurelet\XeKo@let@token\XeKo@char@orphan}
-\def\XeKo@flush@char@orphan{\XeKo@do@flush@toks \the\XeKo@toks@ii }
+\def\XeKo@flush@char@orphan{\expandafter \XeKo@do@flush@toks \the\XeKo@toks@ii }
 \def\XeKo@char@raise@start{%
   \ifdefined\xetexkocharraise
     \ifx\XeKo@curr@font\XeKo@latin@font\else
@@ -729,13 +729,8 @@
       \XeKo@post@hang % hanging punctuations
     \fi
   \endgroup
-  \ifnum\XeKo@currclass<\thr@@ % \the\XeKo@toks@ii
-    \expandafter\expandafter\expandafter\XeKo@maybe@kern@i
-  \else
-    \expandafter\XeKo@maybe@kern@i
-  \fi
+  \futurelet\XeKo@let@token\XeKo@maybe@kern@ii
   }
-\def\XeKo@maybe@kern@i{\futurelet\XeKo@let@token\XeKo@maybe@kern@ii }
 \def\XeKo@maybe@kern@ii{%
   \ifx\XeKo@let@token\@sptoken
     \ifnum\XeKo@cjk@ignorespaces=\@ne % try to remove space
