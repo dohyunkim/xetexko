@@ -137,6 +137,8 @@
 \XeTeXcharclass "2015=\XeTeXcharclassLD % ― HORIZONTAL BAR
 \XeTeXcharclass "2025=\XeTeXcharclassLD % ‥ TWO DOT LEADER
 \XeTeXcharclass "2026=\XeTeXcharclassLD % … HORIZONTAL ELLIPSIS
+\XeTeXcharclass "FF5E=\XeTeXcharclassLD % ～ FULLWIDTH TILDE : KS symbol
+\XeTeXcharclass "3003=\XeTeXcharclassLD % 〃 DITTO MARK : KS symbol
 % 결락기호
 \XeTeXcharclass "25A1=\XeTeXcharclassID % □
 % some KS symbols
@@ -227,7 +229,6 @@
 \XeTeXcharclass "266A = \XeTeXcharclassSY % ♪
 \XeTeXcharclass "266C = \XeTeXcharclassSY % ♬
 \XeTeXcharclass "266D = \XeTeXcharclassSY % ♭
-\XeTeXcharclass "3003 = \XeTeXcharclassSY % 〃
 \XeTeXcharclass "3013 = \XeTeXcharclassSY % 〓
 \count@="3200 \loop % ㈀..㈞
   \XeTeXcharclass\count@=\XeTeXcharclassSY
@@ -241,7 +242,6 @@
 \XeTeXcharclass "FF04 = \XeTeXcharclassSY % ＄
 \XeTeXcharclass "FF05 = \XeTeXcharclassSY % ％
 \XeTeXcharclass "FF3C = \XeTeXcharclassSY % ＼
-\XeTeXcharclass "FF5E = \XeTeXcharclassSY % ～
 \XeTeXcharclass "FFE0 = \XeTeXcharclassSY % ￠
 \XeTeXcharclass "FFE1 = \XeTeXcharclassSY % ￡
 \XeTeXcharclass "FFE5 = \XeTeXcharclassSY % ￥
@@ -288,7 +288,7 @@
   }
 
 % 고아글자 억제. verbatim 에서는 이 명령을 꺼야 한다
-\def\XeKo@suppress@char@orphan{%
+\def\XeKo@suppress@linebreak{%
   \XeKo@skip@=\lastskip \unskip
   \XeKo@count@=\lastpenalty \unpenalty
   \ifnum\XeKo@count@<5000 \XeKo@count@=5000 \fi
@@ -656,7 +656,7 @@
   }
 \def\XeKo@char@orphan{%
   \ifx\XeKo@let@token\par
-    \XeKo@suppress@char@orphan
+    \XeKo@suppress@linebreak
     \let\XeKo@next\XeKo@flush@char@orphan
   \else \ifx\@sptoken\XeKo@let@token
     \XeKo@toks@ii\expandafter{\the\XeKo@toks@ii \@sptoken}%
@@ -983,7 +983,7 @@
       \or
       \or \unkern\unkern                      % SY HG
       \or \unkern\unkern \XeKo@latincjk       % AA HG
-      \or \unkern\unkern \XeKo@nobreak        % AO HG
+      \or \unkern\unkern                      % AO HG
       \or \unkern\unkern \XeKo@latincjk       % AC HG
       \or \unkern\unkern \XeKo@latincjk       % AP HG
       \or \unkern\unkern \XeKo@latincjk       % AM HG
@@ -1009,7 +1009,7 @@
       \or
       \or \unkern\unkern                      % SY ID
       \or \unkern\unkern \XeKo@latincjk       % AA ID
-      \or \unkern\unkern \XeKo@nobreak        % AO ID
+      \or \unkern\unkern                      % AO ID
       \or \unkern\unkern \XeKo@latincjk       % AC ID
       \or \unkern\unkern \XeKo@latincjk       % AP ID
       \or \unkern\unkern \XeKo@latincjk       % AM ID
@@ -1030,23 +1030,23 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCJ{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
-      \or \unkern\unkern \XKinterhanjabreak   % HG CJ
-      \or \unkern\unkern \XKinterhanjabreak\XeKo@suppress@char@orphan \XeKo@maybe@gobble % ID CJ
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % HG CJ
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak \XeKo@maybe@gobble % ID CJ
       \or
-      \or \unkern\unkern                      % SY CJ
-      \or \unkern\unkern \XeKo@latincjk       % AA CJ
-      \or \unkern\unkern \XeKo@nobreak        % AO CJ
-      \or \unkern\unkern \XeKo@latincjk       % AC CJ
-      \or \unkern\unkern \XeKo@latincjk       % AP CJ
-      \or \unkern\unkern \XeKo@latincjk       % AM CJ
-      \or \unkern\unkern \XKinterhanjabreak   % AH CJ
-      \or \unkern\unkern                      % OP CJ
-      \or \unkern\unkern \XeKo@halfhalf       % CL CJ
-      \or \unkern\unkern \XeKo@quarterquarter % MD CJ
-      \or \unkern\unkern \XeKo@halfzero       % FS CJ
-      \or \unkern\unkern \XeKo@halfhalf       % EX CJ
-      \or \unkern\unkern \XKinterhanjabreak   % LD CJ
-      \or \unkern\unkern \XeKo@quarterquarter % VC CJ
+      \or \unkern\unkern                                               % SY CJ
+      \or \unkern\unkern \XeKo@latincjk                                % AA CJ
+      \or \unkern\unkern                                               % AO CJ
+      \or \unkern\unkern \XeKo@latincjk                                % AC CJ
+      \or \unkern\unkern \XeKo@latincjk                                % AP CJ
+      \or \unkern\unkern \XeKo@latincjk                                % AM CJ
+      \or \unkern\unkern \XKinterhanjabreak                            % AH CJ
+      \or \unkern\unkern                                               % OP CJ
+      \or \unkern\unkern \XeKo@halfhalf       \XeKo@suppress@linebreak % CL CJ
+      \or \unkern\unkern \XeKo@quarterquarter \XeKo@suppress@linebreak % MD CJ
+      \or \unkern\unkern \XeKo@halfzero       \XeKo@suppress@linebreak % FS CJ
+      \or \unkern\unkern \XeKo@halfhalf       \XeKo@suppress@linebreak % EX CJ
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % LD CJ
+      \or \unkern\unkern \XeKo@quarterquarter \XeKo@suppress@linebreak % VC CJ
     \fi
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@postmath
@@ -1061,7 +1061,7 @@
       \or
       \or \unkern\unkern \XeKo@maybe@gobble % SY SY
       \or \unkern\unkern                      % AA SY
-      \or \unkern\unkern \XeKo@nobreak        % AO SY
+      \or \unkern\unkern                      % AO SY
       \or \unkern\unkern \XeKo@latincjk       % AC SY
       \or \unkern\unkern \XeKo@latincjk       % AP SY
       \or \unkern\unkern \XeKo@latincjk       % AM SY
@@ -1350,23 +1350,23 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassLD{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
-      \or \unkern\unkern                                   % HG LD
-      \or \unkern\unkern                                   % ID LD
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % HG LD
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % ID LD
       \or
-      \or \unkern\unkern                                   % SY LD
-      \or \unkern\unkern                                   % AA LD
-      \or \unkern\unkern                                   % AO LD
-      \or \unkern\unkern                                   % AC LD
-      \or \unkern\unkern                                   % AP LD
-      \or \unkern\unkern                                   % AM LD
-      \or \unkern\unkern                                   % AH LD
-      \or \unkern\unkern                                   % OP LD
-      \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf       % CL LD
-      \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter % MD LD
-      \or \unkern\unkern \XeKo@nobreak\XeKo@halfzero       % FS LD
-      \or \unkern\unkern                                   % EX LD
+      \or \unkern\unkern                                               % SY LD
+      \or \unkern\unkern                                               % AA LD
+      \or \unkern\unkern                                               % AO LD
+      \or \unkern\unkern                                               % AC LD
+      \or \unkern\unkern                                               % AP LD
+      \or \unkern\unkern                                               % AM LD
+      \or \unkern\unkern                                               % AH LD
+      \or \unkern\unkern                                               % OP LD
+      \or \unkern\unkern \XeKo@halfhalf       \XeKo@suppress@linebreak % CL LD
+      \or \unkern\unkern \XeKo@quarterquarter \XeKo@suppress@linebreak % MD LD
+      \or \unkern\unkern \XeKo@halfzero       \XeKo@suppress@linebreak % FS LD
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % EX LD
       \or \unkern\unkern \XeKo@maybe@gobble % LD LD
-      \or \unkern\unkern                                   % VC LD
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % VC LD
     \fi
   \fi
   \XeKo@fontLD\XeKo@startLD
@@ -1720,7 +1720,7 @@
   \let\XeKo@latincjk@classic  \inhibitglue
   \let\XeKo@latincjk@modern   \inhibitglue
   \let\XeKo@postmath@modern   \inhibitglue
-  \let\XeKo@suppress@char@orphan  \relax
+  \let\XeKo@suppress@linebreak    \relax
   \chardef\XeKo@cjk@ignorespaces  \z@
   \chardef\XeKo@compresspuncts    \z@
   }
