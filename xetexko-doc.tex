@@ -70,7 +70,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 3.2\quad 2021/04/08}
+\date{Version 3.3\quad 2021/04/20}
 \maketitle
 
 \begin{quote}\small
@@ -673,11 +673,11 @@ microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 �
 따위를 사용한다.
 
 \section{밑줄긋기}
-\uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
+\LaTeX 에서는 \uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
 
-3.0 버전부터는\vernote{3.0} \cs{xetexkoulemsupport} 선언이
-불필요하게 되었다. 이 명령은 호환성을 위해 남겨두었으나 아무 일도
-하지 않는다.
+\cs{xetexkoulemsupport} 명령이 \vernote{3.3}3.3 버전부터 부활하였으므로
+플레인텍에서는 이 명령을 명시해야 할 경우가 있을 것이다.
+
 
 %\hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
 
@@ -687,6 +687,11 @@ microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 �
 
 \begin{small}\linespread{1.2}\selectfont
 \begin{description}\itemsep=0pt
+    \item[v3.3] 2021-04-20
+      \begin{itemize}
+        \item \cs{xetexkoulemsupport} 명령 부활
+        \item `㉾' 등 한글기호를 \verb=cjksymbols=에 할당
+      \end{itemize}
     \item[v3.2] 2021-04-08
       \begin{itemize}
         \item 매달린 구두점이 기본값으로 따옴표에는 작동하지 않고 마침표^^b7쉼표에만 작동한다.

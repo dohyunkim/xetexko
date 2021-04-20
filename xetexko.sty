@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-  \ProvidesPackage{xetexko}[2021/04/08 v3.2 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2021/04/20 v3.3 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@gobble\else \def\@gobble#1{} \fi
@@ -252,11 +252,11 @@
 \XeTeXcharclass "FFE6 = \XeTeXcharclassSY % ￦
 
 % spaces
-\def\XeKo@halfzero         {\hskip 2\XeKo@halfdim \relax}
-\def\XeKo@halfhalf         {\hskip 2\XeKo@halfdim minus 2\XeKo@halfdim \relax}
-\def\XeKo@halfquarter      {\hskip 2\XeKo@halfdim minus  \XeKo@halfdim \relax}
-\def\XeKo@quarterquarter   {\hskip  \XeKo@halfdim minus  \XeKo@halfdim \relax}
-\def\XeKo@iiiquarterquarter{\hskip 3\XeKo@halfdim minus  \XeKo@halfdim \relax}
+\def\XeKo@halfzero         {\hskip 2\XeKo@quarterdim \relax}
+\def\XeKo@halfhalf         {\hskip 2\XeKo@quarterdim minus 2\XeKo@quarterdim \relax}
+\def\XeKo@halfquarter      {\hskip 2\XeKo@quarterdim minus  \XeKo@quarterdim \relax}
+\def\XeKo@quarterquarter   {\hskip  \XeKo@quarterdim minus  \XeKo@quarterdim \relax}
+\def\XeKo@iiiquarterquarter{\hskip 3\XeKo@quarterdim minus  \XeKo@quarterdim \relax}
 \let\XeKo@nobreak\nobreak
 
 \def\XKinterhangulbreak{% compat
@@ -279,15 +279,16 @@
   \ifdefined\xetexkohu
     \xetexkohu plus .5\dimexpr\xetexkohu\relax minus.25\dimexpr\xetexkohu\relax
   \else
-    \XeKo@halfdim plus .5\XeKo@halfdim minus.25\XeKo@halfdim
+    \XeKo@quarterdim plus .5\XeKo@quarterdim minus.25\XeKo@quarterdim
   \fi
+  \relax
   }
 \def\XeKo@latincjk@modern{%
-  \hskip \ifdefined\xetexkohu \xetexkohu \else \XeKo@halfdim \fi
+  \hskip \ifdefined\xetexkohu \xetexkohu \else \XeKo@quarterdim \fi
   \XeKo@stretchshrink
   }
 \def\XeKo@postmath@modern{%
-  \hskip 2\ifdefined\xetexkohu \dimexpr\xetexkohu\relax \else \XeKo@halfdim \fi
+  \hskip 2\ifdefined\xetexkohu \dimexpr\xetexkohu\relax \else \XeKo@quarterdim \fi
   \XeKo@stretchshrink
   }
 
@@ -305,8 +306,8 @@
 % typesetting modes
 \protected\def\typesetclassic{%
   \chardef\XeKo@typesetclassic\@ne
-  \def\XeKo@halfdim{\dimexpr.25em\relax}%
-  \def\XeKo@stretchshrink{plus.08em minus.04em}%
+  \def\XeKo@quarterdim{\dimexpr.25em\relax}%
+  \def\XeKo@stretchshrink{plus.08em minus.04em\relax}%
   \let\XeKo@latincjk\XeKo@latincjk@classic
   \let\XeKo@postmath\XeKo@latincjk@classic
   \XeTeXlinebreakpenalty=\z@
@@ -315,8 +316,8 @@
   }
 \protected\def\typesetmodern{%
   \chardef\XeKo@typesetclassic\z@
-  \def\XeKo@halfdim{\dimexpr.05em\relax}%
-  \def\XeKo@stretchshrink{plus.04em minus.02em}%
+  \def\XeKo@quarterdim{\dimexpr.05em\relax}%
+  \def\XeKo@stretchshrink{plus.04em minus.02em\relax}%
   \let\XeKo@latincjk\XeKo@latincjk@modern
   \let\XeKo@postmath\XeKo@postmath@modern
   \XeTeXlinebreakpenalty=50
@@ -1742,9 +1743,64 @@
 % no longer support these two \disable...
 \let\disableautojosa\relax
 \let\disablejamoautojosa\relax
-% no need xetexkoulemsupport any more
-% !!! uline 내부에서의 폰트변경이 효력이 없는 문제가 남아있음 !!!
-\let\xetexkoulemsupport\relax
+% ulem support
+\ifcsname ver@xetexko.sty\endcsname
+  \def\xetexkoulemsupport{%
+    \ifdefined\UL@hook
+      \UL@hook\expandafter{%
+        \the\UL@hook
+        \let\XeKo@char@orphan\XeKo@flush@char@orphan
+        % uline 안에서 폰트가 변경되는 경우를 대비
+        \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
+          \XeKo@hangul@selectfont
+          \ifdefined\XeKo@in@selectfont\else
+            \global\let\XeKo@temp@hangul@font\XeKo@hangul@font
+            \gdef\XeKo@UL@hangul@font{\let\XeKo@hangul@font\XeKo@temp@hangul@font}%
+            \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
+          \fi }%
+        \expandafter\def\expandafter\XeKo@hanja@selectfont\expandafter{%
+          \XeKo@hanja@selectfont
+          \ifdefined\XeKo@in@selectfont\else
+            \global\let\XeKo@temp@hanja@font\XeKo@hanja@font
+            \gdef\XeKo@UL@hanja@font{\let\XeKo@hanja@font\XeKo@temp@hanja@font}%
+            \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
+          \fi }%
+        \expandafter\def\expandafter\XeKo@latin@selectfont\expandafter{%
+          \XeKo@latin@selectfont
+          \ifdefined\XeKo@in@selectfont\else
+            \global\let\XeKo@temp@latin@font\XeKo@latin@font
+            \gdef\XeKo@UL@latin@font{\let\XeKo@latin@font\XeKo@temp@latin@font}%
+            \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
+          \fi }%
+        }%
+    \fi
+    }
+\else
+  \let\XeKo@UL@hangul@patch\relax
+  \let\XeKo@UL@hanja@patch \relax
+  \def\xetexkoulemsupport{%
+    \ifdefined\UL@hook
+      \UL@hook\expandafter{%
+        \the\UL@hook
+        \let\XeKo@char@orphan\XeKo@flush@char@orphan
+        \def\XeKo@UL@hangul@patch{%
+          \global\let\XeKo@temp@hangul@font\XeKo@hangul@font
+          \global\let\XeKo@temp@latin@font\XeKo@latin@font
+          \gdef\XeKo@UL@hangul@font{%
+            \let\XeKo@hangul@font\XeKo@temp@hangul@font
+            \let\XeKo@latin@font\XeKo@temp@latin@font }%
+          \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font }%
+        \def\XeKo@UL@hanja@patch{%
+          \global\let\XeKo@temp@hanja@font\XeKo@hanja@font
+          \global\let\XeKo@temp@latin@font\XeKo@latin@font
+          \gdef\XeKo@UL@hanja@font{%
+            \let\XeKo@hanja@font\XeKo@temp@hanja@font
+            \let\XeKo@latin@font\XeKo@temp@latin@font }%
+          \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font }%
+        }%
+    \fi
+    }
+\fi
 
 % math hangul
 \def\setmathhangulblock#1#2{%
@@ -1761,13 +1817,21 @@
     \afterassignment\XeKo@hangulfont@setup\font\XeKo@hangul@font
     }
   \def\XeKo@hangulfont@setup{%
-    \expandafter\let\expandafter\XeKo@latin@font\the\font
+    \ifdefined\XeKo@curr@font
+      \ifx\XeKo@curr@font\XeKo@hangul@font\else
+      \ifx\XeKo@curr@font\XeKo@hanja@font\else
+        \expandafter\let\expandafter\XeKo@latin@font\the\font
+      \fi\fi
+    \else
+      \expandafter\let\expandafter\XeKo@latin@font\the\font
+    \fi
     \edef\XeKo@hangul@font{%
       \the\XeKo@hangul@font
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
       }%
+    \XeKo@UL@hangul@patch
     }
   \protected\def\sethangulfont#1{%
     \def\@tempa{#1}%
@@ -1777,26 +1841,43 @@
     }
   \def\XeKo@sethangulfont@setup{%
     \expandafter\edef\@tempa{%
-      \let\noexpand\XeKo@latin@font=\the\font
+      \let\noexpand\XeKo@latin@font=%
+        \ifdefined\XeKo@curr@font
+          \ifx\XeKo@curr@font\XeKo@hangul@font \the\XeKo@latin@font \else
+          \ifx\XeKo@curr@font\XeKo@hanja@font  \the\XeKo@latin@font \else
+            \the\font
+          \fi\fi
+        \else
+          \the\font
+        \fi
       \def\noexpand\XeKo@hangul@font{%
         \csname XeKo@hangul@font@\@tempb\endcsname
         \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
         \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
         \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
         }%
+      \noexpand\XeKo@UL@hangul@patch
       }%
     }
   \protected\def\hanjafont{%
     \afterassignment\XeKo@hanjafont@setup\font\XeKo@hanja@font
     }
   \def\XeKo@hanjafont@setup{%
-    \expandafter\let\expandafter\XeKo@latin@font\the\font
+    \ifdefined\XeKo@curr@font
+      \ifx\XeKo@curr@font\XeKo@hangul@font\else
+      \ifx\XeKo@curr@font\XeKo@hanja@font\else
+        \expandafter\let\expandafter\XeKo@latin@font\the\font
+      \fi\fi
+    \else
+      \expandafter\let\expandafter\XeKo@latin@font\the\font
+    \fi
     \edef\XeKo@hanja@font{%
       \the\XeKo@hanja@font
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
       }%
+    \XeKo@UL@hanja@patch
     }
   \protected\def\sethanjafont#1{%
     \def\@tempa{#1}%
@@ -1806,13 +1887,22 @@
     }
   \def\XeKo@sethanjafont@setup{%
     \expandafter\edef\@tempa{%
-      \let\noexpand\XeKo@latin@font=\the\font
+      \let\noexpand\XeKo@latin@font=%
+        \ifdefined\XeKo@curr@font
+          \ifx\XeKo@curr@font\XeKo@hangul@font \the\XeKo@latin@font \else
+          \ifx\XeKo@curr@font\XeKo@hanja@font  \the\XeKo@latin@font \else
+            \the\font
+          \fi\fi
+        \else
+          \the\font
+        \fi
       \def\noexpand\XeKo@hanja@font{%
         \csname XeKo@hanja@font@\@tempb\endcsname
         \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
         \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
         \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
         }%
+      \noexpand\XeKo@UL@hanja@patch
       }%
     }
   \protected\def\hanjabyhangulfont{\let\XeKo@hanja@font\XeKo@hangul@font }
@@ -2349,6 +2439,7 @@
   \ifdefined\XeKo@hanja@font\else
     \let\XeKo@hanja@font    \XeKo@hangul@font
   \fi
+  \@ifpackageloaded{ulem}{\xetexkoulemsupport}{}
   \@ifpackageloaded{hyperref}{\pdfstringdefDisableCommands{%
     \let\hangulalphs\relax
     \let\hangulnums\relax

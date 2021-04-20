@@ -1,3 +1,11 @@
+2021-04-20      Dohyun Kim <nomos at ktug org>
+
+	Version 3.3
+
+	* more fix on ulem package support
+	* suppress linebreak before ellipsis etc.
+	* assign U+327E to cjksymbols class
+
 2021-04-08      Dohyun Kim <nomos at ktug org>
 
 	Version 3.2
