@@ -61,8 +61,8 @@
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
 \let\hparens\hparen
-\def\keyword#1{\leavevmode\marginpar{\hfuzz\maxdimen\footnotesize\cs{#1}}}
-\def\vernote#1{\leavevmode\marginpar{\hfuzz\maxdimen\footnotesize{\color{red}☜ v#1}}}
+\def\keyword#1{\cs{#1}\marginpar{\hfuzz\maxdimen\footnotesize{\color{blue!70}\cs{#1}}}}
+\def\vernote#1{v#1\marginpar{\hfuzz\maxdimen\footnotesize{\color{red}☜ v#1}}}
 
 \hangingpunctuations
 
@@ -146,7 +146,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
 
 \bigskip
 
-※ 버전 3.1부터 플레인텍에 주요 변경사항이 있다:\vernote{3.1}%
+※ \vernote{3.1}부터 플레인텍에 주요 변경사항이 있다:
 \begin{plaintex}
 플레인텍에서도 기본값으로 은바탕을 한글에 사용한다. 한글폰트를 지시하는 방법은 다음과 같다.
 \begin{verbatim}
@@ -168,8 +168,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
   그리하여 예의 \cs{tt} 명령으로 이제 한글, 한자, 영문 글꼴을 동시에 바꿀 수 있게 된다.
 \end{plaintex}
 
-\keyword{fallbackhanjafont}%
-\cs{fallbackhanjafont}를 정의해두면 \hemph{한자 글꼴에도 없는 한자}를
+\keyword{fallbackhanjafont}를 정의해두면 \hemph{한자 글꼴에도 없는 한자}를
 이 글꼴에서 찾아 식자한다. \cs{newfontfamily} 명령 등으로 정의한다.
 
 \section{글꼴 명령 (계속)}
@@ -197,8 +196,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 
 참고로, 한자와 한글을 같은 글꼴로 식자하고 싶을 때 글꼴 설정을
 번거롭게 두 번 할 필요 없이 한글 글꼴만 설정한 뒤 간단히
-\keyword{hanjabyhangulfont}%
-\cs{hanjabyhangulfont}를 선언하면 된다.%
+\keyword{hanjabyhangulfont}를 선언하면 된다.%
 \footnote{프리앰블의 main/sans/mono 글꼴 명령들과 달리 새로 지정한 한글 폰트가
   한자에도 자동으로 적용되지는 않는다는 말이다.}
 
@@ -225,16 +223,16 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \item[cjksymbols] CJK 구두점, 괄호 및 상징기호
 \end{description}
 
-종전에\vernote{3.0}
+종전에
 라틴숫자에 적용되던 \verb|nums| 옵션과
 라틴 인용부호에 적용되던 \verb|quotes| 옵션이
-3.0 버전부터는
+\vernote{3.0}부터는
 각각 \verb|alphs| 옵션과 \verb|parens| 옵션에 통합되었음에 유의하라.
-또한\vernote{3.0} en dash, em dash가 종래 \verb|colons|에 속하던 것이 이제
+또한 en dash, em dash가 종래 \verb|colons|에 속하던 것이 이제
 \verb|hyphens|에 속하게 되었다.
 
 기본값은 다음 명령을 준 것과 동일하다.
-v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유의하라.
+\vernote{3.0}부터 괄호류의 기본글꼴이 한글이 되었음도 유의하라.
 \begin{verbatim}
   \xetexkofontregime {latin}%
     [ puncts=prevfont, colons=prevfont,
@@ -285,7 +283,7 @@ v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유�
   기본값은 \verb|0pt|.
   고정폭 글꼴에서도 이 옵션은 작동한다.
 \end{description}
-3.0 버전부터는\vernote{3.0} 다음 옵션들이 아무 효과도 가져오지 않게
+\vernote{3.0}부터는 다음 옵션들이 아무 효과도 가져오지 않게
 변경되었음을 주의하라.
 \begin{verbatim}
     lowerperiod         lowerquestion
@@ -311,9 +309,9 @@ v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유�
   한자폰트 옵션을 서로 달리 지시할 수 있다.
 \end{plaintex}
 
-종전에 한글·한자 글꼴의 옵션 기본값을 지정하던\vernote{3.0}
+종전에 한글·한자 글꼴의 옵션 기본값을 지정하던
 \cs{defaulthangulfontfeatures} 및 \cs{defaulthanjafontfeatures} 명령이
-3.0 버전부터는
+\vernote{3.0}부터는
 아무런 기능을 하지 않게 변경되었음에 유의하라.
 폰트옵션의 수가 적어졌기 때문에 이 명령의 유용성도 거의 사라졌다고 판단했다.
 
@@ -336,8 +334,7 @@ v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유�
 
     \cs{nocompresspunctuations}는 이 명령과 동의어이다.\\
     반대로
-    \keyword{compresspunctuations}%
-    \cs{compresspunctuations}는 반각을 강제하라는 명령이다.
+    \keyword{compresspunctuations}는 반각을 강제하라는 명령이다.
     이것이 기본값이므로 특별한 경우가 아니면 따로 선언할 필요가 없다.
 
   \item[\cs{disablehangulspacing}]
@@ -359,7 +356,7 @@ v3.0부터\vernote{3.0} 괄호류의 기본글꼴이 한글이 되었음도 유�
       }
 
 \end{description}
-3.0 버전부터는\vernote{3.0} 종전의
+\vernote{3.0}부터는 종전의
 \cs{disableautojosa} 및 \cs{disablejamoautojosa} 명령이 아무 기능도 하지 않게
 변경되었음을 유의하라.
 
@@ -411,8 +408,8 @@ Source Han Serif (본명조), Noto Sans CJK, Noto Serif CJK,
   \setmainhangulfont{Noto Sans CJK KR}[
     Vertical=Alternates, RawFeature=vertical ]
 \end{verbatim}
-\keyword{verticaltypesetting}%
-문서 전체를 세로쓰기할 때 \cs{verticaltypesetting}을 선언하면
+
+문서 전체를 세로쓰기할 때 \keyword{verticaltypesetting}을 선언하면
 면주는 그대로 두고 본문만 세로쓰기한다.\footnote{면주의 글꼴에는
   \texttt{vertical} 옵션이 없어야 할 것이다.
   면주 글꼴을 따로 지정하는 것은 사용자의 몫이다. }
@@ -482,10 +479,9 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
 
 \verb|typesetclassic| 환경은 고문헌 조판에 적합한 환경이다.
 
-불필요한 공백을 없애주는 기능은\vernote{3.0}
-3.0 버전부터는 자동으로 동작하지 않는다.  사용자가
-\keyword{removeclassicspaces}%
-\cs{removeclassicspaces} 명령을 주어야 CJK 글자간 공백을
+불필요한 공백을 없애주는 기능은
+\vernote{3.0}부터는 자동으로 동작하지 않는다.  사용자가
+\keyword{removeclassicspaces} 명령을 주어야 CJK 글자간 공백을
 제거하기 시작한다.
 
 간단한 일본어, 중국어 문단 정도를 식자하는 데도 이 환경을 이용할 수 있으나
@@ -505,8 +501,7 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
 \end{plaintex}
 
 
-\keyword{inhibitglue}%
-\cs{inhibitglue} 명령은
+\keyword{inhibitglue} 명령은
 해당 지점에 자동 삽입되는 공백을 영(zero)으로 만들어준다.
 
 현대문서 조판에는 \verb|typesetmodern| 환경이 쓰인다. 이 환경은 기본값이므로
@@ -554,13 +549,12 @@ horizontal 환경에는 가로쓰기 박스의 너비를 인자로 주어야 한
 \section{매달린 구두점}
 \hemph{하이픈을 제외한} 문장부호들를 판면 바깥에 식자하여 행 끝에 매달리게 만들 수 있다.
 
-3.0 버전부터는\vernote{3.0} \keyword{hangingpunctuations}%
-\cs{hangingpunctuations} 명령으로 활성화한다.
+\vernote{3.0}부터는 \keyword{hangingpunctuations} 명령으로 활성화한다.
 \cs{hangingpunctuation}은 이 명령과 동의어이다.
 당분간 xetexko-hanging.sty을 로드하는 것으로도 활성화되도록 해 두었다.
 이렇게 활성화되면 기본값으로 온점, 반점, 고리점, 모점에 대해서 전부 내밀기가 작동한다.
 
-3.2 버전부터는\vernote{3.2} 사용자가 원하는 문장부호를 원하는 만큼 판면 밖으로 내밀 수 있다.
+\vernote{3.2}부터는 사용자가 원하는 문장부호를 원하는 만큼 판면 밖으로 내밀 수 있다.
 \begin{verbatim}
     \sethangingratio"28=0.5 %
     \sethangingratio"3002=1 %
@@ -602,7 +596,7 @@ microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 �
 \begin{quote}
   \verb|$가^{나^다}$|\quad$\Rightarrow\quad가^{나^다}$
 \end{quote}
-3.0 버전부터는\vernote{3.0}
+\vernote{3.0}부터는
 자동으로 수식한글을 잡아주지 않으므로 사용자가 다음과 같이 명시적으로 선언해야 한다.
 \begin{verbatim}
   \setmathhangulfont{Noto Sans CJK KR}[
@@ -645,7 +639,7 @@ microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 �
 \end{verbatim}
 
 \section{드러냄표}
-\keyword{dotemph}%
+\keyword{dotemph} 명령을 사용하는
 \dotemph{드러냄표} 강조도 \kotex 과 대동소이하다.
 기본은 글자 위에 점을 찍는 형태이나 다음 명령을 이용해 개인적으로 선호하는
 기호를 드러냄표로 쓸 수 있다.
@@ -675,7 +669,7 @@ microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 �
 \section{밑줄긋기}
 \LaTeX 에서는 \uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
 
-\cs{xetexkoulemsupport} 명령이 \vernote{3.3}3.3 버전부터 부활하였으므로
+\cs{xetexkoulemsupport} 명령이 \vernote{3.3}부터 부활하였으므로
 플레인텍에서는 이 명령을 명시해야 할 경우가 있을 것이다.
 
 

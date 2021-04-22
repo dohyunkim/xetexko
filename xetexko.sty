@@ -357,9 +357,9 @@
   }
 \def\XeKo@Tchinese@classes{% these glyphs in traditional chinese fonts are center-aligned
   \XeTeXcharclass "3001 = \XeTeXcharclassMD % 、
-  \XeTeXcharclass "3002 = \XeTeXcharclassMD % 。
+  \XeTeXcharclass "3002 = \XeTeXcharclassLD % 。
   \XeTeXcharclass "FF0C = \XeTeXcharclassMD % ，
-  \XeTeXcharclass "FF0E = \XeTeXcharclassMD % ．
+  \XeTeXcharclass "FF0E = \XeTeXcharclassLD % ．
   }
 
 \chardef\XeKo@typesetvertical\z@
@@ -1102,7 +1102,7 @@
       \or \unkern\unkern \XeKo@quarterquarter % MD AA
       \or \unkern\unkern \XeKo@halfzero       % FS AA
       \or \unkern\unkern \XeKo@halfhalf       % EX AA
-      \or \unkern\unkern                      % LD AA
+      \or \unkern\unkern \XeKo@latincjk       % LD AA
       \or \unkern\unkern \XeKo@quarterquarter % VC AA
     \fi
   \fi
@@ -1126,7 +1126,7 @@
       \or \unkern\unkern \XeKo@quarterquarter % MD AO
       \or \unkern\unkern \XeKo@halfzero       % FS AO
       \or \unkern\unkern \XeKo@halfhalf       % EX AO
-      \or \unkern\unkern                      % LD AO
+      \or \unkern\unkern \XeKo@latincjk       % LD AO
       \or \unkern\unkern \XeKo@quarterquarter % VC AO
     \fi
   \fi
