@@ -405,7 +405,8 @@
 \protected\def\endhorizontal{%
   \egroup
   \XeKo@unrotatebox\z@
-  \lower.5\ht\z@ \box\z@
+  \lower\dimexpr.5\ht\z@\ifdefined\xetexkocharraise-\xetexkocharraise\fi\relax
+  \box\z@
   }
 \def\XeKo@rotatebox#1{%
   \setbox#1\hbox to\dimexpr\ht#1+\dp#1\bgroup
