@@ -1519,8 +1519,8 @@
   }
 \def\XeKo@read@hanja@hangul@line{%
   \read1 to \@tempa
-  \ifnum\count@=\@tempcnta
-    \global\count@\@tempa
+  \ifnum\XeKo@count@=\@tempcnta
+    \global\XeKo@count@\@tempa
   \else
     \advance\@tempcnta\@ne \expandafter\XeKo@read@hanja@hangul@line
   \fi
