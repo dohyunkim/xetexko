@@ -4,7 +4,7 @@ PDFFILE		= $(NAME)-doc.pdf
 RUNFILES	= $(wildcard $(NAME)*.sty) $(wildcard hanja*.tab)
 DOCFILES	= $(TEXFILE) $(PDFFILE) README ChangeLog
 ZIPFILE		= $(NAME).zip
-DO_LATEX	= texfot --quiet --tee=/dev/null xelatex $(TEXFILE)
+DO_LATEX	= texfot --quiet --tee=/dev/null xelatex-dev $(TEXFILE)
 FORMAT		= xetex
 RUNDIR		= $(TEXMFDIR)/tex/$(FORMAT)/$(NAME)
 DOCDIR		= $(TEXMFDIR)/doc/$(FORMAT)/$(NAME)

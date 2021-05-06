@@ -15,7 +15,7 @@
 \catcode`@=11
 
 \ifdefined\ProvidesPackage
-  \NeedsTeXFormat{LaTeX2e}[2020/10/01]
+  \NeedsTeXFormat{LaTeX2e}[2021/06/01]
   \ProvidesPackage{xetexko}[2021/04/20 v3.3 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
@@ -433,8 +433,9 @@
   \def\verticaltypesetting{%
     \maxdepth\z@ \typesetvertical
     \dimen@\textwidth \textwidth\textheight \textheight\dimen@
-    \edef\@outputpage{\unexpanded{\XeKo@rotatebox\@outputbox
-    \textwidth\textheight}\unexpanded\expandafter{\@outputpage}}}
+    \AddToHook{cmd/@outputpage/before}{\XeKo@rotatebox\@outputbox \textwidth\textheight}%
+    \let\verticaltypesetting\relax % prevent multiple running
+    }
 \else
   \def\verticaltypesetting{%
     \dimen@\hsize \hsize\vsize \vsize\dimen@
@@ -442,7 +443,9 @@
       \unexpanded\expandafter{\plainoutput}}%
     \def\pagebody{\setbox\z@\vbox to\hsize{\boxmaxdepth=\maxdepth
       \pagecontents}\XeKo@rotatebox\z@\box\z@}%
-    \maxdepth\z@ \typesetvertical }
+    \maxdepth\z@ \typesetvertical
+    \let\verticaltypesetting\relax % prevent multiple running
+    }
 \fi
 
 \protected\def\vertlatin#1{\leavevmode\lower.5ex\hbox{\latinmarks #1}} % compat
@@ -1960,32 +1963,21 @@
   \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens
   \disablehangulspacing
   }
-\edef\verbatim@font{%
-  \unexpanded\expandafter{%
-    \verbatim@font
-    \disablehangulspacingandlinebreak
-    \aftergroup\enablehangulspacingandlinebreak
-    }}
+\AddToHook{cmd/verbatim@font/after}{%
+  \disablehangulspacingandlinebreak
+  \aftergroup\enablehangulspacingandlinebreak
+  }
 \AddToHook{normalfont}{%
   \let \xetexkohangulfont   \xetexkodefaulthangulfont
   \let \xetexkohanguloption \xetexkodefaulthanguloption
   \let \xetexkohanjafont    \xetexkodefaulthanjafont
   \let \xetexkohanjaoption  \xetexkodefaulthanjaoption
   }
-\IfHookExistsTF{selectfont}{
-  \AddToHook{selectfont}{%
-    \XeKo@latin@selectfont
-    \XeKo@hanja@selectfont
-    \XeKo@hangul@selectfont
-    }
-}{
-  \RequirePackage{everysel}
-  \EverySelectfont{%
-    \XeKo@latin@selectfont
-    \XeKo@hanja@selectfont
-    \XeKo@hangul@selectfont
-    }
-}
+\AddToHook{selectfont}{%
+  \XeKo@latin@selectfont
+  \XeKo@hanja@selectfont
+  \XeKo@hangul@selectfont
+  }
 \def\XeKo@hangul@selectfont{%
   \ifdefined\XeKo@in@selectfont\else
     \ifdefined\xetexkohangulfont
