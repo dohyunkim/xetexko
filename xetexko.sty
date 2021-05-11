@@ -473,10 +473,10 @@
   }
 \def\XeKo@font@Latin{%
   \ifdefined\XeKo@latin@font
-  \ifnum\XeTeXfonttype\font=\z@\else % 현재 폰트가 tfm 폰트면 라틴폰트를 강제하지 않음
-    \XeKo@latin@font
+    \ifnum\XeTeXfonttype\font=\z@\else % 현재 폰트가 tfm 폰트면 라틴폰트를 강제하지 않음
+      \XeKo@latin@font
+    \fi
     \let\XeKo@curr@font\XeKo@latin@font
-  \fi
   \fi
   }
 \let\XeKo@fontHG\XeKo@font@Hangul
