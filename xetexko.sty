@@ -15,8 +15,8 @@
 \catcode`@=11
 
 \ifdefined\ProvidesPackage
-  \NeedsTeXFormat{LaTeX2e}[2021/06/01]
-  \ProvidesPackage{xetexko}[2021/04/20 v3.3 typesetting Korean with XeTeX]
+  \NeedsTeXFormat{LaTeX2e}[2020/10/01]
+  \ProvidesPackage{xetexko}[2021/05/15 v3.4 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@gobble\else \def\@gobble#1{} \fi
@@ -430,12 +430,22 @@
   \egroup
   }
 \ifcsname ver@xetexko.sty\endcsname
-  \def\verticaltypesetting{%
-    \maxdepth\z@ \typesetvertical
-    \dimen@\textwidth \textwidth\textheight \textheight\dimen@
-    \AddToHook{cmd/@outputpage/before}{\XeKo@rotatebox\@outputbox \textwidth\textheight}%
-    \let\verticaltypesetting\relax % prevent multiple running
-    }
+  \IfFormatAtLeastTF{2021/06/01}{
+    \def\verticaltypesetting{%
+      \maxdepth\z@ \typesetvertical
+      \dimen@\textwidth \textwidth\textheight \textheight\dimen@
+      \AddToHook{cmd/@outputpage/before}{\XeKo@rotatebox\@outputbox \textwidth\textheight}%
+      \let\verticaltypesetting\relax % prevent multiple running
+      }
+  }{
+    \def\verticaltypesetting{%
+      \maxdepth\z@ \typesetvertical
+      \dimen@\textwidth \textwidth\textheight \textheight\dimen@
+      \edef\@outputpage{\unexpanded{\XeKo@rotatebox\@outputbox
+        \textwidth\textheight}\unexpanded\expandafter{\@outputpage}}%
+      \let\verticaltypesetting\relax % prevent multiple running
+      }
+  }
 \else
   \def\verticaltypesetting{%
     \dimen@\hsize \hsize\vsize \vsize\dimen@
@@ -1946,10 +1956,19 @@
   \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens
   \disablehangulspacing
   }
-\AddToHook{cmd/verbatim@font/after}{%
-  \disablehangulspacingandlinebreak
-  \aftergroup\enablehangulspacingandlinebreak
-  }
+\IfFormatAtLeastTF{2021/06/01}{
+  \AddToHook{cmd/verbatim@font/after}{%
+    \disablehangulspacingandlinebreak
+    \aftergroup\enablehangulspacingandlinebreak
+    }
+}{
+  \edef\verbatim@font{%
+    \unexpanded\expandafter{%
+      \verbatim@font
+      \disablehangulspacingandlinebreak
+      \aftergroup\enablehangulspacingandlinebreak
+      }}
+}
 \AddToHook{normalfont}{%
   \let \xetexkohangulfont   \xetexkodefaulthangulfont
   \let \xetexkohanguloption \xetexkodefaulthanguloption
@@ -1960,10 +1979,18 @@
   \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens
   }
 
-\AddToHook{selectfont}{%
-  \XeKo@hanja@selectfont
-  \XeKo@hangul@selectfont
-  }
+\IfHookExistsTF{selectfont}{
+  \AddToHook{selectfont}{%
+    \XeKo@hanja@selectfont
+    \XeKo@hangul@selectfont
+    }
+}{
+  \RequirePackage{everysel}
+  \EverySelectfont{%
+    \XeKo@hanja@selectfont
+    \XeKo@hangul@selectfont
+    }
+}
 \def\XeKo@hangul@selectfont{%
   \ifdefined\XeKo@in@selectfont\else
     \ifdefined\xetexkohangulfont
