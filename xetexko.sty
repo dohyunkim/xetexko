@@ -457,27 +457,38 @@
   \let\xetexkointerhchar\XeKo@undefined
   }
 
+\expandafter\let\expandafter\XeKo@latin@font\the\font
+
 \def\XeKo@font@Hangul{%
+  \expandafter\ifx\the\font\XeKo@raw@hangul@font \else
+  \expandafter\ifx\the\font\XeKo@raw@hanja@font \else
+    \expandafter\let\expandafter\XeKo@latin@font\the\font
+  \fi\fi
   \ifdefined\XeKo@hangul@font
     \XeKo@reset@options
     \XeKo@hangul@font
-    \let\XeKo@curr@font\XeKo@hangul@font
+    \expandafter\let\expandafter\XeKo@raw@hangul@font\the\font
   \fi
   }
 \def\XeKo@font@CJK{%
+  \expandafter\ifx\the\font\XeKo@raw@hangul@font \else
+  \expandafter\ifx\the\font\XeKo@raw@hanja@font \else
+    \expandafter\let\expandafter\XeKo@latin@font\the\font
+  \fi\fi
   \ifdefined\XeKo@hanja@font
     \XeKo@reset@options
     \XeKo@hanja@font
-    \let\XeKo@curr@font\XeKo@hanja@font
+    \expandafter\let\expandafter\XeKo@raw@hanja@font\the\font
   \fi
   }
 \def\XeKo@font@Latin{%
-  \ifdefined\XeKo@latin@font
-    \ifnum\XeTeXfonttype\font=\z@\else % 현재 폰트가 tfm 폰트면 라틴폰트를 강제하지 않음
-      \XeKo@latin@font
-    \fi
-    \let\XeKo@curr@font\XeKo@latin@font
-  \fi
+  \expandafter\ifx\the\font\XeKo@raw@hangul@font
+    \XeKo@latin@font
+  \else \expandafter\ifx\the\font\XeKo@raw@hanja@font
+    \XeKo@latin@font
+  \else
+    \expandafter\let\expandafter\XeKo@latin@font\the\font
+  \fi\fi
   }
 \let\XeKo@fontHG\XeKo@font@Hangul
 \let\XeKo@fontID\XeKo@font@CJK
@@ -545,14 +556,14 @@
 \protected\def\hanjacolons {\let\XeKo@fontAM\XeKo@font@CJK}
 \protected\def\hanjahyphens{\let\XeKo@fontAH\XeKo@font@CJK}
 \protected\def\hanjacjksymbols{%
-  \let\XeKo@fontSY\XeKo@font@Hanja
-  \let\XeKo@fontOP\XeKo@font@Hanja
-  \let\XeKo@fontCL\XeKo@font@Hanja
-  \let\XeKo@fontMD\XeKo@font@Hanja
-  \let\XeKo@fontFS\XeKo@font@Hanja
-  \let\XeKo@fontEX\XeKo@font@Hanja
-  \let\XeKo@fontLD\XeKo@font@Hanja
-  \let\XeKo@fontVC\XeKo@font@Hanja
+  \let\XeKo@fontSY\XeKo@font@CJK
+  \let\XeKo@fontOP\XeKo@font@CJK
+  \let\XeKo@fontCL\XeKo@font@CJK
+  \let\XeKo@fontMD\XeKo@font@CJK
+  \let\XeKo@fontFS\XeKo@font@CJK
+  \let\XeKo@fontEX\XeKo@font@CJK
+  \let\XeKo@fontLD\XeKo@font@CJK
+  \let\XeKo@fontVC\XeKo@font@CJK
   }
 \protected\def\hanjamarks{%
   \hanjaalphs\hanjaparens\hanjapuncts\hanjacolons\hanjahyphens\hanjacjksymbols
@@ -697,16 +708,20 @@
 \def\XeKo@flush@char@orphan{\expandafter \XeKo@do@flush@toks \the\XeKo@toks@ii }
 \def\XeKo@char@raise@start{%
   \ifdefined\xetexkocharraise
-    \ifx\XeKo@curr@font\XeKo@latin@font\else
+    \expandafter\ifx\the\font\XeKo@raw@hangul@font
       \raise\xetexkocharraise\hbox\bgroup
-    \fi
+    \else \expandafter\ifx\the\font\XeKo@raw@hanja@font
+      \raise\xetexkocharraise\hbox\bgroup
+    \fi\fi
   \fi
   }
 \def\XeKo@char@raise@stop{%
   \ifdefined\xetexkocharraise
-    \ifx\XeKo@curr@font\XeKo@latin@font\else
+    \expandafter\ifx\the\font\XeKo@raw@hangul@font
       \egroup
-    \fi
+    \else \expandafter\ifx\the\font\XeKo@raw@hanja@font
+      \egroup
+    \fi\fi
   \fi
   }
 \def\XeKo@do@flush@toks{%
@@ -979,12 +994,9 @@
   }
 
 \def\XeKo@maybe@gobble{%
-  \ifdefined\XeKo@curr@font\expandafter\XeKo@maybe@gobble@\fi
-  }
-\let\XeKo@do@maybe@gobble\XeKo@maybe@gobble
-\def\XeKo@maybe@gobble@{%
   \expandafter\expandafter\expandafter\@gobble
   }
+\let\XeKo@do@maybe@gobble\XeKo@maybe@gobble
 
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassHG{%
   \ifnum\lastnodetype=12 %
@@ -1753,9 +1765,9 @@
 \ifcsname ver@xetexko.sty\endcsname
   \def\xetexkoulemsupport{%
     \ifdefined\UL@hook
-      \UL@hook\expandafter{%
-        \the\UL@hook
+      \UL@hook\expandafter{\the\UL@hook
         \let\XeKo@char@orphan\XeKo@flush@char@orphan
+        \let\XeKo@maybe@gobble\relax
         % uline 안에서 폰트가 변경되는 경우를 대비
         \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
           \XeKo@hangul@selectfont
@@ -1763,6 +1775,9 @@
             \global\let\XeKo@temp@hangul@font\XeKo@hangul@font
             \gdef\XeKo@UL@hangul@font{\let\XeKo@hangul@font\XeKo@temp@hangul@font}%
             \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
+            % 여기서 라틴폰트 지정을 보존한다.
+            \global\let\XeKo@UL@latin@font\font@name
+            \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
           \fi }%
         \expandafter\def\expandafter\XeKo@hanja@selectfont\expandafter{%
           \XeKo@hanja@selectfont
@@ -1770,13 +1785,6 @@
             \global\let\XeKo@temp@hanja@font\XeKo@hanja@font
             \gdef\XeKo@UL@hanja@font{\let\XeKo@hanja@font\XeKo@temp@hanja@font}%
             \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
-          \fi }%
-        \expandafter\def\expandafter\XeKo@latin@selectfont\expandafter{%
-          \XeKo@latin@selectfont
-          \ifdefined\XeKo@in@selectfont\else
-            \global\let\XeKo@temp@latin@font\XeKo@latin@font
-            \gdef\XeKo@UL@latin@font{\let\XeKo@latin@font\XeKo@temp@latin@font}%
-            \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
           \fi }%
         }%
     \fi
@@ -1786,23 +1794,30 @@
   \let\XeKo@UL@hanja@patch \relax
   \def\xetexkoulemsupport{%
     \ifdefined\UL@hook
-      \UL@hook\expandafter{%
-        \the\UL@hook
+      \UL@hook\expandafter{\the\UL@hook
         \let\XeKo@char@orphan\XeKo@flush@char@orphan
+        \let\XeKo@maybe@gobble\relax
+        % uline 안에서 폰트가 변경되는 경우를 대비
         \def\XeKo@UL@hangul@patch{%
           \global\let\XeKo@temp@hangul@font\XeKo@hangul@font
-          \global\let\XeKo@temp@latin@font\XeKo@latin@font
-          \gdef\XeKo@UL@hangul@font{%
-            \let\XeKo@hangul@font\XeKo@temp@hangul@font
-            \let\XeKo@latin@font\XeKo@temp@latin@font }%
-          \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font }%
+          \gdef\XeKo@UL@hangul@font{\let\XeKo@hangul@font\XeKo@temp@hangul@font}%
+          \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
+          \XeKo@UL@latin@patch
+          }%
         \def\XeKo@UL@hanja@patch{%
           \global\let\XeKo@temp@hanja@font\XeKo@hanja@font
-          \global\let\XeKo@temp@latin@font\XeKo@latin@font
-          \gdef\XeKo@UL@hanja@font{%
-            \let\XeKo@hanja@font\XeKo@temp@hanja@font
-            \let\XeKo@latin@font\XeKo@temp@latin@font }%
-          \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font }%
+          \gdef\XeKo@UL@hanja@font{\let\XeKo@hanja@font\XeKo@temp@hanja@font}%
+          \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
+          \XeKo@UL@latin@patch
+          }%
+        % uline 안에서 폰트 지시는 라틴폰트, 한글폰트 순서로 해야 라틴폰트가 올바로 동작함
+        \def\XeKo@UL@latin@patch{%
+          \ifnum 0\expandafter\ifx\the\font\XeKo@raw@hangul@font 1\else
+                  \expandafter\ifx\the\font\XeKo@raw@hanja@font  1\fi\fi =\z@
+            \global\expandafter\let\expandafter\XeKo@UL@latin@font\the\font
+            \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
+          \fi
+          }%
         }%
     \fi
     }
@@ -1823,14 +1838,6 @@
     \afterassignment\XeKo@hangulfont@setup\font\XeKo@hangul@font
     }
   \def\XeKo@hangulfont@setup{%
-    \ifdefined\XeKo@curr@font
-      \ifx\XeKo@curr@font\XeKo@hangul@font\else
-      \ifx\XeKo@curr@font\XeKo@hanja@font\else
-        \expandafter\let\expandafter\XeKo@latin@font\the\font
-      \fi\fi
-    \else
-      \expandafter\let\expandafter\XeKo@latin@font\the\font
-    \fi
     \edef\XeKo@hangul@font{%
       \the\XeKo@hangul@font
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
@@ -1847,15 +1854,6 @@
     }
   \def\XeKo@sethangulfont@setup{%
     \expandafter\edef\@tempa{%
-      \let\noexpand\XeKo@latin@font=%
-        \ifdefined\XeKo@curr@font
-          \ifx\XeKo@curr@font\XeKo@hangul@font \the\XeKo@latin@font \else
-          \ifx\XeKo@curr@font\XeKo@hanja@font  \the\XeKo@latin@font \else
-            \the\font
-          \fi\fi
-        \else
-          \the\font
-        \fi
       \def\noexpand\XeKo@hangul@font{%
         \csname XeKo@hangul@font@\@tempb\endcsname
         \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
@@ -1869,14 +1867,6 @@
     \afterassignment\XeKo@hanjafont@setup\font\XeKo@hanja@font
     }
   \def\XeKo@hanjafont@setup{%
-    \ifdefined\XeKo@curr@font
-      \ifx\XeKo@curr@font\XeKo@hangul@font\else
-      \ifx\XeKo@curr@font\XeKo@hanja@font\else
-        \expandafter\let\expandafter\XeKo@latin@font\the\font
-      \fi\fi
-    \else
-      \expandafter\let\expandafter\XeKo@latin@font\the\font
-    \fi
     \edef\XeKo@hanja@font{%
       \the\XeKo@hanja@font
       \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
@@ -1893,15 +1883,6 @@
     }
   \def\XeKo@sethanjafont@setup{%
     \expandafter\edef\@tempa{%
-      \let\noexpand\XeKo@latin@font=%
-        \ifdefined\XeKo@curr@font
-          \ifx\XeKo@curr@font\XeKo@hangul@font \the\XeKo@latin@font \else
-          \ifx\XeKo@curr@font\XeKo@hanja@font  \the\XeKo@latin@font \else
-            \the\font
-          \fi\fi
-        \else
-          \the\font
-        \fi
       \def\noexpand\XeKo@hanja@font{%
         \csname XeKo@hanja@font@\@tempb\endcsname
         \ifdefined\xetexkohu \def\noexpand\xetexkohu{\xetexkohu}\fi
@@ -1975,8 +1956,11 @@
   \let \xetexkohanjafont    \xetexkodefaulthanjafont
   \let \xetexkohanjaoption  \xetexkodefaulthanjaoption
   }
+\AddToHook{env/picture/begin}{%
+  \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens
+  }
+
 \AddToHook{selectfont}{%
-  \XeKo@latin@selectfont
   \XeKo@hanja@selectfont
   \XeKo@hangul@selectfont
   }
@@ -2011,16 +1995,6 @@
       \let\XeKo@hanja@font\XeKo@undefined
     \fi
   \fi }
-\def\XeKo@latin@selectfont{%
-  \ifdefined\XeKo@in@selectfont\else
-    \begingroup
-    \let\XeKo@in@selectfont\empty
-    \selectfont
-    \edef\x{\endgroup
-      \def\noexpand\XeKo@latin@font{\the\font}%
-      }\x
-  \fi
-  }
 
 \ExplSyntaxOn
 \tl_new:N \l_xtxko_font_opts_tl
@@ -2089,7 +2063,6 @@
     \cs_set_eq:NN \xetexkohanguloption \xetexkomainhanguloption
     \cs_set_eq:NN \xetexkodefaulthangulfont \xetexkomainhangulfont
     \cs_set_eq:NN \xetexkodefaulthanguloption \xetexkomainhanguloption
-    \XeKo@latin@selectfont
     \XeKo@hangul@selectfont
   }
   \ignorespaces
@@ -2109,7 +2082,6 @@
     \cs_set_eq:NN \xetexkohanguloption \xetexkosanshanguloption
     \cs_set_eq:NN \xetexkodefaulthangulfont \xetexkosanshangulfont
     \cs_set_eq:NN \xetexkodefaulthanguloption \xetexkosanshanguloption
-    \XeKo@latin@selectfont
     \XeKo@hangul@selectfont
   }
   \ignorespaces
@@ -2129,7 +2101,6 @@
     \cs_set_eq:NN \xetexkohanguloption \xetexkomonohanguloption
     \cs_set_eq:NN \xetexkodefaulthangulfont \xetexkomonohangulfont
     \cs_set_eq:NN \xetexkodefaulthanguloption \xetexkomonohanguloption
-    \XeKo@latin@selectfont
     \XeKo@hangul@selectfont
   }
   \ignorespaces
@@ -2216,7 +2187,6 @@
     \cs_set_eq:NN \xetexkohanjaoption \xetexkomainhanjaoption
     \cs_set_eq:NN \xetexkodefaulthanjafont \xetexkomainhanjafont
     \cs_set_eq:NN \xetexkodefaulthanjaoption \xetexkomainhanjaoption
-    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
   }
   \ignorespaces
@@ -2236,7 +2206,6 @@
     \cs_set_eq:NN \xetexkohanjaoption \xetexkosanshanjaoption
     \cs_set_eq:NN \xetexkodefaulthanjafont \xetexkosanshanjafont
     \cs_set_eq:NN \xetexkodefaulthanjaoption \xetexkosanshanjaoption
-    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
   }
   \ignorespaces
@@ -2256,7 +2225,6 @@
     \cs_set_eq:NN \xetexkohanjaoption \xetexkomonohanjaoption
     \cs_set_eq:NN \xetexkodefaulthanjafont \xetexkomonohanjafont
     \cs_set_eq:NN \xetexkodefaulthanjaoption \xetexkomonohanjaoption
-    \XeKo@latin@selectfont
     \XeKo@hanja@selectfont
   }
   \ignorespaces
