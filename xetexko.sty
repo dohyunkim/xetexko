@@ -1782,8 +1782,8 @@
         \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
           \XeKo@hangul@selectfont
           \ifdefined\XeKo@in@selectfont\else
-            \global\let\XeKo@temp@hangul@font\XeKo@hangul@font
-            \gdef\XeKo@UL@hangul@font{\let\XeKo@hangul@font\XeKo@temp@hangul@font}%
+            \xdef\XeKo@UL@hangul@font{%
+              \def\noexpand\XeKo@hangul@font{\unexpanded\expandafter{\XeKo@hangul@font}}}%
             \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
             % 여기서 라틴폰트 지정을 보존한다.
             \global\let\XeKo@UL@latin@font\font@name
@@ -1792,8 +1792,8 @@
         \expandafter\def\expandafter\XeKo@hanja@selectfont\expandafter{%
           \XeKo@hanja@selectfont
           \ifdefined\XeKo@in@selectfont\else
-            \global\let\XeKo@temp@hanja@font\XeKo@hanja@font
-            \gdef\XeKo@UL@hanja@font{\let\XeKo@hanja@font\XeKo@temp@hanja@font}%
+            \xdef\XeKo@UL@hanja@font{%
+              \def\noexpand\XeKo@hanja@font{\unexpanded\expandafter{\XeKo@hanja@font}}}%
             \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
           \fi }%
         }%
@@ -1809,14 +1809,14 @@
         \let\XeKo@maybe@gobble\relax
         % uline 안에서 폰트가 변경되는 경우를 대비
         \def\XeKo@UL@hangul@patch{%
-          \global\let\XeKo@temp@hangul@font\XeKo@hangul@font
-          \gdef\XeKo@UL@hangul@font{\let\XeKo@hangul@font\XeKo@temp@hangul@font}%
+          \xdef\XeKo@UL@hangul@font{%
+            \def\noexpand\XeKo@hangul@font{\unexpanded\expandafter{\XeKo@hangul@font}}}%
           \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
           \XeKo@UL@latin@patch
           }%
         \def\XeKo@UL@hanja@patch{%
-          \global\let\XeKo@temp@hanja@font\XeKo@hanja@font
-          \gdef\XeKo@UL@hanja@font{\let\XeKo@hanja@font\XeKo@temp@hanja@font}%
+          \xdef\XeKo@UL@hanja@font{%
+            \def\noexpand\XeKo@hanja@font{\unexpanded\expandafter{\XeKo@hanja@font}}}%
           \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
           \XeKo@UL@latin@patch
           }%
