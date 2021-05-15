@@ -325,16 +325,23 @@
   }
 \typesetmodern
 
-\let\japanese\typesetclassic
+\chardef\XeKo@typesetvertical\z@
+\chardef\XeKo@STchineseJapanese\z@ % 0=KOR, 1=SC, 2=TC, 3=JPN
+
+\protected\def\japanese{%
+  \typesetclassic
+  \chardef\XeKo@STchineseJapanese\thr@@
+  \XeTeXcharclass "FF1A = \XeTeXcharclassMD % ： both horizontal and vertical glyphs
+  }
 \protected\def\Tchinese{%
   \typesetclassic
-  \chardef\XeKo@typesetSTchinese\tw@
+  \chardef\XeKo@STchineseJapanese\tw@
   \XeKo@Tchinese@classes
   \parindent=2em
   }
 \protected\def\Schinese{%
   \typesetclassic
-  \chardef\XeKo@typesetSTchinese\@ne
+  \chardef\XeKo@STchineseJapanese\@ne
   \ifnum\XeKo@typesetvertical=\@ne
     \XeKo@Schinese@vertical
   \else
@@ -362,24 +369,22 @@
   \XeTeXcharclass "FF0E = \XeTeXcharclassLD % ．
   }
 
-\chardef\XeKo@typesetvertical\z@
-\chardef\XeKo@typesetSTchinese\z@
-
 \protected\def\typesetvertical{%
   \chardef\XeKo@typesetvertical\@ne
   \XeTeXcharclass "FF1A = \XeTeXcharclassVC % ：
   \XeTeXcharclass "FF1B = \XeTeXcharclassVC % ；
-  \ifcase\XeKo@typesetSTchinese
+  \ifcase\XeKo@STchineseJapanese
     \parindent=1em
   \or \XeKo@Schinese@vertical
   \or \XeKo@Tchinese@classes
+  \or \XeTeXcharclass "FF1A = \XeTeXcharclassMD % ：
   \fi
   }
 \protected\def\typesethorizontal{%
   \chardef\XeKo@typesetvertical\z@
   \XeTeXcharclass "FF1A = \XeTeXcharclassMD % ：
   \XeTeXcharclass "FF1B = \XeTeXcharclassMD % ；
-  \ifcase\XeKo@typesetSTchinese
+  \ifcase\XeKo@STchineseJapanese
   \or \XeKo@Schinese@horizontal
   \or \XeKo@Tchinese@classes
   \fi
