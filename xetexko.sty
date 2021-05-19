@@ -294,11 +294,13 @@
 
 % 고아글자 억제. verbatim 에서는 이 명령을 꺼야 한다
 \def\XeKo@suppress@linebreak{%
-  \XeKo@skip@=\lastskip \unskip
-  \XeKo@count@=\lastpenalty \unpenalty
-  \ifnum\XeKo@count@<5000 \XeKo@count@=5000 \fi
-  \penalty\XeKo@count@
-  \hskip\XeKo@skip@
+  \ifnum\lastnodetype=11 % glue node
+    \XeKo@skip@=\lastskip \unskip
+    \XeKo@count@=\lastpenalty \unpenalty
+    \ifnum\XeKo@count@<5000 \XeKo@count@=5000 \fi
+    \penalty\XeKo@count@
+    \hskip\XeKo@skip@
+  \fi
   }
 
 \protected\def\inhibitglue{\hskip\z@\XeKo@stretchshrink}
@@ -1781,7 +1783,6 @@
   \def\xetexkoulemsupport{%
     \ifdefined\UL@hook
       \UL@hook\expandafter{\the\UL@hook
-        \let\XeKo@char@orphan\XeKo@flush@char@orphan
         \let\XeKo@maybe@gobble\relax
         % uline 안에서 폰트가 변경되는 경우를 대비
         \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
@@ -1810,7 +1811,6 @@
   \def\xetexkoulemsupport{%
     \ifdefined\UL@hook
       \UL@hook\expandafter{\the\UL@hook
-        \let\XeKo@char@orphan\XeKo@flush@char@orphan
         \let\XeKo@maybe@gobble\relax
         % uline 안에서 폰트가 변경되는 경우를 대비
         \def\XeKo@UL@hangul@patch{%
@@ -2519,7 +2519,7 @@
 
 \RequirePackage{kolabels-utf}
 
-\protected\def\hellipsis{\char"2026\char"2026 }
+\protected\def\hellipsis{^^^^2026^^^^2026}
 
 \if@hangul
   \linespread{1.3888}
