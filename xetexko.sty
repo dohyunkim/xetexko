@@ -16,10 +16,9 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-  \ProvidesPackage{xetexko}[2021/05/15 v3.4 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2021/05/20 v3.5 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
-  \ifdefined\@gobble\else \def\@gobble#1{} \fi
   \ifdefined\@sptoken \else
     \begingroup\def\:{\global\let\@sptoken= } \: \endgroup
   \fi
@@ -503,8 +502,6 @@
     \XeKo@latin@font
   \else \expandafter\ifx\the\font\XeKo@raw@hanja@font
     \XeKo@latin@font
-  \else
-    \expandafter\let\expandafter\XeKo@latin@font\the\font
   \fi\fi
   }
 \let\XeKo@fontHG\XeKo@font@Hangul
@@ -641,12 +638,8 @@
 \def\XeKo@check@next@tok@{%
   \XeKo@get@charslot
   \ifnum\XeKo@charslot="FFFF
-    % 다음 한 줄이 없으면 한글과 한글 사이에 폰트가 변경되는 경우 글자 누락.
-    % 폰트 변경은 kern 에 아무 영향을 주지 않기 때문.
-    \let\XeKo@maybe@gobble\relax
     \expandafter\XeKo@flush@toks
   \else
-    \let\XeKo@maybe@gobble\XeKo@do@maybe@gobble
     \ifnum 0\ifnum\XeKo@currclass>4 \ifnum\XeKo@currclass<11 % AA..AH
            1\fi\fi >\z@
       \expandafter\expandafter\expandafter\XeKo@check@next@tok@latin
@@ -1010,15 +1003,10 @@
   \XeKo@check@next@tok
   }
 
-\def\XeKo@maybe@gobble{%
-  \expandafter\expandafter\expandafter\@gobble
-  }
-\let\XeKo@do@maybe@gobble\XeKo@maybe@gobble
-
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassHG{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
-      \or \unkern\unkern \XKinterhangulbreak \XeKo@maybe@gobble % HG HG
+      \or \unkern\unkern \XKinterhangulbreak % HG HG
       \or \unkern\unkern \XKinterhanjabreak   % ID HG
       \or
       \or \unkern\unkern                      % SY HG
@@ -1045,7 +1033,7 @@
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \unkern\unkern \XKinterhanjabreak   % HG ID
-      \or \unkern\unkern \XKinterhanjabreak \XeKo@maybe@gobble % ID ID
+      \or \unkern\unkern \XKinterhanjabreak % ID ID
       \or
       \or \unkern\unkern                      % SY ID
       \or \unkern\unkern \XeKo@latincjk       % AA ID
@@ -1071,7 +1059,7 @@
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % HG CJ
-      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak \XeKo@maybe@gobble % ID CJ
+      \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % ID CJ
       \or
       \or \unkern\unkern                                               % SY CJ
       \or \unkern\unkern \XeKo@latincjk                                % AA CJ
@@ -1099,7 +1087,7 @@
       \or \unkern\unkern                      % HG SY
       \or \unkern\unkern                      % ID SY
       \or
-      \or \unkern\unkern \XeKo@maybe@gobble % SY SY
+      \or \unkern\unkern % SY SY
       \or \unkern\unkern                      % AA SY
       \or \unkern\unkern                      % AO SY
       \or \unkern\unkern \XeKo@latincjk       % AC SY
@@ -1126,7 +1114,7 @@
       \or \unkern\unkern \XeKo@latincjk       % ID AA
       \or
       \or \unkern\unkern                      % SY AA
-      \or \unkern\unkern \XeKo@maybe@gobble % AA AA
+      \or \unkern\unkern % AA AA
       \or \unkern\unkern                      % AO AA
       \or \unkern\unkern                      % AC AA
       \or \unkern\unkern                      % AP AA
@@ -1151,7 +1139,7 @@
       \or
       \or \unkern\unkern \XeKo@latincjk       % SY AO
       \or \unkern\unkern                      % AA AO
-      \or \unkern\unkern \XeKo@maybe@gobble % AO AO
+      \or \unkern\unkern % AO AO
       \or \unkern\unkern                      % AC AO
       \or \unkern\unkern                      % AP AO
       \or \unkern\unkern                      % AM AO
@@ -1176,7 +1164,7 @@
       \or \unkern\unkern                                   % SY AC
       \or \unkern\unkern                                   % AA AC
       \or \unkern\unkern                                   % AO AC
-      \or \unkern\unkern \XeKo@maybe@gobble % AC AC
+      \or \unkern\unkern % AC AC
       \or \unkern\unkern                                   % AP AC
       \or \unkern\unkern                                   % AM AC
       \or \unkern\unkern                                   % AH AC
@@ -1201,7 +1189,7 @@
       \or \unkern\unkern                                   % AA AP
       \or \unkern\unkern                                   % AO AP
       \or \unkern\unkern                                   % AC AP
-      \or \unkern\unkern \XeKo@maybe@gobble % AP AP
+      \or \unkern\unkern % AP AP
       \or \unkern\unkern                                   % AM AP
       \or \unkern\unkern                                   % AH AP
       \or \unkern\unkern                                   % OP AP
@@ -1226,7 +1214,7 @@
       \or \unkern\unkern                                   % AO AM
       \or \unkern\unkern                                   % AC AM
       \or \unkern\unkern                                   % AP AM
-      \or \unkern\unkern \XeKo@maybe@gobble % AM AM
+      \or \unkern\unkern % AM AM
       \or \unkern\unkern                                   % AH AM
       \or \unkern\unkern                                   % OP AM
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf       % CL AM
@@ -1251,7 +1239,7 @@
       \or \unkern\unkern                                   % AC AH
       \or \unkern\unkern                                   % AP AH
       \or \unkern\unkern                                   % AM AH
-      \or \unkern\unkern \XeKo@maybe@gobble % AH AH
+      \or \unkern\unkern % AH AH
       \or \unkern\unkern                                   % OP AH
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf       % CL AH
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter % MD AH
@@ -1276,7 +1264,7 @@
       \or \unkern\unkern \XeKo@halfhalf              % AP OP
       \or \unkern\unkern \XeKo@halfhalf              % AM OP
       \or \unkern\unkern \XeKo@halfhalf              % AH OP
-      \or \unkern\unkern \XeKo@maybe@gobble % OP OP
+      \or \unkern\unkern % OP OP
       \or \unkern\unkern \XeKo@halfhalf              % CL OP
       \or \unkern\unkern \XeKo@quarterquarter        % MD OP
       \or \unkern\unkern \XeKo@halfzero              % FS OP
@@ -1303,7 +1291,7 @@
       \or \unkern\unkern                                   % AM CL
       \or \unkern\unkern                                   % AH CL
       \or \unkern\unkern                                   % OP CL
-      \or \unkern\unkern \XeKo@maybe@gobble % CL CL
+      \or \unkern\unkern % CL CL
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter % MD CL
       \or \unkern\unkern                                   % FS CL
       \or \unkern\unkern                                   % EX CL
@@ -1328,7 +1316,7 @@
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AH MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % OP MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % CL MD
-      \or \unkern\unkern \XeKo@nobreak\XeKo@halfquarter \XeKo@maybe@gobble % MD MD
+      \or \unkern\unkern \XeKo@nobreak\XeKo@halfquarter % MD MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@iiiquarterquarter % FS MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % EX MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % LD MD
@@ -1355,7 +1343,7 @@
       \or \unkern\unkern                                   % OP FS
       \or \unkern\unkern                                   % CL FS
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter % MD FS
-      \or \unkern\unkern \XeKo@maybe@gobble % FS FS
+      \or \unkern\unkern % FS FS
       \or \unkern\unkern                                   % EX FS
       \or \unkern\unkern                                   % LD FS
       \or \unkern\unkern                                   % VC FS
@@ -1380,7 +1368,7 @@
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf       % CL EX
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter % MD EX
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfzero       % FS EX
-      \or \unkern\unkern \XeKo@maybe@gobble % EX EX
+      \or \unkern\unkern % EX EX
       \or \unkern\unkern                                   % LD EX
       \or \unkern\unkern                                   % VC EX
     \fi
@@ -1405,7 +1393,7 @@
       \or \unkern\unkern \XeKo@quarterquarter \XeKo@suppress@linebreak % MD LD
       \or \unkern\unkern \XeKo@halfzero       \XeKo@suppress@linebreak % FS LD
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % EX LD
-      \or \unkern\unkern \XeKo@maybe@gobble % LD LD
+      \or \unkern\unkern % LD LD
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % VC LD
     \fi
   \fi
@@ -1430,7 +1418,7 @@
       \or \unkern\unkern                                   % FS VC
       \or \unkern\unkern                                   % EX VC
       \or \unkern\unkern                                   % LD VC
-      \or \unkern\unkern \XeKo@maybe@gobble % VC VC
+      \or \unkern\unkern % VC VC
     \fi
   \fi
   \XeKo@fontVC\XeKo@startVC
@@ -1783,7 +1771,6 @@
   \def\xetexkoulemsupport{%
     \ifdefined\UL@hook
       \UL@hook\expandafter{\the\UL@hook
-        \let\XeKo@maybe@gobble\relax
         % uline 안에서 폰트가 변경되는 경우를 대비
         \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
           \XeKo@hangul@selectfont
@@ -1811,7 +1798,6 @@
   \def\xetexkoulemsupport{%
     \ifdefined\UL@hook
       \UL@hook\expandafter{\the\UL@hook
-        \let\XeKo@maybe@gobble\relax
         % uline 안에서 폰트가 변경되는 경우를 대비
         \def\XeKo@UL@hangul@patch{%
           \xdef\XeKo@UL@hangul@font{%

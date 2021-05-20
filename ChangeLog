@@ -1,3 +1,10 @@
+2021-05-20      Dohyun Kim <nomos at ktug org>
+
+	Version 3.5
+
+	* internal changes regarding font-switching method
+	  (remove Xeko@maybe@gobble)
+
 2021-05-15      Dohyun Kim <nomos at ktug org>
 
 	Version 3.4
