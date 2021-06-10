@@ -17,7 +17,7 @@ doc: $(PDFFILE)
 
 $(PDFFILE): $(TEXFILE) $(RUNFILES)
 	@$(DO_LATEX) | tee $(MYTMPFILE)
-	@if( grep Rerun $(MYTMPFILE) > /dev/null ); then $(DO_LATEX); fi
+	@if( grep -i rerun $(MYTMPFILE) > /dev/null ); then $(DO_LATEX); fi
 	@$(RM) $(MYTMPFILE)
 
 ctan: $(ZIPFILE)

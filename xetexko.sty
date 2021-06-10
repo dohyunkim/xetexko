@@ -393,9 +393,12 @@
   }
 \protected\def\vertical#1{%
   \leavevmode
-  \setbox\z@\vbox\bgroup
-    \hsize#1\relax
-    \typesetvertical
+  \ifx\empty#1\empty
+    \setbox\z@\hbox\bgroup
+  \else
+    \setbox\z@\vbox\bgroup \hsize#1\relax
+  \fi
+  \typesetvertical
   }
 \protected\def\endvertical{%
   \egroup
@@ -404,33 +407,46 @@
   }
 \protected\def\horizontal#1{%
   \leavevmode
-  \setbox\z@\vbox\bgroup
-    \hsize#1\relax
-    \typesethorizontal
+  \ifx\empty#1\empty
+    \setbox\z@\hbox\bgroup
+  \else
+    \setbox\z@\vbox\bgroup \hsize#1\relax
+  \fi
+  \typesethorizontal
   }
 \protected\def\endhorizontal{%
   \egroup
   \XeKo@unrotatebox\z@
-  \lower\dimexpr.5\ht\z@\ifdefined\xetexkocharraise-\xetexkocharraise\fi\relax
+  \ifdefined\xetexkocharraise \raise\xetexkocharraise \fi
   \box\z@
   }
 \def\XeKo@rotatebox#1{%
-  \setbox#1\hbox to\dimexpr\ht#1+\dp#1\bgroup
+  \dimen@\dimexpr\ht#1+\dp#1\relax
+  \setbox#1\hbox to\dimen@\bgroup
     \hfil
     \vbox to\wd#1\bgroup
-      \wd#1\z@ \ht#1\z@ \dp#1\z@
-      \special{x:gsave}\special{x:rotate -90}\box#1\special{x:grestore}%
+      \wd#1\z@
+      \special{x:gsave}\relax
+      \special{x:rotate -90}\relax
+      \box#1\relax
+      \kern-\dimen@
+      \special{x:grestore}\relax
       \vfil
     \egroup
     \kern-.5ex
   \egroup
   }
 \def\XeKo@unrotatebox#1{%
-  \setbox#1\hbox to\dimexpr\ht#1+\dp#1\bgroup
-    \vbox to\wd#1\bgroup
+  \dimen@\dimexpr\ht#1+\dp#1\relax
+  \setbox#1\hbox to\dimen@\bgroup
+    \lower.5\wd#1\vbox to\wd#1\bgroup
       \vfil
-      \wd#1\z@ \ht#1\z@ \dp#1\z@
-      \special{x:gsave}\special{x:rotate 90}\box#1\special{x:grestore}%
+      \wd#1\z@
+      \special{x:gsave}\relax
+      \special{x:rotate 90}\relax
+      \box#1\relax
+      \kern-\dimen@
+      \special{x:grestore}\relax
     \egroup
     \hfil
   \egroup

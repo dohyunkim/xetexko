@@ -2,6 +2,9 @@
 
 	Version 3.6
 
+	* LaTeX 2021/06/01 or later is required.
+	* vertical/horizontal environments now honor empty argument, which
+	means natural width.
 	* new LaTeX environment: verticaltypesetting
 	* new plain TeX commands: \beginverticaltypesetting and
 	\endverticaltypesetting
