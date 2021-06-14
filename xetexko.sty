@@ -1829,7 +1829,7 @@
       \unexpanded\expandafter{\plainoutput}}%
     \def\pagebody{\setbox\z@\vbox to\hsize{\boxmaxdepth=\maxdepth \pagecontents}%
       \XeKo@rotatebox\z@\box\z@}%
-    \maxdepth\z@ \typesetvertical
+    \typesetvertical
     \let\verticaltypesetting\relax % prevent multiple running
   }
   \def\beginverticaltypesetting{\vfill\supereject \begingroup \verticaltypesetting}
@@ -1946,7 +1946,7 @@
     \expandafter\textwidth\expandafter\textheight
     \@outputpage
   }%
-  \maxdepth\z@ \typesetvertical
+  \typesetvertical
   \let\verticaltypesetting\relax % prevent multiple running
 }
 \def\endverticaltypesetting{%
