@@ -285,7 +285,11 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 
 \item[CharRaise, charraise]\quad
   글자의 {\addhangulfontfeature{charraise=.5ex}수직 위치}를 조절한다.
-  기본값은 \verb|0pt|.
+  기본값은 \verb|0pt|.%
+    \footnote{%
+      세로쓰기에서는 이 옵션의 값을 고정길이(가령 pt 단위)로 주어야
+      크기가 다른 폰트들 간에 중앙정렬이 이루어진다.
+    }
   고정폭 글꼴에서도 이 옵션은 작동한다.
 \end{description}
 \vernote{3.0}부터는 다음 옵션들이 아무 효과도 가져오지 않게

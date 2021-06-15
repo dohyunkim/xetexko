@@ -730,10 +730,10 @@
     \fi
     \XeKo@char@raise@start % charraise
     \ifnum\XeKo@currclass=\@ne
-      \XeKo@everyhangul{\the\XeKo@toks@}% everyhangul
+      \XeKo@everyhangul{\XeKo@maybe@dotemph \the\XeKo@toks@}% everyhangul
     \else
       \ifnum\XeKo@currclass=\tw@
-        \XeKo@everyhanja{\the\XeKo@toks@}% everyhanja
+        \XeKo@everyhanja{\XeKo@maybe@dotemph \the\XeKo@toks@}% everyhanja
       \else
         \ifnum\XeKo@compresspuncts=\@ne
           \ifnum\XeKo@currclass=11      % OP
@@ -1684,22 +1684,46 @@
 \fi
 
 \newbox\XeKo@dotemph@box
+\let\XeKo@maybe@dotemph\relax
+
 \protected\def\dotemph#1{%
   \leavevmode
+  \setbox\XeKo@dotemph@box\hbox{\raise\dotemphraise\hbox{\dotemphchar}}%
   \begingroup
-  \setbox\XeKo@dotemph@box\hbox{\dotemphchar}%
-  \edef\XeKo@flush@char@orphan{%
-    \unexpanded{%
-      \edef\XeKo@tempa{%
-        \XeKo@toks@{%
-          \setbox\z@\hbox{\the\XeKo@toks@}%
-          \setbox\tw@\hbox to\wd\z@{\hss\unhcopy\XeKo@dotemph@box\hss}\ht\tw@\z@\dp\tw@\z@
-          \rlap{\raise\dotemphraise\box\tw@}\the\XeKo@toks@ }%
-        }\XeKo@tempa }%
-    \unexpanded\expandafter{\XeKo@flush@char@orphan}}%
+  \let\XeKo@maybe@dotemph\XeKo@do@dotemph
   #1\relax
   \endgroup
-  }
+}
+\def\XeKo@do@dotemph{%
+  \XeKo@check@hangulTM % 방점 너비를 감안하자
+  \setbox\z@\hbox{\the\XeKo@toks@}%
+  \setbox\tw@\hbox to\wd\z@{%
+    \hss
+    \ifnum\XeKo@has@hangulTM>\z@
+      \kern\fontcharwd\font\XeKo@has@hangulTM
+    \fi
+    \unhcopy\XeKo@dotemph@box
+    \hss
+  }\wd\tw@\z@ \ht\tw@\z@ \dp\tw@\z@
+  \box\tw@
+}
+\def\XeKo@check@hangulTM{%
+  \chardef\XeKo@has@hangulTM\z@
+  \expandafter\XeKo@check@hangulTM@e \the\XeKo@toks@ ^^^^302e\relax
+  \ifnum\XeKo@has@hangulTM=\z@
+    \expandafter\XeKo@check@hangulTM@f \the\XeKo@toks@ ^^^^302f\relax
+  \fi
+}
+\def\XeKo@check@hangulTM@e#1^^^^302e#2\relax{%
+  \ifx\empty#2\empty \else
+    \chardef\XeKo@has@hangulTM="302E
+  \fi
+}
+\def\XeKo@check@hangulTM@f#1^^^^302f#2\relax{%
+  \ifx\empty#2\empty \else
+    \chardef\XeKo@has@hangulTM="302F
+  \fi
+}
 
 % other commands
 \let\enablecjksymbolspacing\compresspunctuations
@@ -1763,20 +1787,22 @@
         \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
           \XeKo@hangul@selectfont
           \ifdefined\XeKo@in@selectfont\else
+          \ifx\ \LA@space\else % not in box
             \xdef\XeKo@UL@hangul@font{%
               \def\noexpand\XeKo@hangul@font{\unexpanded\expandafter{\XeKo@hangul@font}}}%
             \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
             % 여기서 라틴폰트 지정을 보존한다.
             \global\let\XeKo@UL@latin@font\font@name
             \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
-          \fi }%
+          \fi\fi }%
         \expandafter\def\expandafter\XeKo@hanja@selectfont\expandafter{%
           \XeKo@hanja@selectfont
           \ifdefined\XeKo@in@selectfont\else
+          \ifx\ \LA@space\else % not in box
             \xdef\XeKo@UL@hanja@font{%
               \def\noexpand\XeKo@hanja@font{\unexpanded\expandafter{\XeKo@hanja@font}}}%
             \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
-          \fi }%
+          \fi\fi }%
         }%
     \fi
     }
@@ -1788,16 +1814,20 @@
       \UL@hook\expandafter{\the\UL@hook
         % uline 안에서 폰트가 변경되는 경우를 대비
         \def\XeKo@UL@hangul@patch{%
+          \ifx\ \LA@space\else % not in box
           \xdef\XeKo@UL@hangul@font{%
             \def\noexpand\XeKo@hangul@font{\unexpanded\expandafter{\XeKo@hangul@font}}}%
           \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
           \XeKo@UL@latin@patch
+          \fi
           }%
         \def\XeKo@UL@hanja@patch{%
+          \ifx\ \LA@space\else % not in box
           \xdef\XeKo@UL@hanja@font{%
             \def\noexpand\XeKo@hanja@font{\unexpanded\expandafter{\XeKo@hanja@font}}}%
           \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
           \XeKo@UL@latin@patch
+          \fi
           }%
         % uline 안에서 폰트 지시는 라틴폰트, 한글폰트 순서로 해야 라틴폰트가 올바로 동작함
         \def\XeKo@UL@latin@patch{%
