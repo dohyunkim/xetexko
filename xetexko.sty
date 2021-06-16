@@ -1779,67 +1779,83 @@
 \let\disableautojosa\relax
 \let\disablejamoautojosa\relax
 % ulem support
+\protected\def\XeKo@UL@dotemph#1{%
+    \ifx\ \LA@space\else \UL@stop\fi
+    \leavevmode
+    \setbox\XeKo@dotemph@box\hbox{\raise\dotemphraise\hbox{\dotemphchar}}%
+    \begingroup
+    \let\XeKo@maybe@dotemph\XeKo@do@dotemph
+    \XeKo@UL@dotemph@#1 ^^^^ffff \relax
+    \endgroup
+    \ifx\ \LA@space\else \UL@start\fi
+}
+\def\XeKo@UL@dotemph@#1 {%
+  \ifx^^^^ffff#1\relax
+    \unskip\unskip\unskip
+  \else
+    \ifx\ \LA@space
+      #1\ %
+    \else
+      \UL@start
+      #1\ %
+      \UL@stop
+    \fi
+    \expandafter\XeKo@UL@dotemph@
+  \fi
+}
+\def\XeKo@UL@retain@hangul@font{%
+  \global\let\XeKo@UL@hangul@font\XeKo@hangul@font
+  \gdef\XeKo@restore@hangul@font{\let\XeKo@hangul@font\XeKo@UL@hangul@font}%
+  \aftergroup\aftergroup\aftergroup\XeKo@restore@hangul@font
+}
+\def\XeKo@UL@retain@hanja@font{%
+  \global\let\XeKo@UL@hanja@font\XeKo@hanja@font
+  \gdef\XeKo@restore@hanja@font{\let\XeKo@hanja@font\XeKo@UL@hanja@font}%
+  \aftergroup\aftergroup\aftergroup\XeKo@restore@hanja@font
+}
+\def\XeKo@UL@retain@latin@font{%
+  \global\expandafter\let\expandafter\XeKo@UL@latin@font\the\font
+  \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
+}
 \ifcsname ver@xetexko.sty\endcsname
   \def\xetexkoulemsupport{%
-    \ifdefined\UL@hook
-      \UL@hook\expandafter{\the\UL@hook
-        % uline 안에서 폰트가 변경되는 경우를 대비
-        \expandafter\def\expandafter\XeKo@hangul@selectfont\expandafter{%
-          \XeKo@hangul@selectfont
-          \ifdefined\XeKo@in@selectfont\else
-          \ifx\ \LA@space\else % not in box
-            \xdef\XeKo@UL@hangul@font{%
-              \def\noexpand\XeKo@hangul@font{\unexpanded\expandafter{\XeKo@hangul@font}}}%
-            \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
-            % 여기서 라틴폰트 지정을 보존한다.
-            \global\let\XeKo@UL@latin@font\font@name
-            \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
-          \fi\fi }%
-        \expandafter\def\expandafter\XeKo@hanja@selectfont\expandafter{%
-          \XeKo@hanja@selectfont
-          \ifdefined\XeKo@in@selectfont\else
-          \ifx\ \LA@space\else % not in box
-            \xdef\XeKo@UL@hanja@font{%
-              \def\noexpand\XeKo@hanja@font{\unexpanded\expandafter{\XeKo@hanja@font}}}%
-            \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
-          \fi\fi }%
-        }%
-    \fi
-    }
+    \UL@hook\expandafter{\the\UL@hook
+      \let\dotemph\XeKo@UL@dotemph
+      % uline 안에서 폰트가 변경되는 경우를 대비
+      \protected\edef\selectfont{\unexpanded\expandafter{\selectfont
+        \ifdefined\XeKo@in@selectfont\else
+        \ifx\UL@start\@empty % inside UL@start .. UL@stop
+        \ifx\ \LA@space\else % not in a box
+          \XeKo@UL@retain@hanja@font
+          \XeKo@UL@retain@hangul@font
+          \XeKo@UL@retain@latin@font
+        \fi\fi\fi
+  }}}}
 \else
   \let\XeKo@UL@hangul@patch\relax
   \let\XeKo@UL@hanja@patch \relax
   \def\xetexkoulemsupport{%
-    \ifdefined\UL@hook
-      \UL@hook\expandafter{\the\UL@hook
-        % uline 안에서 폰트가 변경되는 경우를 대비
-        \def\XeKo@UL@hangul@patch{%
-          \ifx\ \LA@space\else % not in box
-          \xdef\XeKo@UL@hangul@font{%
-            \def\noexpand\XeKo@hangul@font{\unexpanded\expandafter{\XeKo@hangul@font}}}%
-          \aftergroup\aftergroup\aftergroup\XeKo@UL@hangul@font
+    \UL@hook\expandafter{\the\UL@hook
+      \let\dotemph\XeKo@UL@dotemph
+      % uline 안에서 폰트가 변경되는 경우를 대비
+      \def\XeKo@UL@hangul@patch{%
+        \ifx\UL@start\@empty
+        \ifx\ \LA@space\else
+          \XeKo@UL@retain@hangul@font
           \XeKo@UL@latin@patch
-          \fi
-          }%
-        \def\XeKo@UL@hanja@patch{%
-          \ifx\ \LA@space\else % not in box
-          \xdef\XeKo@UL@hanja@font{%
-            \def\noexpand\XeKo@hanja@font{\unexpanded\expandafter{\XeKo@hanja@font}}}%
-          \aftergroup\aftergroup\aftergroup\XeKo@UL@hanja@font
+        \fi\fi }%
+      \def\XeKo@UL@hanja@patch{%
+        \ifx\UL@start\@empty
+        \ifx\ \LA@space\else
+          \XeKo@UL@retain@hanja@font
           \XeKo@UL@latin@patch
-          \fi
-          }%
-        % uline 안에서 폰트 지시는 라틴폰트, 한글폰트 순서로 해야 라틴폰트가 올바로 동작함
-        \def\XeKo@UL@latin@patch{%
-          \ifnum 0\expandafter\ifx\the\font\XeKo@raw@hangul@font 1\else
-                  \expandafter\ifx\the\font\XeKo@raw@hanja@font  1\fi\fi =\z@
-            \global\expandafter\let\expandafter\XeKo@UL@latin@font\the\font
-            \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
-          \fi
-          }%
-        }%
-    \fi
-    }
+        \fi\fi }%
+      \def\XeKo@UL@latin@patch{%
+        \expandafter\ifx\the\font\XeKo@raw@hangul@font \else
+        \expandafter\ifx\the\font\XeKo@raw@hanja@font  \else
+          \XeKo@UL@retain@latin@font
+        \fi\fi }%
+  }}
 \fi
 
 % math hangul
