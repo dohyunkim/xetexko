@@ -598,23 +598,22 @@
 \chardef\XeKo@cjk@ignorespaces\z@
 \protected\def\removeclassicspaces{\chardef\XeKo@cjk@ignorespaces\@ne}
 
-\expandafter\let\csname XeKo@1@class\endcsname =\XeTeXcharclassHG
-\expandafter\let\csname XeKo@2@class\endcsname =\XeTeXcharclassID
-% skip 3 which ulem uses
-\expandafter\let\csname XeKo@4@class\endcsname =\XeTeXcharclassSY
-\expandafter\let\csname XeKo@5@class\endcsname =\XeTeXcharclassAA
-\expandafter\let\csname XeKo@6@class\endcsname =\XeTeXcharclassAO
-\expandafter\let\csname XeKo@7@class\endcsname =\XeTeXcharclassAC
-\expandafter\let\csname XeKo@8@class\endcsname =\XeTeXcharclassAP
-\expandafter\let\csname XeKo@9@class\endcsname =\XeTeXcharclassAM
-\expandafter\let\csname XeKo@10@class\endcsname=\XeTeXcharclassAH
-\expandafter\let\csname XeKo@11@class\endcsname=\XeTeXcharclassOP
-\expandafter\let\csname XeKo@12@class\endcsname=\XeTeXcharclassCL
-\expandafter\let\csname XeKo@13@class\endcsname=\XeTeXcharclassMD
-\expandafter\let\csname XeKo@14@class\endcsname=\XeTeXcharclassFS
-\expandafter\let\csname XeKo@15@class\endcsname=\XeTeXcharclassEX
-\expandafter\let\csname XeKo@16@class\endcsname=\XeTeXcharclassLD
-\expandafter\let\csname XeKo@17@class\endcsname=\XeTeXcharclassVC
+\expandafter\let\csname XeKo@6@class\endcsname =\XeTeXcharclassHG
+\expandafter\let\csname XeKo@7@class\endcsname =\XeTeXcharclassID
+\expandafter\let\csname XeKo@8@class\endcsname =\XeTeXcharclassSY
+\expandafter\let\csname XeKo@9@class\endcsname =\XeTeXcharclassAA
+\expandafter\let\csname XeKo@10@class\endcsname=\XeTeXcharclassAO
+\expandafter\let\csname XeKo@11@class\endcsname=\XeTeXcharclassAC
+\expandafter\let\csname XeKo@12@class\endcsname=\XeTeXcharclassAP
+\expandafter\let\csname XeKo@13@class\endcsname=\XeTeXcharclassAM
+\expandafter\let\csname XeKo@14@class\endcsname=\XeTeXcharclassAH
+\expandafter\let\csname XeKo@15@class\endcsname=\XeTeXcharclassOP
+\expandafter\let\csname XeKo@16@class\endcsname=\XeTeXcharclassCL
+\expandafter\let\csname XeKo@17@class\endcsname=\XeTeXcharclassMD
+\expandafter\let\csname XeKo@18@class\endcsname=\XeTeXcharclassFS
+\expandafter\let\csname XeKo@19@class\endcsname=\XeTeXcharclassEX
+\expandafter\let\csname XeKo@20@class\endcsname=\XeTeXcharclassLD
+\expandafter\let\csname XeKo@21@class\endcsname=\XeTeXcharclassVC
 
 \newtoks\XeKo@toks@
 \newtoks\XeKo@toks@ii
@@ -628,7 +627,7 @@
   \ifnum\XeKo@charslot="FFFF
     \expandafter\XeKo@flush@toks
   \else
-    \ifnum 0\ifnum\XeKo@currclass>4 \ifnum\XeKo@currclass<11 % AA..AH
+    \ifnum 0\ifnum\XeKo@currclass>8 \ifnum\XeKo@currclass<15 % AA..AH
            1\fi\fi >\z@
       \expandafter\expandafter\expandafter\XeKo@check@next@tok@latin
     \else % HG ID
@@ -657,18 +656,18 @@
   \fi
   }
 \def\XeKo@addto@toks#1{%
-  \ifnum\XeKo@currclass=5 % AA
+  \ifnum\XeKo@currclass=9 % AA
     \global\let\XeKo@josatoken=#1\relax
   \else\ifnum\XeTeXcharclass\XeKo@charslot=\XeTeXcharclassJJ
     \global\let\XeKo@josatoken=#1\relax
-  \else\ifnum\XeKo@currclass=4 % SY
+  \else\ifnum\XeKo@currclass=8 % SY
     \global\let\XeKo@josatoken=#1\relax
   \fi\fi\fi
   \XeKo@toks@\expandafter{\the\XeKo@toks@ #1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@flush@toks{%
-  \ifnum\XeKo@currclass<\thr@@
+  \ifnum\XeKo@currclass<8 %
     \XeKo@toks@ii{}\expandafter\XeKo@char@orphan % HG, ID
   \else
     \expandafter\XeKo@do@flush@toks
@@ -729,20 +728,20 @@
       \XeKo@pre@hang % hanging punctuations
     \fi
     \XeKo@char@raise@start % charraise
-    \ifnum\XeKo@currclass=\@ne
+    \ifnum\XeKo@currclass=6 %
       \XeKo@everyhangul{\XeKo@maybe@dotemph \the\XeKo@toks@}% everyhangul
     \else
-      \ifnum\XeKo@currclass=\tw@
+      \ifnum\XeKo@currclass=7 %
         \XeKo@everyhanja{\XeKo@maybe@dotemph \the\XeKo@toks@}% everyhanja
       \else
         \ifnum\XeKo@compresspuncts=\@ne
-          \ifnum\XeKo@currclass=11      % OP
+          \ifnum\XeKo@currclass=15      % OP
             \hbox to.5em\bgroup\hss \the\XeKo@toks@ \egroup
-          \else\ifnum\XeKo@currclass=12 % CL
+          \else\ifnum\XeKo@currclass=16 % CL
             \hbox to.5em\bgroup \the\XeKo@toks@ \hss\egroup
-          \else\ifnum\XeKo@currclass=13 % MD
+          \else\ifnum\XeKo@currclass=17 % MD
             \hbox to.5em\bgroup\hss \the\XeKo@toks@ \hss\egroup
-          \else\ifnum\XeKo@currclass=14 % FS
+          \else\ifnum\XeKo@currclass=18 % FS
             \hbox to.5em\bgroup \the\XeKo@toks@ \hss\egroup
           \else
             \the\XeKo@toks@
@@ -773,8 +772,8 @@
   }
 % remove space
 \def\XeKo@maybe@ignorespaces{%
-  \ifnum 0\ifnum\XeKo@currclass<5  1\else  % HG ID SY
-          \ifnum\XeKo@currclass>10 1\fi\fi % CJK punctuations
+  \ifnum 0\ifnum\XeKo@currclass<9  1\else  % HG ID SY
+          \ifnum\XeKo@currclass>14 1\fi\fi % CJK punctuations
           >\z@
     \expandafter\XeKo@ignorespaces@iv
   \fi
@@ -810,7 +809,7 @@
   \ifnum\XeKo@hangingpuncts=\@ne
     \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
       \ifnum 0\ifnum\XeKo@compresspuncts=\@ne
-              \ifnum\XeKo@currclass=11 % OP
+              \ifnum\XeKo@currclass=15 % OP
               1\fi\fi >\z@
         \XeKo@dimen@=.5em
       \else
@@ -829,8 +828,8 @@
   \ifnum\XeKo@hangingpuncts=\@ne
     \ifcsname XeKo@hanging@ratio@\number`#1\endcsname
       \ifnum 0\ifnum\XeKo@compresspuncts=\@ne
-              \ifnum\XeKo@currclass>11 %
-              \ifnum\XeKo@currclass<15 % CL MD FS
+              \ifnum\XeKo@currclass>15 %
+              \ifnum\XeKo@currclass<19 % CL MD FS
               1\fi\fi\fi >\z@
         \XeKo@dimen@=.5em
       \else
@@ -868,14 +867,14 @@
 \def\XeKo@startHG#1{%
   \global\let\XeKo@josatoken=#1\relax
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{1}%
+  \def\XeKo@currclass{6}%
   \XeKo@toks@{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startID#1{%
   \global\let\XeKo@josatoken=#1\relax
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{2}%
+  \def\XeKo@currclass{7}%
   \XeKo@toks@{#1}%
   \ifdefined\fallbackhanjafont
     \iffontchar\font`#1\else
@@ -886,55 +885,55 @@
   }
 \def\XeKo@startCJ#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{2}% same as ID
+  \def\XeKo@currclass{7}% same as ID
   \XeKo@toks@{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startSY#1{%
   \global\let\XeKo@josatoken=#1\relax
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{4}%
+  \def\XeKo@currclass{8}%
   \XeKo@toks@{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAA#1{%
   \global\let\XeKo@josatoken=#1\relax
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{5}%
+  \def\XeKo@currclass{9}%
   \XeKo@toks@{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAO#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{6}%
+  \def\XeKo@currclass{10}%
   \XeKo@toks@{#1}%
   \XeKo@def@pre@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{7}%
+  \def\XeKo@currclass{11}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAP#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{8}%
+  \def\XeKo@currclass{12}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAM#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{9}%
+  \def\XeKo@currclass{13}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startAH#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{10}%
+  \def\XeKo@currclass{14}%
   \XeKo@toks@{#1}%
   \ifnum`#1=\hyphenchar\font \else % exclude hyphen char
     \XeKo@def@post@hang{#1}%
@@ -943,49 +942,49 @@
   }
 \def\XeKo@startOP#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{11}%
+  \def\XeKo@currclass{15}%
   \XeKo@toks@{#1}%
   \XeKo@def@pre@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startCL#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{12}%
+  \def\XeKo@currclass{16}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startMD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{13}%
+  \def\XeKo@currclass{17}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startFS#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{14}%
+  \def\XeKo@currclass{18}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startEX#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{15}%
+  \def\XeKo@currclass{19}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startLD#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{16}%
+  \def\XeKo@currclass{20}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
   }
 \def\XeKo@startVC#1{%
   \let\XeKo@pre@hang\XeKo@undefined \let\XeKo@post@hang\XeKo@undefined
-  \def\XeKo@currclass{17}%
+  \def\XeKo@currclass{21}%
   \XeKo@toks@{#1}%
   \XeKo@def@post@hang{#1}%
   \XeKo@check@next@tok
@@ -994,9 +993,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassHG{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XKinterhanjabreak \or \or \or \or % 1: ruby를 한자처럼 취급
       \or \unkern\unkern \XKinterhangulbreak % HG HG
       \or \unkern\unkern \XKinterhanjabreak   % ID HG
-      \or
       \or \unkern\unkern                      % SY HG
       \or \unkern\unkern \XeKo@latincjk       % AA HG
       \or \unkern\unkern                      % AO HG
@@ -1020,9 +1019,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassID{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XKinterhanjabreak \or \or \or \or
       \or \unkern\unkern \XKinterhanjabreak   % HG ID
       \or \unkern\unkern \XKinterhanjabreak % ID ID
-      \or
       \or \unkern\unkern                      % SY ID
       \or \unkern\unkern \XeKo@latincjk       % AA ID
       \or \unkern\unkern                      % AO ID
@@ -1046,9 +1045,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCJ{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XKinterhanjabreak \XeKo@suppress@linebreak \or \or \or \or
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % HG CJ
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % ID CJ
-      \or
       \or \unkern\unkern                                               % SY CJ
       \or \unkern\unkern \XeKo@latincjk                                % AA CJ
       \or \unkern\unkern                                               % AO CJ
@@ -1072,9 +1071,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassSY{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                      % HG SY
       \or \unkern\unkern                      % ID SY
-      \or
       \or \unkern\unkern % SY SY
       \or \unkern\unkern                      % AA SY
       \or \unkern\unkern                      % AO SY
@@ -1098,9 +1097,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAA{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XeKo@latincjk \or \or \or \or
       \or \unkern\unkern \XeKo@latincjk       % HG AA
       \or \unkern\unkern \XeKo@latincjk       % ID AA
-      \or
       \or \unkern\unkern                      % SY AA
       \or \unkern\unkern % AA AA
       \or \unkern\unkern                      % AO AA
@@ -1122,9 +1121,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAO{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XeKo@latincjk \or \or \or \or
       \or \unkern\unkern \XeKo@latincjk       % HG AO
       \or \unkern\unkern \XeKo@latincjk       % ID AO
-      \or
       \or \unkern\unkern \XeKo@latincjk       % SY AO
       \or \unkern\unkern                      % AA AO
       \or \unkern\unkern % AO AO
@@ -1146,9 +1145,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAC{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                                   % HG AC
       \or \unkern\unkern                                   % ID AC
-      \or
       \or \unkern\unkern                                   % SY AC
       \or \unkern\unkern                                   % AA AC
       \or \unkern\unkern                                   % AO AC
@@ -1170,9 +1169,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAP{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                                   % HG AP
       \or \unkern\unkern                                   % ID AP
-      \or
       \or \unkern\unkern                                   % SY AP
       \or \unkern\unkern                                   % AA AP
       \or \unkern\unkern                                   % AO AP
@@ -1194,9 +1193,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAM{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XeKo@nobreak\XeKo@latincjk \or \or \or \or
       \or \unkern\unkern \XeKo@nobreak\XeKo@latincjk       % HG AM
       \or \unkern\unkern \XeKo@nobreak\XeKo@latincjk       % ID AM
-      \or
       \or \unkern\unkern \XeKo@nobreak\XeKo@latincjk       % SY AM
       \or \unkern\unkern                                   % AA AM
       \or \unkern\unkern                                   % AO AM
@@ -1218,9 +1217,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAH{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XeKo@nobreak \or \or \or \or
       \or \unkern\unkern \XeKo@nobreak                     % HG AH
       \or \unkern\unkern \XeKo@nobreak                     % ID AH
-      \or
       \or \unkern\unkern \XeKo@nobreak                     % SY AH
       \or \unkern\unkern                                   % AA AH
       \or \unkern\unkern                                   % AO AH
@@ -1242,9 +1241,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassOP{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XeKo@halfhalf \or \or \or \or
       \or \unkern\unkern \XeKo@halfhalf              % HG OP
       \or \unkern\unkern \XeKo@halfhalf              % ID OP
-      \or
       \or \unkern\unkern \XeKo@halfhalf              % SY OP
       \or \unkern\unkern \XeKo@halfhalf              % AA OP
       \or \unkern\unkern \XeKo@nobreak\XeKo@halfhalf % AO OP
@@ -1268,9 +1267,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCL{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                                   % HG CL
       \or \unkern\unkern                                   % ID CL
-      \or
       \or \unkern\unkern                                   % SY CL
       \or \unkern\unkern                                   % AA CL
       \or \unkern\unkern                                   % AO CL
@@ -1292,9 +1291,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassMD{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XeKo@nobreak\XeKo@quarterquarter \or \or \or \or
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % HG MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % ID MD
-      \or
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % SY MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AA MD
       \or \unkern\unkern \XeKo@nobreak\XeKo@quarterquarter    % AO MD
@@ -1318,9 +1317,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassFS{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                                   % HG FS
       \or \unkern\unkern                                   % ID FS
-      \or
       \or \unkern\unkern                                   % SY FS
       \or \unkern\unkern                                   % AA FS
       \or \unkern\unkern                                   % AO FS
@@ -1342,9 +1341,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassEX{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                                   % HG EX
       \or \unkern\unkern                                   % ID EX
-      \or
       \or \unkern\unkern                                   % SY EX
       \or \unkern\unkern                                   % AA EX
       \or \unkern\unkern                                   % AO EX
@@ -1366,9 +1365,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassLD{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \XKinterhanjabreak \XeKo@suppress@linebreak \or \or \or \or
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % HG LD
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % ID LD
-      \or
       \or \unkern\unkern                                               % SY LD
       \or \unkern\unkern                                               % AA LD
       \or \unkern\unkern                                               % AO LD
@@ -1390,9 +1389,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassVC{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+      \or \or \or \or \or
       \or \unkern\unkern                                   % HG VC
       \or \unkern\unkern                                   % ID VC
-      \or
       \or \unkern\unkern                                   % SY VC
       \or \unkern\unkern                                   % AA VC
       \or \unkern\unkern                                   % AO VC
@@ -1418,7 +1417,7 @@
 % !!!!! 이 경우 \everyhangul 등이 제대로 작동 않는다 !!!!!
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassJJ{%
   \ifnum\lastnodetype=12 %
-    \ifnum\lastkern=\@ne
+    \ifnum\lastkern=6 %
       \unkern\unkern
       \expandafter\expandafter\expandafter\XeKo@startJJ
     \fi
@@ -1441,9 +1440,9 @@
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCM{%
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
+    \or \or \or \or \or
     \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % HG
     \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % ID
-    \or
     \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % SY
     \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AA
     \or \unkern\unkern \expandafter\expandafter\expandafter\XeKo@startCM % AO
@@ -1485,7 +1484,7 @@
   \XeKo@insert@kerns
   }
 \def\XeKo@rebox@punctbox#1{%
-  \ifnum 0\ifnum\XeKo@currclass>10 \ifnum\XeKo@currclass<15
+  \ifnum 0\ifnum\XeKo@currclass>14 \ifnum\XeKo@currclass<19 % OP .. FS
          1\fi\fi >\z@
     \setbox\XeKo@box@=\lastbox
     \hbox to.5em\bgroup
