@@ -1802,60 +1802,25 @@
     \expandafter\XeKo@UL@dotemph@
   \fi
 }
-\def\XeKo@UL@retain@hangul@font{%
-  \global\let\XeKo@UL@hangul@font\XeKo@hangul@font
-  \gdef\XeKo@restore@hangul@font{\let\XeKo@hangul@font\XeKo@UL@hangul@font}%
-  \aftergroup\aftergroup\aftergroup\XeKo@restore@hangul@font
-}
-\def\XeKo@UL@retain@hanja@font{%
-  \global\let\XeKo@UL@hanja@font\XeKo@hanja@font
-  \gdef\XeKo@restore@hanja@font{\let\XeKo@hanja@font\XeKo@UL@hanja@font}%
-  \aftergroup\aftergroup\aftergroup\XeKo@restore@hanja@font
-}
-\def\XeKo@UL@retain@latin@font{%
-  \global\expandafter\let\expandafter\XeKo@UL@latin@font\the\font
-  \aftergroup\aftergroup\aftergroup\XeKo@UL@latin@font
-}
-\ifcsname ver@xetexko.sty\endcsname
-  \def\xetexkoulemsupport{%
-    \UL@hook\expandafter{\the\UL@hook
-      \let\dotemph\XeKo@UL@dotemph
-      % uline 안에서 폰트가 변경되는 경우를 대비
-      \protected\edef\selectfont{\unexpanded\expandafter{\selectfont
-        \ifdefined\XeKo@in@selectfont\else
-        \ifx\UL@start\@empty % inside UL@start .. UL@stop
-        \ifx\ \LA@space\else % not in a box
-          \XeKo@UL@retain@hanja@font
-          \XeKo@UL@retain@hangul@font
-          \XeKo@UL@retain@latin@font
-        \fi\fi\fi
-  }}}}
-\else
-  \let\XeKo@UL@hangul@patch\relax
-  \let\XeKo@UL@hanja@patch \relax
-  \def\xetexkoulemsupport{%
-    \UL@hook\expandafter{\the\UL@hook
-      \let\dotemph\XeKo@UL@dotemph
-      % uline 안에서 폰트가 변경되는 경우를 대비
-      \def\XeKo@UL@hangul@patch{%
-        \ifx\UL@start\@empty
-        \ifx\ \LA@space\else
-          \XeKo@UL@retain@hangul@font
-          \XeKo@UL@latin@patch
-        \fi\fi }%
-      \def\XeKo@UL@hanja@patch{%
-        \ifx\UL@start\@empty
-        \ifx\ \LA@space\else
-          \XeKo@UL@retain@hanja@font
-          \XeKo@UL@latin@patch
-        \fi\fi }%
-      \def\XeKo@UL@latin@patch{%
-        \expandafter\ifx\the\font\XeKo@raw@hangul@font \else
-        \expandafter\ifx\the\font\XeKo@raw@hanja@font  \else
-          \XeKo@UL@retain@latin@font
-        \fi\fi }%
-  }}
-\fi
+\def\xetexkoulemsupport{%
+  \let\XeKo@UL@stop\UL@stop
+  \UL@hook\expandafter{\the\UL@hook
+    \let\dotemph\XeKo@UL@dotemph
+    % uline 안에서 폰트가 변경되는 경우를 대비
+    \def\UL@stop{%
+      \global\let\XeKo@UL@tmp@latinfont     \XeKo@latin@font
+      \global\let\XeKo@UL@tmp@hangulfont    \XeKo@hangul@font
+      \global\let\XeKo@UL@tmp@hanjafont     \XeKo@hanja@font
+      \global\let\XeKo@UL@tmp@rawhangulfont \XeKo@raw@hangul@font
+      \global\let\XeKo@UL@tmp@rawhanjafont  \XeKo@raw@hanja@font
+      \expandafter \XeKo@UL@stop \the\font
+      \let\XeKo@latin@font      \XeKo@UL@tmp@latinfont
+      \let\XeKo@hangul@font     \XeKo@UL@tmp@hangulfont
+      \let\XeKo@hanja@font      \XeKo@UL@tmp@hanjafont
+      \let\XeKo@raw@hangul@font \XeKo@UL@tmp@rawhangulfont
+      \let\XeKo@raw@hanja@font  \XeKo@UL@tmp@rawhanjafont
+    }%
+}}
 
 % math hangul
 \def\setmathhangulblock#1#2{%
@@ -1890,7 +1855,6 @@
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
       }%
-    \XeKo@UL@hangul@patch
     }
   \protected\def\sethangulfont#1{%
     \def\@tempa{#1}%
@@ -1906,7 +1870,6 @@
         \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
         \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
         }%
-      \noexpand\XeKo@UL@hangul@patch
       }%
     }
   \protected\def\hanjafont{%
@@ -1919,7 +1882,6 @@
       \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
       \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
       }%
-    \XeKo@UL@hanja@patch
     }
   \protected\def\sethanjafont#1{%
     \def\@tempa{#1}%
@@ -1935,7 +1897,6 @@
         \ifdefined\xetexkointerhchar \def\noexpand\xetexkointerhchar{\xetexkointerhchar}\fi
         \ifdefined\xetexkocharraise \def\noexpand\xetexkocharraise{\xetexkocharraise}\fi
         }%
-      \noexpand\XeKo@UL@hanja@patch
       }%
     }
   \protected\def\hanjabyhangulfont{\let\XeKo@hanja@font\XeKo@hangul@font }
