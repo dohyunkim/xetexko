@@ -1,4 +1,4 @@
-XeTeX-ko Package version 3.6 (2021/06/10)
+XeTeX-ko Package version 3.7 (2021/06/18)
 =========================================
 
 XeTeX-ko is a macro package for Xe(La)TeX which supports typesetting
@@ -124,8 +124,9 @@ Emphasise Hangul or Hanja by putting dot above.
     \begin{vertical}{<dimen>}
     \end{vertical}
 This environment makes a vbox vertically typeset. <dimen> is an
-argument to indicate the box height. For vertical typesetting
-of entire document, use the command \verticaltypesetting instead.
+argument to indicate the box height. When <dimen> is \empty, an hbox
+with natural height will be made. For vertical typesetting of
+entire document, use the command \verticaltypesetting instead.
 
     \은 \는 \이 \가 \을 \를 \와 \과 \로 \으로 \라 \이라
 Commands for automatic Josa selection. Unlike those of cjk-ko

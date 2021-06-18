@@ -1,3 +1,10 @@
+2021-06-18      Dohyun Kim <nomos at ktug org>
+
+	Version 3.7
+
+	* fix position of dotemph regarding hangul tone marks
+	* enhance compatibility with ulem/ruby packages
+
 2021-06-10      Dohyun Kim <nomos at ktug org>
 
 	Version 3.6
