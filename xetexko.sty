@@ -401,6 +401,7 @@
   \typesetvertical
   }
 \protected\def\endvertical{%
+  \ifinner\else \par\fi
   \egroup
   \XeKo@rotatebox\z@
   \box\z@
@@ -415,6 +416,7 @@
   \typesethorizontal
   }
 \protected\def\endhorizontal{%
+  \ifinner\else \par\fi
   \egroup
   \XeKo@unrotatebox\z@
   \ifdefined\xetexkocharraise \raise\xetexkocharraise \fi
