@@ -142,16 +142,13 @@
 % 결락기호
 \XeTeXcharclass "25A1=\XeTeXcharclassID % □
 % some KS symbols
-\XeTeXcharclass "2030=\XeTeXcharclassSY % ‰
 \XeTeXcharclass "2032=\XeTeXcharclassSY % ′
 \XeTeXcharclass "2033=\XeTeXcharclassSY % ″
 \XeTeXcharclass "203B=\XeTeXcharclassSY % ※
 \XeTeXcharclass "2103=\XeTeXcharclassSY % ℃
 \XeTeXcharclass "2109=\XeTeXcharclassSY % ℉
 \XeTeXcharclass "2113=\XeTeXcharclassSY % ℓ
-\XeTeXcharclass "2116=\XeTeXcharclassSY % №
 \XeTeXcharclass "2121=\XeTeXcharclassSY % ℡
-\XeTeXcharclass "2122=\XeTeXcharclassSY % ™
 \count@="2160 \loop % Ⅰ..Ⅹ
   \XeTeXcharclass\count@=\XeTeXcharclassSY
   \ifnum\count@<"2169 \advance\count@\@ne \repeat
@@ -230,6 +227,7 @@
 \XeTeXcharclass "266A = \XeTeXcharclassSY % ♪
 \XeTeXcharclass "266C = \XeTeXcharclassSY % ♬
 \XeTeXcharclass "266D = \XeTeXcharclassSY % ♭
+\XeTeXcharclass "3000 = \XeTeXcharclassSY % 　
 \XeTeXcharclass "3013 = \XeTeXcharclassSY % 〓
 \count@="3200 \loop % ㈀..㈞
   \XeTeXcharclass\count@=\XeTeXcharclassSY
@@ -2494,9 +2492,6 @@
     \def\으{으}%
     \def\로{로}%
     \def\hellipsis{...}}}{}
-  \if@hangul
-    \RequirePackage{konames-utf}
-  \fi
   }
 
 \newif\if@hangul
@@ -2507,6 +2502,9 @@
 \ProcessOptions\relax
 
 \RequirePackage{kolabels-utf}
+\if@hangul
+  \RequirePackage{konames-utf}
+\fi
 
 \protected\def\hellipsis{^^^^2026^^^^2026}
 
