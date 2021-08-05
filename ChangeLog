@@ -1,3 +1,11 @@
+2021-08-09      Dohyun Kim <nomos at ktug org>
+
+	Version 3.9
+
+	* Substitution with hangul/hanja fonts will now occur only when
+	\ifx\f@encoding\UTFencname is true. On plain TeX this is normally true
+	as both are undefined.
+
 2021-07-13      Dohyun Kim <nomos at ktug org>
 
 	Version 3.8

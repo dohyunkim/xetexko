@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2021/06/01]
-  \ProvidesPackage{xetexko}[2021/07/13 v3.8 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2021/08/09 v3.9 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@sptoken \else
@@ -467,9 +467,11 @@
     \expandafter\let\expandafter\XeKo@latin@font\the\font
   \fi\fi
   \ifdefined\XeKo@hangul@font
-    \XeKo@reset@options
-    \XeKo@hangul@font
-    \expandafter\let\expandafter\XeKo@raw@hangul@font\the\font
+    \ifx\f@encoding\UTFencname
+      \XeKo@reset@options
+      \XeKo@hangul@font
+      \expandafter\let\expandafter\XeKo@raw@hangul@font\the\font
+    \fi
   \fi
   }
 \def\XeKo@font@CJK{%
@@ -478,9 +480,11 @@
     \expandafter\let\expandafter\XeKo@latin@font\the\font
   \fi\fi
   \ifdefined\XeKo@hanja@font
-    \XeKo@reset@options
-    \XeKo@hanja@font
-    \expandafter\let\expandafter\XeKo@raw@hanja@font\the\font
+    \ifx\f@encoding\UTFencname
+      \XeKo@reset@options
+      \XeKo@hanja@font
+      \expandafter\let\expandafter\XeKo@raw@hanja@font\the\font
+    \fi
   \fi
   }
 \def\XeKo@font@Latin{%
