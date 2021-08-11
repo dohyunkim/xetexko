@@ -467,11 +467,9 @@
     \expandafter\let\expandafter\XeKo@latin@font\the\font
   \fi\fi
   \ifdefined\XeKo@hangul@font
-    \ifx\f@encoding\UTFencname
       \XeKo@reset@options
       \XeKo@hangul@font
       \expandafter\let\expandafter\XeKo@raw@hangul@font\the\font
-    \fi
   \fi
   }
 \def\XeKo@font@CJK{%
@@ -480,11 +478,9 @@
     \expandafter\let\expandafter\XeKo@latin@font\the\font
   \fi\fi
   \ifdefined\XeKo@hanja@font
-    \ifx\f@encoding\UTFencname
       \XeKo@reset@options
       \XeKo@hanja@font
       \expandafter\let\expandafter\XeKo@raw@hanja@font\the\font
-    \fi
   \fi
   }
 \def\XeKo@font@Latin{%
@@ -993,6 +989,7 @@
   }
 
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassHG{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XKinterhanjabreak \or \or \or \or % 1: ruby를 한자처럼 취급
@@ -1016,9 +1013,11 @@
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@postmath
   \fi\fi
-  \XeKo@fontHG\XeKo@startHG
+  \XeKo@fontHG\expandafter\XeKo@startHG
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassID{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XKinterhanjabreak \or \or \or \or
@@ -1042,9 +1041,11 @@
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@postmath
   \fi\fi
-  \XeKo@fontID\XeKo@startID
+  \XeKo@fontID\expandafter\XeKo@startID
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCJ{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XKinterhanjabreak \XeKo@suppress@linebreak \or \or \or \or
@@ -1068,9 +1069,11 @@
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@postmath
   \fi\fi
-  \XeKo@fontCJ\XeKo@startCJ
+  \XeKo@fontCJ\expandafter\XeKo@startCJ
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassSY{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1094,9 +1097,11 @@
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@postmath
   \fi\fi
-  \XeKo@fontSY\XeKo@startSY
+  \XeKo@fontSY\expandafter\XeKo@startSY
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAA{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XeKo@latincjk \or \or \or \or
@@ -1118,9 +1123,11 @@
       \or \unkern\unkern \XeKo@quarterquarter % VC AA
     \fi
   \fi
-  \XeKo@fontAA\XeKo@startAA
+  \XeKo@fontAA\expandafter\XeKo@startAA
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAO{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XeKo@latincjk \or \or \or \or
@@ -1142,9 +1149,11 @@
       \or \unkern\unkern \XeKo@quarterquarter % VC AO
     \fi
   \fi
-  \XeKo@fontAO\XeKo@startAO
+  \XeKo@fontAO\expandafter\XeKo@startAO
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAC{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1166,9 +1175,11 @@
       \or \unkern\unkern                                   % VC AC
     \fi
   \fi
-  \XeKo@fontAC\XeKo@startAC
+  \XeKo@fontAC\expandafter\XeKo@startAC
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAP{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1190,9 +1201,11 @@
       \or \unkern\unkern                                   % VC AP
     \fi
   \fi
-  \XeKo@fontAP\XeKo@startAP
+  \XeKo@fontAP\expandafter\XeKo@startAP
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAM{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XeKo@nobreak\XeKo@latincjk \or \or \or \or
@@ -1214,9 +1227,11 @@
       \or \unkern\unkern                                   % VC AM
     \fi
   \fi
-  \XeKo@fontAM\XeKo@startAM
+  \XeKo@fontAM\expandafter\XeKo@startAM
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassAH{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XeKo@nobreak \or \or \or \or
@@ -1238,9 +1253,11 @@
       \or \unkern\unkern \XeKo@nobreak                     % VC AH
     \fi
   \fi
-  \XeKo@fontAH\XeKo@startAH
+  \XeKo@fontAH\expandafter\XeKo@startAH
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassOP{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XeKo@halfhalf \or \or \or \or
@@ -1264,9 +1281,11 @@
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@halfhalf
   \fi\fi
-  \XeKo@fontOP\XeKo@startOP
+  \XeKo@fontOP\expandafter\XeKo@startOP
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassCL{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1288,9 +1307,11 @@
       \or \unkern\unkern                                   % VC CL
     \fi
   \fi
-  \XeKo@fontCL\XeKo@startCL
+  \XeKo@fontCL\expandafter\XeKo@startCL
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassMD{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XeKo@nobreak\XeKo@quarterquarter \or \or \or \or
@@ -1314,9 +1335,11 @@
   \else\ifnum\lastnodetype=10 % mathoff
     \XeKo@nobreak\XeKo@quarterquarter
   \fi\fi
-  \XeKo@fontMD\XeKo@startMD
+  \XeKo@fontMD\expandafter\XeKo@startMD
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassFS{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1338,9 +1361,11 @@
       \or \unkern\unkern                                   % VC FS
     \fi
   \fi
-  \XeKo@fontFS\XeKo@startFS
+  \XeKo@fontFS\expandafter\XeKo@startFS
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassEX{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1362,9 +1387,11 @@
       \or \unkern\unkern                                   % VC EX
     \fi
   \fi
-  \XeKo@fontEX\XeKo@startEX
+  \XeKo@fontEX\expandafter\XeKo@startEX
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassLD{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \XKinterhanjabreak \XeKo@suppress@linebreak \or \or \or \or
@@ -1386,9 +1413,11 @@
       \or \unkern\unkern \XKinterhanjabreak   \XeKo@suppress@linebreak % VC LD
     \fi
   \fi
-  \XeKo@fontLD\XeKo@startLD
+  \XeKo@fontLD\expandafter\XeKo@startLD
+  \fi
   }
 \XeTeXinterchartoks\XeTeXcharclassBoundary\XeTeXcharclassVC{%
+  \ifx\f@encoding\UTFencname
   \ifnum\lastnodetype=12 %
     \ifcase\lastkern
       \or \or \or \or \or
@@ -1410,7 +1439,8 @@
       \or \unkern\unkern % VC VC
     \fi
   \fi
-  \XeKo@fontVC\XeKo@startVC
+  \XeKo@fontVC\expandafter\XeKo@startVC
+  \fi
   }
 
 \newbox\XeKo@box@

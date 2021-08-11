@@ -1,3 +1,11 @@
+2021-XX-XX      Dohyun Kim <nomos at ktug org>
+
+	Version 4.0
+
+	* generalize the concept introduced at v3.9, that is
+	\ifx\f@encoding\UTFencname now affects inter-character spacing
+	as well as font substitution.
+
 2021-08-09      Dohyun Kim <nomos at ktug org>
 
 	Version 3.9
