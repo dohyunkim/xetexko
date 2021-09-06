@@ -1534,7 +1534,7 @@
 \catcode`A=11\relax \global\let\XeKo@catcode@letter=A
 \catcode`0=12\relax \global\let\XeKo@catcode@other =0
 \endgroup
-\def\XeKo@striptw@words#1 #2 #3{#3}
+\def\XeKo@striptw@words#1 #2 #3\relax{#3}
 \def\XeKo@get@charslot{%
   \if\noexpand\XeKo@let@token\relax
     \chardef\XeKo@charslot="FFFF
@@ -1545,7 +1545,7 @@
 \def\XeKo@get@charslot@{%
   \ifnum 0\ifcat\XeKo@let@token\XeKo@catcode@letter 1\else
           \ifcat\XeKo@let@token\XeKo@catcode@other  1\fi\fi >\z@
-    \edef\@tempa{\expandafter\XeKo@striptw@words\meaning\XeKo@let@token}%
+    \edef\@tempa{\expandafter\XeKo@striptw@words\meaning\XeKo@let@token\relax}%
     \expandafter\chardef\expandafter\XeKo@charslot\expandafter`\@tempa\relax
   \else
     \chardef\XeKo@charslot="FFFF
