@@ -1,3 +1,10 @@
+2022-03-18      Dohyun Kim <nomos at ktug org>
+
+	Version 4.1
+
+	* assign U+223C (tilde operator) to \XeTeXcharclassSY (cjksymbols)
+	* avoid possible clash with unicode-math package
+
 2021-09-06      Dohyun Kim <nomos at ktug org>
 
 	Version 4.0

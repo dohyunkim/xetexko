@@ -1,6 +1,6 @@
 % xetexko.sty
 %
-% Copyright (c) 2013-2021 Dohyun Kim  <nomos at ktug org>
+% Copyright (c) 2013-2022 Dohyun Kim  <nomos at ktug org>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3c
@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2021/06/01]
-  \ProvidesPackage{xetexko}[2021/09/06 v4.0 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2022/03/18 v4.1 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@sptoken \else
@@ -137,7 +137,6 @@
 \XeTeXcharclass "2015=\XeTeXcharclassLD % ― HORIZONTAL BAR
 \XeTeXcharclass "2025=\XeTeXcharclassLD % ‥ TWO DOT LEADER
 \XeTeXcharclass "2026=\XeTeXcharclassLD % … HORIZONTAL ELLIPSIS
-\XeTeXcharclass "FF5E=\XeTeXcharclassLD % ～ FULLWIDTH TILDE : KS symbol
 \XeTeXcharclass "3003=\XeTeXcharclassLD % 〃 DITTO MARK : KS symbol
 % 결락기호
 \XeTeXcharclass "25A1=\XeTeXcharclassID % □
@@ -161,6 +160,7 @@
 \XeTeXcharclass "21D2=\XeTeXcharclassSY % ⇒
 \XeTeXcharclass "21D4=\XeTeXcharclassSY % ⇔
 \XeTeXcharclass "2225=\XeTeXcharclassSY % ∥
+\XeTeXcharclass "223C=\XeTeXcharclassSY % ∼ TILDE OPERATOR
 \XeTeXcharclass "226A=\XeTeXcharclassSY % ≪ 꽉찬 전각! 어디에 배정해야 하나?
 \XeTeXcharclass "226B=\XeTeXcharclassSY % ≫ 꽉찬 전각! 어디에 배정해야 하나?
 \XeTeXcharclass "2299=\XeTeXcharclassSY % ⊙
@@ -241,6 +241,7 @@
 \XeTeXcharclass "FF04 = \XeTeXcharclassSY % ＄
 \XeTeXcharclass "FF05 = \XeTeXcharclassSY % ％
 \XeTeXcharclass "FF3C = \XeTeXcharclassSY % ＼
+\XeTeXcharclass "FF5E = \XeTeXcharclassSY % ～ FULLWIDTH TILDE : KS symbol
 \XeTeXcharclass "FFE0 = \XeTeXcharclassSY % ￠
 \XeTeXcharclass "FFE1 = \XeTeXcharclassSY % ￡
 \XeTeXcharclass "FFE5 = \XeTeXcharclassSY % ￥
@@ -2029,10 +2030,6 @@
 \AddToHook{env/picture/begin}{%
   \latinalphs\latinparens\latinpuncts\latincolons\latinhyphens
   }
-\AddToHook{selectfont}{%
-  \XeKo@hanja@selectfont
-  \XeKo@hangul@selectfont
-  }
 \def\XeKo@hangul@selectfont{%
   \ifdefined\XeKo@in@selectfont\else
     \ifdefined\xetexkohangulfont
@@ -2066,6 +2063,14 @@
   \fi }
 
 \ExplSyntaxOn
+\AddToHook{selectfont}
+{
+  \fontspec_if_current_script:nTF {math} {} % unless unicode-math font
+  {
+    \XeKo@hanja@selectfont
+    \XeKo@hangul@selectfont
+  }
+}
 \tl_new:N \l_xtxko_font_opts_tl
 \tl_new:N \l_xtxko_rest_opts_tl
 \keys_define:nn { xtxko-font }
