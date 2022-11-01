@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2021/06/01]
-  \ProvidesPackage{xetexko}[2022/03/18 v4.1 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2022/11/01 v4.2 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@sptoken \else
@@ -2062,6 +2062,8 @@
     \fi
   \fi }
 
+\let\XeKo@selectfont\selectfont
+
 \ExplSyntaxOn
 \AddToHook{selectfont}
 {
@@ -2113,7 +2115,7 @@
   \fontspec_set_family:Nnn \XeKo@mainhangulfamily { Ligatures=TeX, \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkomainhangulfont
   {
-    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@mainhangulfamily \selectfont
+    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@mainhangulfamily \XeKo@selectfont
   }
   \cs_set_eq:NN \xetexkomainhanguloption \l_xtxko_font_opts_tl
   \str_if_eq:eeT \familydefault \rmdefault
@@ -2132,7 +2134,7 @@
   \fontspec_set_family:Nnn \XeKo@sanshangulfamily { Ligatures=TeX, \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkosanshangulfont
   {
-    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@sanshangulfamily \selectfont
+    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@sanshangulfamily \XeKo@selectfont
   }
   \cs_set_eq:NN \xetexkosanshanguloption \l_xtxko_font_opts_tl
   \str_if_eq:eeT \familydefault \sfdefault
@@ -2151,7 +2153,7 @@
   \fontspec_set_family:Nnn \XeKo@monohangulfamily { \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkomonohangulfont
   {
-    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@monohangulfamily \selectfont
+    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@monohangulfamily \XeKo@selectfont
   }
   \cs_set_eq:NN \xetexkomonohanguloption \l_xtxko_font_opts_tl
   \str_if_eq:eeT \familydefault \ttdefault
@@ -2171,7 +2173,7 @@
   \cs_set_nopar:cpn { xetexko_user_font_ \cs_to_str:N #1 }
   {
     \fontencoding \g_fontspec_encoding_tl
-    \exp_args:Nc \fontfamily { xetexko_user_family_ \cs_to_str:N #1 } \selectfont
+    \exp_args:Nc \fontfamily { xetexko_user_family_ \cs_to_str:N #1 } \XeKo@selectfont
   }
   \cs_set_nopar:cpx { xetexko_user_option_ \cs_to_str:N #1 }
   {
@@ -2196,7 +2198,7 @@
   \cs_set_nopar:Npn \xetexkohangulfont
   {
     \fontencoding \g_fontspec_encoding_tl
-    \fontfamily \xetexkohangulfontfamily \selectfont
+    \fontfamily \xetexkohangulfontfamily \XeKo@selectfont
   }
   \cs_set_nopar:Npx \xetexkohanguloption
   {
@@ -2220,7 +2222,7 @@
     {
       \exp_not:N \fontencoding { \f@encoding }
       \exp_not:N \fontfamily   { \f@family }
-      \exp_not:N \selectfont
+      \exp_not:N \XeKo@selectfont
     }
     \exp_not:N \cs_set_nopar:Npn \exp_not:N \xetexkohanguloption
     {
@@ -2237,7 +2239,7 @@
   \fontspec_set_family:Nnn \XeKo@mainhanjafamily { Ligatures=TeX, \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkomainhanjafont
   {
-    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@mainhanjafamily \selectfont
+    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@mainhanjafamily \XeKo@selectfont
   }
   \cs_set_eq:NN \xetexkomainhanjaoption \l_xtxko_font_opts_tl
   \str_if_eq:eeT \familydefault \rmdefault
@@ -2256,7 +2258,7 @@
   \fontspec_set_family:Nnn \XeKo@sanshanjafamily { Ligatures=TeX, \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkosanshanjafont
   {
-    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@sanshanjafamily \selectfont
+    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@sanshanjafamily \XeKo@selectfont
   }
   \cs_set_eq:NN \xetexkosanshanjaoption \l_xtxko_font_opts_tl
   \str_if_eq:eeT \familydefault \sfdefault
@@ -2275,7 +2277,7 @@
   \fontspec_set_family:Nnn \XeKo@monohanjafamily { \l_xtxko_rest_opts_tl } { #2 }
   \cs_set_protected_nopar:Npn \xetexkomonohanjafont
   {
-    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@monohanjafamily \selectfont
+    \fontencoding \g_fontspec_encoding_tl \fontfamily \XeKo@monohanjafamily \XeKo@selectfont
   }
   \cs_set_eq:NN \xetexkomonohanjaoption \l_xtxko_font_opts_tl
   \str_if_eq:eeT \familydefault \ttdefault
@@ -2295,7 +2297,7 @@
   \cs_set_nopar:cpn { xetexko_user_font_ \cs_to_str:N #1 }
   {
     \fontencoding \g_fontspec_encoding_tl
-    \exp_args:Nc \fontfamily { xetexko_user_family_ \cs_to_str:N #1 } \selectfont
+    \exp_args:Nc \fontfamily { xetexko_user_family_ \cs_to_str:N #1 } \XeKo@selectfont
   }
   \cs_set_nopar:cpx { xetexko_user_option_ \cs_to_str:N #1 }
   {
@@ -2320,7 +2322,7 @@
   \cs_set_nopar:Npn \xetexkohanjafont
   {
     \fontencoding \g_fontspec_encoding_tl
-    \fontfamily \xetexkohanjafontfamily \selectfont
+    \fontfamily \xetexkohanjafontfamily \XeKo@selectfont
   }
   \cs_set_nopar:Npx \xetexkohanjaoption
   {
@@ -2344,7 +2346,7 @@
     {
       \exp_not:N \fontencoding { \f@encoding }
       \exp_not:N \fontfamily   { \f@family }
-      \exp_not:N \selectfont
+      \exp_not:N \XeKo@selectfont
     }
     \exp_not:N \cs_set_nopar:Npn \exp_not:N \xetexkohanjaoption
     {

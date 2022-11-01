@@ -1,3 +1,9 @@
+2022-11-01      Dohyun Kim <nomos at ktug org>
+
+	Version 4.2
+
+	* prevent clash with pgfpicture (use kernel's selectfont)
+
 2022-03-18      Dohyun Kim <nomos at ktug org>
 
 	Version 4.1
