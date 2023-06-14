@@ -2462,8 +2462,10 @@
   \ifdefined\XeKo@hanja@font\else
     \let\XeKo@hanja@font    \XeKo@hangul@font
   \fi
-  \@ifpackageloaded{ulem}{\xetexkoulemsupport}{}
-  \@ifpackageloaded{hyperref}{\pdfstringdefDisableCommands{%
+  }
+
+\AddToHook{package/ulem/after}{\xetexkoulemsupport}
+\AddToHook{package/hyperref/after}{\pdfstringdefDisableCommands{%
     \let\hangulalphs\relax
     \let\hangulnums\relax
     \let\hangulparens\relax
@@ -2532,8 +2534,7 @@
     \def\라{라}%
     \def\으{으}%
     \def\로{로}%
-    \def\hellipsis{...}}}{}
-  }
+    \def\hellipsis{...}}}
 
 \newif\if@hangul
 \newif\if@hanja
