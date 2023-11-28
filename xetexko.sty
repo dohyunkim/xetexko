@@ -1137,7 +1137,7 @@
       \or \unkern\unkern \XeKo@latincjk       % SY AO
       \or \unkern\unkern                      % AA AO
       \or \unkern\unkern % AO AO
-      \or \unkern\unkern                      % AC AO
+      \or \unkern\unkern \inhibitglue         % AC AO
       \or \unkern\unkern                      % AP AO
       \or \unkern\unkern                      % AM AO
       \or \unkern\unkern                      % AH AO
@@ -2107,7 +2107,7 @@
 \cs_new:Nn \__xtxko_assign_font_opts:n
 {
   \tl_clear:N \l_xtxko_font_opts_tl
-  \keys_set_known:nxN { xtxko-font } {#1} \l_xtxko_rest_opts_tl
+  \keys_set_known:neN { xtxko-font } {#1} \l_xtxko_rest_opts_tl
 }
 \DeclareDocumentCommand \setmainhangulfont { O{} m O{} }
 {
@@ -2175,7 +2175,7 @@
     \fontencoding \g_fontspec_encoding_tl
     \exp_args:Nc \fontfamily { xetexko_user_family_ \cs_to_str:N #1 } \XeKo@selectfont
   }
-  \cs_set_nopar:cpx { xetexko_user_option_ \cs_to_str:N #1 }
+  \cs_set_nopar:cpe { xetexko_user_option_ \cs_to_str:N #1 }
   {
     \exp_not:o { \l_xtxko_font_opts_tl }
   }
@@ -2200,7 +2200,7 @@
     \fontencoding \g_fontspec_encoding_tl
     \fontfamily \xetexkohangulfontfamily \XeKo@selectfont
   }
-  \cs_set_nopar:Npx \xetexkohanguloption
+  \cs_set_nopar:Npe \xetexkohanguloption
   {
     \exp_not:o { \l_xtxko_font_opts_tl }
   }
@@ -2213,9 +2213,9 @@
   \group_begin:
   \fontseries\seriesdefault\fontshape\shapedefault \xetexkohangulfont
   \cs_set_eq:NN \l_xtxko_font_opts_tl \xetexkohanguloption
-  \keys_set_known:nxN { xtxko-font } { #1 } \l_xtxko_rest_opts_tl
+  \keys_set_known:neN { xtxko-font } { #1 } \l_xtxko_rest_opts_tl
   \addfontfeature { \l_xtxko_rest_opts_tl }
-  \use:x
+  \use:e
   {
     \group_end:
     \exp_not:N \cs_set_nopar:Npn \exp_not:N \xetexkohangulfont
@@ -2299,7 +2299,7 @@
     \fontencoding \g_fontspec_encoding_tl
     \exp_args:Nc \fontfamily { xetexko_user_family_ \cs_to_str:N #1 } \XeKo@selectfont
   }
-  \cs_set_nopar:cpx { xetexko_user_option_ \cs_to_str:N #1 }
+  \cs_set_nopar:cpe { xetexko_user_option_ \cs_to_str:N #1 }
   {
     \exp_not:o { \l_xtxko_font_opts_tl }
   }
@@ -2324,7 +2324,7 @@
     \fontencoding \g_fontspec_encoding_tl
     \fontfamily \xetexkohanjafontfamily \XeKo@selectfont
   }
-  \cs_set_nopar:Npx \xetexkohanjaoption
+  \cs_set_nopar:Npe \xetexkohanjaoption
   {
     \exp_not:o { \l_xtxko_font_opts_tl }
   }
@@ -2337,9 +2337,9 @@
   \group_begin:
   \fontseries\seriesdefault\fontshape\shapedefault \xetexkohanjafont
   \cs_set_eq:NN \l_xtxko_font_opts_tl \xetexkohanjaoption
-  \keys_set_known:nxN { xtxko-font } { #1 } \l_xtxko_rest_opts_tl
+  \keys_set_known:neN { xtxko-font } { #1 } \l_xtxko_rest_opts_tl
   \addfontfeature { \l_xtxko_rest_opts_tl }
-  \use:x
+  \use:e
   {
     \group_end:
     \exp_not:N \cs_set_nopar:Npn \exp_not:N \xetexkohanjafont
