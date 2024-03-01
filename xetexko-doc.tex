@@ -74,7 +74,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomos at ktug org}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 4.2\quad 2022/11/01}
+\date{Version 4.3\quad 2024/03/01}
 \maketitle
 
 \begin{quote}\small
@@ -152,7 +152,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
 
 \bigskip
 
-※ \vernote{3.1} 및 \vernote{3.4}부터 플레인텍에 주요 변경사항이 있다:
+※ \vernote{3.4}부터 플레인텍에 주요 변경사항이 있다:
 \begin{plaintex}
 플레인텍에서도 기본값으로 은바탕을 한글에 사용한다. 한글폰트를 지시하는 방법은 다음과 같다.
 \begin{verbatim}
@@ -160,16 +160,12 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
     \hangulfont="[UnBatang]:mapping=tex-text" at 10pt
     \hanjafont ="Naver Dictionary:mapping=tex-text" at 10pt
 \end{verbatim}
-  \sout{그런데 3.1 버전부터는 이렇게 하면 문서 중간에 영문글꼴을 바꾸더라도
-  \cs{hangulfont} 선언시의 영문글꼴이 계속 적용되도록 바뀌었다.}
   또한 다음과 같은 새로운 명령을 제공한다.
 \begin{verbatim}
     \sethangulfont\untaza ="[UnTaza.ttf]"  at 10pt
     \sethanjafont \undotum="[UnDotum.ttf]" at 10pt
     \expandafter\def\expandafter\tt\expandafter{\tt\untaza\undotum}
 \end{verbatim}
-  \sout{이 경우 \cs{untaza}, \cs{undotum} 명령에 \cs{set...font} 실행시의 현재폰트 명령이
-  자동으로 포함된다. 뒤에서 설명할 글꼴옵션이 포함되는 것과 같은 개념이다.}
   그리하여 예의 \cs{tt} 명령으로 이제 한글, 한자, 영문 글꼴을 동시에 바꿀 수 있게 된다.
 \end{plaintex}
 
