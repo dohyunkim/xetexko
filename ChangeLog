@@ -3,6 +3,7 @@
 	Version 4.4
 
 	* change char class of some traditional chinese chars
+	* use LaTeX's build/page/before hook if available
 
 2024-03-01      Dohyun Kim <nomos at ktug org>
 

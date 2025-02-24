@@ -1980,16 +1980,24 @@
   \else
     \linewidth\hsize \columnwidth\hsize
   \fi
-  \expandafter\def\expandafter\@outputpage\expandafter{%
-    \expandafter\XeKo@rotatebox\expandafter\@outputbox
-    \expandafter\textwidth\expandafter\textheight
-    \@outputpage
+  \IfFormatAtLeastTF{2025-06-01}{%
+    \AddToHook{build/page/before}[xetexko/beforeOR]{%
+      \XeKo@rotatebox\@outputbox
+      \textwidth\textheight
+    }%
+  }{%
+    \expandafter\def\expandafter\@outputpage\expandafter{%
+      \expandafter\XeKo@rotatebox\expandafter\@outputbox
+      \expandafter\textwidth\expandafter\textheight
+      \@outputpage
+    }%
   }%
   \typesetvertical
   \let\verticaltypesetting\relax % prevent multiple running
 }
 \def\endverticaltypesetting{%
   \clearpage
+  \IfFormatAtLeastTF{2025-06-01}{\RemoveFromHook{build/page/before}[xetexko/beforeOR]}{}%
   \endgroup
   \global\@colroom\textheight
   \global\@colht\textheight
