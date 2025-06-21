@@ -15,7 +15,7 @@
 \catcode`@=11
 
 \ifdefined\ProvidesPackage
-  \NeedsTeXFormat{LaTeX2e}[2021/11/15]
+  \NeedsTeXFormat{LaTeX2e}[2025/06/01]
   \ProvidesPackage{xetexko}[2025/02/24 v4.4 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
@@ -1980,24 +1980,16 @@
   \else
     \linewidth\hsize \columnwidth\hsize
   \fi
-  \IfFormatAtLeastTF{2025-06-01}{%
-    \AddToHook{build/page/before}[xetexko/beforeOR]{%
-      \XeKo@rotatebox\@outputbox
-      \textwidth\textheight
-    }%
-  }{%
-    \expandafter\def\expandafter\@outputpage\expandafter{%
-      \expandafter\XeKo@rotatebox\expandafter\@outputbox
-      \expandafter\textwidth\expandafter\textheight
-      \@outputpage
-    }%
+  \AddToHook{build/page/before}[xetexko/beforeOR]{%
+    \XeKo@rotatebox\@outputbox
+    \textwidth\textheight
   }%
   \typesetvertical
   \let\verticaltypesetting\relax % prevent multiple running
 }
 \def\endverticaltypesetting{%
   \clearpage
-  \IfFormatAtLeastTF{2025-06-01}{\RemoveFromHook{build/page/before}[xetexko/beforeOR]}{}%
+  \RemoveFromHook{build/page/before}[xetexko/beforeOR]%
   \endgroup
   \global\@colroom\textheight
   \global\@colht\textheight
