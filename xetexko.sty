@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2025/06/01]
-  \ProvidesPackage{xetexko}[2025/02/24 v4.4 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2025/07/07 v4.5 (forthcoming) typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@sptoken \else
@@ -305,7 +305,11 @@
 \protected\def\typesetclassic{%
   \chardef\XeKo@typesetclassic\@ne
   \def\XeKo@quarterdim{\dimexpr.25em\relax}%
-  \def\XeKo@stretchshrink{plus.08em minus.04em\relax}%
+  \ifdefined\XeKo@stretch@shrink
+    \let\XeKo@stretchshrink\XeKo@stretch@shrink
+  \else
+    \def\XeKo@stretchshrink{plus.08em minus.04em\relax}%
+  \fi
   \let\XeKo@latincjk\XeKo@latincjk@classic
   \let\XeKo@postmath\XeKo@latincjk@classic
   \XeTeXlinebreakpenalty=\z@
@@ -315,13 +319,23 @@
 \protected\def\typesetmodern{%
   \chardef\XeKo@typesetclassic\z@
   \def\XeKo@quarterdim{\dimexpr.05em\relax}%
-  \def\XeKo@stretchshrink{plus.04em minus.02em\relax}%
+  \ifdefined\XeKo@stretch@shrink
+    \let\XeKo@stretchshrink\XeKo@stretch@shrink
+  \else
+    \def\XeKo@stretchshrink{plus.04em minus.02em\relax}%
+  \fi
   \let\XeKo@latincjk\XeKo@latincjk@modern
   \let\XeKo@postmath\XeKo@postmath@modern
   \XeTeXlinebreakpenalty=50
   \XeTeXlinebreakskip=\z@ \XeKo@stretchshrink
   }
 \typesetmodern
+% xetexkostretchshrink
+\protected\def\xetexkostretchshrink#1{%
+  \def\XeKo@stretchshrink{#1\relax}%
+  \let\XeKo@stretch@shrink\XeKo@stretchshrink
+  \XeTeXlinebreakskip=\z@ \XeKo@stretchshrink
+}
 
 \chardef\XeKo@typesetvertical\z@
 \chardef\XeKo@STchineseJapanese\z@ % 0=KOR, 1=SC, 2=TC, 3=JPN
@@ -2523,6 +2537,7 @@
     \let\addhangulfontfeatures\@gobble
     \let\addhanjafontfeature\@gobble
     \let\addhanjafontfeatures\@gobble
+    \let\xetexkostretchshrink\@gobble
     \def\는{는}%
     \def\은{은}%
     \def\을{을}%

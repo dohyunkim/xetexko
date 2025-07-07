@@ -1,3 +1,11 @@
+2025-xx-xx      Dohyun Kim <nomosnomos at gmail com>
+
+	Version 4.5
+
+	* new command \xetexkostretchshrink.
+	The argement shall be stretch and shrink part of a glue,
+	for instance 'plus .025em minus .015em'.
+
 2025-02-24      Dohyun Kim <nomosnomos at gmail com>
 
 	Version 4.4

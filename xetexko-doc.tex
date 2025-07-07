@@ -5,7 +5,7 @@
 %% This file is in the public domain
 
 \documentclass[a4paper]{article}
-\usepackage[hmargin=3.8cm]{geometry}
+\usepackage[hmargin={3.4cm,4.2cm}]{geometry}
 \usepackage[hangul]{xetexko}
 \setmainhangulfont{Noto Serif CJK KR}[
   UprightFont=* Light, BoldFont=* Bold,
@@ -24,7 +24,7 @@
   Script=Hangul, Language=Korean
 ]
 \usepackage{hologo, xcolor, ulem}
-\usepackage[bookmarksnumbered,hidelinks]{hyperref}
+\usepackage[bookmarksnumbered]{hyperref}
 
 \edef\verbatim{\unexpanded\expandafter{\verbatim
   \linespread{1.1}\selectfont }}
@@ -34,7 +34,7 @@
 \def\kotex{\logoko\kern-.1ex .\kern-.1667em \hologo{TeX}}
 \pdfstringdefDisableCommands{\def\xetexko{XeTeX-ko}}
 \renewcommand*\descriptionlabel[1]{\hspace\labelsep\ttfamily\bfseries
-  \color{blue!50!black}#1}
+  \color{blue!67!black}#1}
 \def\grayhrule{{\color{white!80!black}\hrule height2pt}}
 \def\grayvrule{{\color{white!80!black}\vrule width 2pt}}
 \newenvironment{plaintex}
@@ -62,8 +62,10 @@
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
 \let\hparens\hparen
-\def\keyword#1{\cs{#1}\marginpar{\hfuzz\maxdimen\footnotesize{\color{blue!80}\cs{#1}}}}
-\def\vernote#1{v#1\marginpar{\hfuzz\maxdimen\footnotesize{\color{red}☜ v#1}}}
+\def\keyword#1{\cs{#1}\marginpar{\hfuzz\maxdimen
+  \setbox0\hbox{\footnotesize{\color{blue!67!black}\cs{#1}}}\ht0=0pt\dp0=0pt\box0 }}
+\def\vernote#1{v#1\marginpar{\hfuzz\maxdimen
+  \setbox0\hbox{\footnotesize{\color{red}☜ v#1}}\ht0=0pt\dp0=0pt\box0 }}
 
 \hangingpunctuations
 
@@ -74,7 +76,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{Dohyun Kim \normalsize <\texttt{nomosnomos at gmail com}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 4.4\quad 2025/02/24}
+\date{Version 4.5\quad 2025/xx/xx}
 \maketitle
 
 \begin{quote}\small
@@ -321,6 +323,11 @@ v3.0부터는
 
 \section{그밖의 명령들}\label{sec:etccmds}
 \begin{description}
+  \item[\cs{xetexkostretchshrink}]
+    \vernote{4.5}부터 한글 및 한자 사이 자간의 늘이기 값과 줄이기 값을 지시할 수 있다.
+    가령 \keyword{xetexkostretchshrink}\allowbreak\verb|{plus .025em minus .015em}|.\footnote{%
+      이 예시값은 Lua\TeX-\textsf{k}\kern-0.0625em\textit{o}의 기본값을 흉내낸 것이다.}
+
   \item[\cs{everyhangul}, \cs{everyhanja}]
     한글 또는 한자에 대해 글자마다 지시한 명령을 수행한다. 예컨대
     \verb|\everyhangul{\fbox{#1}}| 명령은 모든
@@ -366,7 +373,9 @@ v3.0부터는 종전의
 
 \section{옛한글}
 
-옛한글을 사용하기 위해선 \verb|Script=Hangul| 옵션을 주는 것으로 족하다.
+옛한글을 사용하기 위해선 \verb|Script=Hangul| 옵션을 주는 것으로 족하다.\footnote{%
+  옛한글을 위해서가 아니더라도 \texttt{Script=Hangul}과 \texttt{Language=Korean}은
+  가능하면 항상 주는 것이 권장된다.}
 옛한글 식자는 고급 오픈타입 기능을 이용하므로
 폰트가 이런 기능을 제공해야만 가능한 일이다.\footnote{%
 이런 기능을 제공하는 폰트로는 윈도즈~8에 번들된 맑은고딕이
@@ -704,6 +713,10 @@ v3.0부터는
 
 \begin{small}\linespread{1.2}\selectfont
 \begin{description}\itemsep=0pt
+    \item[v4.5] 202x-xx-xx
+      \begin{itemize}
+        \item \hyperref[sec:etccmds]{\cs{xetexkostretchshrink} 명령 추가}
+      \end{itemize}
     \item[v4.1] 2022-03-18
       \begin{itemize}
         \item U+223C \hparen{\texttt{^^^^223c}}를
