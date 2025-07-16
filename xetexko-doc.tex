@@ -24,17 +24,19 @@
   Script=Hangul, Language=Korean
 ]
 \usepackage{hologo, xcolor, ulem}
-\usepackage[bookmarksnumbered]{hyperref}
+\usepackage[bookmarksnumbered,hidelinks]{hyperref}
 
-\edef\verbatim{\unexpanded\expandafter{\verbatim
-  \linespread{1.1}\selectfont }}
+\AddToHook{cmd/caption/before}{\linespread{1.3}\sffamily}
+\AddToHook{env/verbatim/begin}{\linespread{1.1}}
+\AssignSocketPlug{build/column/outputbox}{space-floats-footnotes}
+
 \def\logoko{\textsf{k}\kern-.2ex\textit{o}}
 \def\XeTeX{\hologo{XeTeX}}
 \def\xetexko{\XeTeX\kern-.1ex -\logoko}
 \def\kotex{\logoko\kern-.1ex .\kern-.1667em \hologo{TeX}}
 \pdfstringdefDisableCommands{\def\xetexko{XeTeX-ko}}
 \renewcommand*\descriptionlabel[1]{\hspace\labelsep\ttfamily\bfseries
-  \color{blue!67!black}#1}
+  \color{blue!50!black}#1}
 \def\grayhrule{{\color{white!80!black}\hrule height2pt}}
 \def\grayvrule{{\color{white!80!black}\vrule width 2pt}}
 \newenvironment{plaintex}
@@ -58,14 +60,24 @@
     \vbox\bgroup\hsize\dimexpr\textwidth-4pt\relax
     \grayhrule\kern5pt\leftskip10pt\rightskip10pt
   }{\par\kern5pt\grayhrule\egroup\grayvrule\egroup}
+\newenvironment{oldstuff}
+  {
+    \par\smallskip
+    \narrower\small\parindent0pt
+  }
+  {
+    \par\smallskip
+  }
 \def\cs#1{\texttt{\textbackslash #1}}
 \def\hemph#1{\textsf{\bfseries #1}}
 \def\hparen#1{{\small\hangulparens(#1)}}
 \let\hparens\hparen
 \def\keyword#1{\cs{#1}\marginpar{\hfuzz\maxdimen
-  \setbox0\hbox{\footnotesize{\color{blue!67!black}\cs{#1}}}\ht0=0pt\dp0=0pt\box0 }}
+  \setbox0\hbox{\footnotesize{\color{blue!50!black}\cs{#1}}}\ht0=0pt\dp0=0pt\box0 }}
 \def\vernote#1{v#1\marginpar{\hfuzz\maxdimen
   \setbox0\hbox{\footnotesize{\color{red}☜ v#1}}\ht0=0pt\dp0=0pt\box0 }}
+
+\xetexkostretchshrink{plus .025em minus .015em}
 
 \hangingpunctuations
 
@@ -74,9 +86,9 @@
 \latinparens
 
 \title{\xetexko\ 간단 매뉴얼}
-\author{Dohyun Kim \normalsize <\texttt{nomosnomos at gmail com}> \and
+\author{\normalsize Dohyun Kim <\texttt{nomosnomos at gmail com}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 4.5\quad 2025/xx/xx}
+\date{Version 4.5\quad\normalsize 2025/07/16}
 \maketitle
 
 \begin{quote}\small
@@ -155,7 +167,7 @@ main/sans hangul/hanja 폰트에는 따로 \verb|Ligatures=TeX| 옵션을 지시
 \bigskip
 
 \begin{plaintex}
-플레인텍에서도 기본값으로 은바탕을 한글에 사용한다. 한글폰트를 지시하는 방법은 다음과 같다.
+플레인텍에서도 기본값으로 은바탕을 한글에 사용한다. 따로 한글폰트를 지시하려면
 \begin{verbatim}
     \font\tenrm="[lmroman10-regular]:mapping=tex-text" at 10pt
     \hangulfont="[UnBatang]:mapping=tex-text" at 10pt
@@ -225,6 +237,7 @@ fontspec과 마찬가지로 각 명령의 끝에 `s'를 붙여도 된다.
 \item[cjksymbols] CJK 구두점, 괄호 및 상징기호
 \end{description}
 
+\begin{oldstuff}
 종전에
 라틴숫자에 적용되던 \verb|nums| 옵션과
 라틴 인용부호에 적용되던 \verb|quotes| 옵션이
@@ -232,6 +245,7 @@ v3.0부터는
 각각 \verb|alphs| 옵션과 \verb|parens| 옵션에 통합되었음에 유의하라.
 또한 en dash, em dash가 종래 \verb|colons|에 속하던 것이 이제
 \verb|hyphens|에 속하게 되었다.
+\end{oldstuff}
 
 기본값은 다음 명령을 준 것과 동일하다.
 v3.0부터 괄호류의 기본글꼴이 한글이 되었음도 유의하라.
@@ -289,6 +303,7 @@ v3.0부터 괄호류의 기본글꼴이 한글이 되었음도 유의하라.
     }
   고정폭 글꼴에서도 이 옵션은 작동한다.
 \end{description}
+\begin{oldstuff}
 v3.0부터는 다음 옵션들이 아무 효과도 가져오지 않게
 변경되었음을 주의하라.
 \begin{verbatim}
@@ -301,6 +316,7 @@ v3.0부터는 다음 옵션들이 아무 효과도 가져오지 않게
     quoteraise          quotewidth
     postmathskip        PunctRaise
 \end{verbatim}
+\end{oldstuff}
 
 \begin{plaintex}
   플레인텍에서는 다음과 같은 방법으로 제어할 수 있다. 기본값은 \LaTeX에서와 같다.
@@ -315,11 +331,13 @@ v3.0부터는 다음 옵션들이 아무 효과도 가져오지 않게
   한자폰트 옵션을 서로 달리 지시할 수 있다.
 \end{plaintex}
 
-종전에 한글·한자 글꼴의 옵션 기본값을 지정하던
-\cs{defaulthangulfontfeatures} 및 \cs{defaulthanjafontfeatures} 명령이
+\begin{oldstuff}
 v3.0부터는
+과거 한글·한자 글꼴의 옵션 기본값을 지정하던
+\cs{defaulthangulfontfeatures} 및 \cs{defaulthanjafontfeatures} 명령이
 아무런 기능을 하지 않게 변경되었음에 유의하라.
 폰트옵션의 수가 적어졌기 때문에 이 명령의 유용성도 거의 사라졌다고 판단했다.
+\end{oldstuff}
 
 \section{그밖의 명령들}\label{sec:etccmds}
 \begin{description}
@@ -349,7 +367,7 @@ v3.0부터는
     이것이 기본값이므로 특별한 경우가 아니면 따로 선언할 필요가 없다.
 
   \item[\cs{disablehangulspacing}]
-    한글조판에 관련된 모든 미세간격을 영(zero)으로 돌린다. 한글 자간,
+    한글조판에 관련된 모든 미세간격을 영\hparen{零}으로 돌린다. 한글 자간,
     영문자와 한글 사이 간격, 구두점과 한글^^b7한자 사이 간격 등이 작동하지 않는다.
     그러나 CJK 글자 사이의 줄바꿈 허용만은 유지된다. 또한
     \verb|CharRaise|는 자간과 무관하므로 여전히 작동한다.
@@ -367,9 +385,11 @@ v3.0부터는
       }
 
 \end{description}
+\begin{oldstuff}
 v3.0부터는 종전의
 \cs{disableautojosa} 및 \cs{disablejamoautojosa} 명령이 아무 기능도 하지 않게
 변경되었음을 유의하라.
+\end{oldstuff}
 
 \section{옛한글}
 
@@ -419,19 +439,23 @@ Source Han Serif (본명조), Noto Sans CJK, Noto Serif CJK,
       [Vertical=Alternates, RawFeature=vertical]
 \end{verbatim}
 
-문서 전체를 세로쓰기할 때 \keyword{verticaltypesetting}을 선언하면
+\begin{itemize}\itemsep=0pt plus1pt minus1pt
+  \item
+문서 전체를 세로쓰기할 때 \keyword{verticaltypesetting} 을 선언하면
 면주는 그대로 두고 본문만 세로쓰기한다.\footnote{면주의 글꼴에는
   \texttt{vertical} 옵션이 없어야 할 것이다.
   면주 글꼴을 따로 지정하는 것은 사용자의 몫이다. }
 
-v3.6부터 \verb|verticaltypesetting| 환경을 이용하여
-몇몇 페이지만 세로쓰기로 조판할 수 있다.
+\item
+몇몇 페이지만 세로쓰기로 조판하려면
+\verb|verticaltypesetting| 을 환경으로 이용한다.
 역시 면주는 가로로 조판되며, 환경의 앞뒤에서 쪽나눔이 행해진다.
 
+\item
 문서의 일부를 세로쓰기 하려면 \verb|vertical| 환경을 이용한다.
 vertical 환경에는 세로쓰기 박스의 높이를 인자로 준다.
-v3.6부터는 만약 인자가 비어있거나 \cs{empty}이면
-본문을 한 줄짜리 박스로 식자하도록 했다. 이때 높이는 natural height가 된다.
+만약 인자가 비어있거나 \cs{empty}이면
+본문을 한 줄짜리 박스로 식자한다. 이때 높이는 natural height가 된다.
 
 \begin{figure}
 \begin{example}
@@ -455,8 +479,7 @@ v3.6부터는 만약 인자가 비어있거나 \cs{empty}이면
 제곡조를못이기는 사랑의노래는 님의沈默을 휩싸고돔니다\par
 \end{vertical}\hfil
 \end{example}
-  \caption{\linespread{1.2}\selectfont
-  세로쓰기 보기.
+  \caption{세로쓰기 보기.
   Noto Sans CJK KR 글꼴을 이용했다. 이 글꼴의 세로쓰기 어간이 1em으로
   매우 커서 \cs{spaceskip=0.5em plus.25em minus.125em}을 강제했다.
   \texttt{CharRaise=.5ex}도 글꼴 옵션에 추가했다.
@@ -473,6 +496,7 @@ v3.6부터는 만약 인자가 비어있거나 \cs{empty}이면
     \end{vertical}
 \end{verbatim}
 
+\item
 혹시 세로로 식자되지 않는 라틴문자 부분이 있다면
 베이스라인이 한글과 어울리지 않을 수 있다. 이를 교정하려면
 \verb|CharRaise| 옵션을 한글 폰트에 준다.\footnote{%
@@ -480,11 +504,13 @@ v3.6부터는 만약 인자가 비어있거나 \cs{empty}이면
   이 방법이 여의치 않으면 라틴문자 부분을 \cs{vertlatin} 명령으로 감쌀 수도
   있는데, 이때 인자가 박스로 처리되어 줄바꿈이 일어나지 않는다.}
 
+\item
 세로쓰기 도중에 문서의 일부를 가로쓰기로 삽입하려면
 \verb|horizontal| 환경을 이용한다.
 horizontal 환경에는 가로쓰기 박스의 너비를 인자로 준다.
-v3.6부터는 만약 인자가 비어있거나 \cs{empty}이면
-본문을 한 줄짜리 박스로 식자하도록 했다. 이때 너비는 당연히 natural width가 된다.
+만약 인자가 비어있거나 \cs{empty}이면
+본문을 한 줄짜리 박스로 식자한다. 이때 너비는 당연히 natural width가 된다.
+\end{itemize}
 
 \begin{plaintex}
   플레인텍에서 문서 전체를 세로쓰기하려면 문서 첫머리에 \cs{verticaltypesetting}.
@@ -530,7 +556,7 @@ v3.0부터는 자동으로 동작하지 않는다.  사용자가
 
 
 \keyword{inhibitglue} 명령은
-해당 지점에 자동 삽입되는 공백을 영(zero)으로 만들어준다.
+해당 지점에 자동 삽입되는 공백을 영\hparen{零}으로 만들어준다.
 
 현대문서 조판에는 \verb|typesetmodern| 환경이 쓰인다. 이 환경은 기본값이므로
 특별한 경우가 아니면 따로 선언할 필요가 없다.
@@ -550,9 +576,8 @@ v3.0부터는 자동으로 동작하지 않는다.  사용자가
     \sffamily\typesetclassic
     \analect
   \end{example}
-\caption{\linespread{1.2}\selectfont
-  고문헌 조판 보기.
-  typesetclassic 환경을 이용했다.
+\caption{고문헌 조판 보기.
+  typesetclassic 환경을 이용했으며
   \cs{removeclassicspaces}도 선언했다.
   }\label{fig:ancientdoc}
 \end{figure}
@@ -566,8 +591,7 @@ v3.0부터는 자동으로 동작하지 않는다.  사용자가
       \analect
     \end{vertical}\hfil
   \end{example}
-  \caption{\linespread{1.2}\selectfont
-  고문헌 세로쓰기 조판 보기.
+  \caption{고문헌 세로쓰기 조판 보기.
   vertical 환경을 이용했다.
   \cs{hangingpunctuations}가 선언되어 있어서 구두점이
   행 끝에 걸린 것을 볼 수 있다.
@@ -596,6 +620,7 @@ v3.2부터는 사용자가 원하는 문장부호를 원하는 만큼 판면 밖
     \unsethangingratio"3002
 \end{verbatim}
 
+\begin{oldstuff}
 microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 있어,%
 \footnote{%
   원시명령 \cs{lpcode} \cs{rpcode} 등 엔진이 제공하는 기능을 말한다.
@@ -604,6 +629,7 @@ microtype 패키지의 protrusion 기능이 잘 작동하지 않는 경우가 �
   \XeTeX\ reference guide를 참고하라.
   }
 어쩔 수 없이 제공하게 되었으므로 예외적으로만 사용할 것을 권한다.
+\end{oldstuff}
 
 %\begin{figure}
 %\Large
@@ -695,25 +721,24 @@ v3.0부터는
 따위를 사용한다.
 
 \section{밑줄긋기}
-\LaTeX 에서는 \uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.
-
-\cs{xetexkoulemsupport} 명령이 v3.3부터 부활하였으므로
-플레인텍에서는 이 명령을 명시해야 할 경우가 있을 것이다.%
+\LaTeX 에서는 \uwave{ulem 패키지}를 로드하는 것만으로 자동 지원된다.%
 \footnote{%
   ulem 명령어의 인자 안에서도 \cs{dotemph} 명령을 쓸 수 있다.
 }
+\begin{plaintex}
+\cs{xetexkoulemsupport} 명령이 v3.3부터 부활하였으므로
+플레인텍에서는 이 명령을 명시해야 할 경우가 있을 것이다.%
+\end{plaintex}
 
-
-%\hfill \fboxsep=-\fboxrule \fbox{\vbox to1em{\hbox to1em{\hss}\vss}}
-
-\bigskip
-\centerline{\hfil\vrule width.5\textwidth height.4pt \relax\hfil}
+\begin{center}
+*\qquad\qquad *\qquad\qquad *
+\end{center}
 
 \section*{주요 변경 이력}
 
 \begin{small}\linespread{1.2}\selectfont
-\begin{description}\itemsep=0pt
-    \item[v4.5] 202x-xx-xx
+\begin{description}
+    \item[v4.5] 2025-07-16
       \begin{itemize}
         \item \hyperref[sec:etccmds]{\cs{xetexkostretchshrink} 명령 추가}
       \end{itemize}
