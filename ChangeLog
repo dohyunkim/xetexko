@@ -1,9 +1,17 @@
+2025-08-24      Dohyun Kim <nomosnomos at gmail com>
+
+	Version 4.6
+
+	* new macros \xetexkoprehanjaspacing and \xetexkoposthanjaspacing,
+	which users can insert before and after a command (eg., \ruby) to
+	produce appropriate inter-character spacing around the command
+
 2025-07-16      Dohyun Kim <nomosnomos at gmail com>
 
 	Version 4.5
 
 	* new command \xetexkostretchshrink.
-	The argement shall be stretch and shrink part of a glue,
+	The argument shall be stretch and shrink part of a glue,
 	for instance 'plus .025em minus .015em'.
 
 2025-02-24      Dohyun Kim <nomosnomos at gmail com>

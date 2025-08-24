@@ -16,7 +16,7 @@
 
 \ifdefined\ProvidesPackage
   \NeedsTeXFormat{LaTeX2e}[2025/06/01]
-  \ProvidesPackage{xetexko}[2025/07/16 v4.5 typesetting Korean with XeTeX]
+  \ProvidesPackage{xetexko}[2025/08/24 v4.6 typesetting Korean with XeTeX]
 \else
   \ifdefined\@tempcnta\else \newcount\@tempcnta \fi
   \ifdefined\@sptoken \else
@@ -1543,6 +1543,34 @@
     #1\relax
   \fi
   }
+% for users' AddToHook
+\def\xetexkoprehanjaspacing{%
+  \ifx\f@encoding\UTFencname
+  \ifnum\lastnodetype=12 %
+    \ifcase\lastkern
+      \or \XKinterhanjabreak \or \or \or \or
+      \or \unkern\unkern \XKinterhanjabreak   % HG ID
+      \or \unkern\unkern \XKinterhanjabreak   % ID ID
+      \or \unkern\unkern                      % SY ID
+      \or \unkern\unkern \XeKo@latincjk       % AA ID
+      \or \unkern\unkern                      % AO ID
+      \or \unkern\unkern \XeKo@latincjk       % AC ID
+      \or \unkern\unkern \XeKo@latincjk       % AP ID
+      \or \unkern\unkern \XeKo@latincjk       % AM ID
+      \or \unkern\unkern \XKinterhanjabreak   % AH ID
+      \or \unkern\unkern                      % OP ID
+      \or \unkern\unkern \XeKo@halfhalf       % CL ID
+      \or \unkern\unkern \XeKo@quarterquarter % MD ID
+      \or \unkern\unkern \XeKo@halfzero       % FS ID
+      \or \unkern\unkern \XeKo@halfhalf       % EX ID
+      \or \unkern\unkern \XKinterhanjabreak   % LD ID
+      \or \unkern\unkern \XeKo@quarterquarter % VC ID
+    \fi
+  \else\ifnum\lastnodetype=10 % mathoff
+    \XeKo@postmath
+  \fi\fi\fi
+}
+\def\xetexkoposthanjaspacing{\kern-7sp\kern 7sp\relax}
 
 %%% josa selection
 \begingroup

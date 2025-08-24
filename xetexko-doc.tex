@@ -28,7 +28,7 @@
 
 \AddToHook{cmd/caption/before}{\linespread{1.3}\sffamily}
 \AddToHook{env/verbatim/begin}{\linespread{1.1}}
-\AssignSocketPlug{build/column/outputbox}{space-floats-footnotes}
+\AssignSocketPlug{build/column/outputbox}{floats-space-footnotes}
 
 \def\logoko{\textsf{k}\kern-.2ex\textit{o}}
 \def\XeTeX{\hologo{XeTeX}}
@@ -81,6 +81,7 @@
 
 \hangingpunctuations
 
+\footnotesep=10pt
 \begin{document}
 
 \latinparens
@@ -88,7 +89,7 @@
 \title{\xetexko\ 간단 매뉴얼}
 \author{\normalsize Dohyun Kim <\texttt{nomosnomos at gmail com}> \and
   \normalsize <\url{http://github.com/dohyunkim/xetexko}>}
-\date{Version 4.5\quad\normalsize 2025/07/16}
+\date{Version 4.6\quad 2025/08/24}
 \maketitle
 
 \begin{quote}\small
@@ -345,6 +346,16 @@ v3.0부터는
     \vernote{4.5}부터 한글 및 한자 사이 자간의 늘이기 값과 줄이기 값을 지시할 수 있다.
     가령 \keyword{xetexkostretchshrink}\allowbreak\verb|{plus .025em minus .015em}|.\footnote{%
       이 예시값은 Lua\TeX-\textsf{k}\kern-0.0625em\textit{o}의 기본값을 흉내낸 것이다.}
+
+  \item[\cs{xetexkoprehanjaspacing}, \cs{xetexkoposthanjaspacing}]
+    \vernote{4.6}부터 사용자는 이들 매크로를
+    어떤 명령어의 앞과 뒤에 각각 삽입함으로써
+    일반적으로 한자 앞^^b7뒤에 들어가야 할 자간공백을 만들어낼 수 있다.\footnote{%
+      예컨대 \texttt{pxrubrica} 패키지를 이용한다면,
+      \texttt{\cs{AddToHook}\{cmd/jruby/before\}\{\cs{xetexkoprehanjaspacing}\}}\\[-2pt]
+      및
+      \texttt{\cs{AddToHook}\{cmd/pxrr@jepilogue/after\}\{\cs{xetexkoposthanjaspacing}\}}.
+    }
 
   \item[\cs{everyhangul}, \cs{everyhanja}]
     한글 또는 한자에 대해 글자마다 지시한 명령을 수행한다. 예컨대
@@ -738,6 +749,10 @@ v3.0부터는
 
 \begin{small}\linespread{1.2}\selectfont
 \begin{description}
+    \item[v4.6] 2025-08-24
+      \begin{itemize}
+        \item \hyperref[sec:etccmds]{\cs{xetexkoprehanjaspacing}, \cs{xetexkoposthanjaspacing} 추가}
+      \end{itemize}
     \item[v4.5] 2025-07-16
       \begin{itemize}
         \item \hyperref[sec:etccmds]{\cs{xetexkostretchshrink} 명령 추가}
